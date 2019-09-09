@@ -1,0 +1,22 @@
+---
+title: Message flow
+weight: 2
+---
+
+# Message flow
+
+The Document Checking Service (DCS) acts as an interface between your client and Her Majesty's Passport Office (HMPO).
+
+<%= image_tag "dcs-overview.svg" %>
+
+A client in your application makes a request over a secure HTTP connection to DCS. After handling the authentication, DCS forwards the request to HMPO. Then HMPO sends a response back to DCS which interprets the response. DCS then sends response back to your application indicating if the passport is valid or not.
+
+Find out more about:
+
+* how to [connect to DCS][connect]
+* the [cryptography involved in authenticating][message-structure]
+* how to [check if a passport is valid][check-passport]
+* how to [check the status of DCS][check-status]
+
+
+<%= partial "partials/links" %>
