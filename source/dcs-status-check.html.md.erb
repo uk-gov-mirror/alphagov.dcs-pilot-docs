@@ -1,0 +1,68 @@
+---
+title: Check the DCS status
+weight: 6
+---
+
+# Check the DCS status
+
+You can check the status of the Document Checking Service (DCS) by making a GET request on the service endpoint.
+
+It is up to you to decide how to use this call to build appropriate levels of reliability into your app.
+
+You can also check the operational status of the Document Checking Service on the [GOV.UK Verify status page].
+
+## Request
+
+`GET: https://<DCS-URI>/checks/passport`
+
+The `<DCS-URI>` will be supplied at a later date.
+
+As part of the GET request, the client will be required to pass their SSL certificate to authenticate themselves. If it’s not supplied, or if it’s incorrect, an `"Untrusted Certificate"` response will be returned. The SSL certificate should be passed in the request header, and be named  `X-ssl-client-s-dn`.
+
+## Response
+
+The responses to the status request can be:
+
+* `Limit exceeded`, if you went beyond the rate limit.
+* `Scheduled outage`, if for example DCS or HMPO are doing routine maintenance
+* `Untrusted Certificate`, if your SSL certificate sent in the header is incorrect
+* `Unplanned outage`, if something else went wrong, used as a catch-all).
+
+For example, if you made the request during an outage period the JSON object in the response body without the [signature and encryption wrapper][cryptography] will be similar to:
+
+```json
+{
+  "available": false,
+  "message": "Planned outage in progress finishing 2019-09-12T00:00:00.000Z",
+  "scheduledOutages":
+    [
+      {
+      	"start":"2019-09-05T00:00:00.000Z",
+      	"end":"2019-09-12T00:00:00.000Z",
+      	"message":"HMPO is doing some maintenance work."
+      }
+    ]
+}
+```
+
+### available
+
+Boolean field that indicates if DCS is available or not.
+
+### message
+
+Is it always present?
+
+String which describes the status?
+
+### scheduledOutages
+
+#### start
+
+#### end
+
+#### message
+
+
+
+<%= partial "partials/links" %>

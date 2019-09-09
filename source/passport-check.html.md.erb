@@ -1,0 +1,98 @@
+---
+title: Check passport validity
+weight: 5
+---
+
+# Check passport validity
+
+You can use the Document Checking Service (DCS) API to check if a passport is valid.
+
+## Request
+
+`POST: https://<DCS-URI>/checks/passport`
+
+The `<DCS-URI>` will be supplied at a later date.
+
+For example, this is the structure of the JSON object in a request body without the [signature and encryption wrapper][cryptography]:
+
+```json
+{
+  "correlationId" : "550e8400-e29b-41d4-a716-446655440000",
+  "requestId" : "550e8400-e29b-41d4-a716-446655440003",
+  "timestamp" : "1997-07-16T19:20:30.45+01:00",
+  "clientId" : "idpName",
+  "passportNumber":"123456789",
+  "surname":"Smith",
+  "forenames":["Bob", "Dave"],
+  "dateOfBirth": "1950-02-13",
+  "expiryDate": "2020-01-01",
+  "issuingCountryCode": "GBR"
+}
+```
+
+All fields are required except for `issuingCountryCode`.
+
+### correlationId
+RFC 4122 compliant Universally Unique Identifier (UUID)          
+
+### requestId            
+RFC 4122 compliant Universally Unique IDentifier (UUID)          
+
+### timestamp            
+ISO 8601 compliant date and time                                    
+
+### clientId             
+String less than 50 characters issued by the DCS team team              
+
+### passportNumber       
+Integer between 1 and 899999999                                    
+
+### surname              
+Maximum length 30. Contains only the characters `A`-`Z` and `.'’-`         
+
+### forenames            
+A list of maximum 30 forenames containing only the characters `A`-`Z` and `.'’-`   
+
+### dateOfBirth          
+Valid date in the format YYYY-MM-DD                                     
+
+### expiryDate           
+Valid date in the format YYYY-MM-DD. Must be in the future.            
+
+### issuingCountryCode   
+ISO 3166-1 alpha-3 code with modifications                            
+
+## Response
+
+If the call to DCS was successful, the response JSON object in a response body without the [signature and encryption wrapper][cryptography] will be similar to:
+
+```json
+{
+  "correlationId" : "550e8400-e29b-41d4-a716-446655440000",
+  "requestId" : "550e8400-e29b-41d4-a716-446655440003",
+  "error": false,
+  "valid": true,
+  "errorMessage" : "<Error description>"
+}
+```
+
+All fields are required, except for `errorMessage`.
+
+### correlationId
+RFC 4122 compliant UUID
+
+
+### requestId
+RFC 4122 compliant UUID
+
+
+### error
+`error` is a boolean field. Indicates if there has been an error when HMPO processed the request received via DCS.
+
+### valid
+Boolean - the field does not exist if `"error": true`.
+
+### errorMessage
+List of Strings. This is not a required field. A description of the error.
+
+<%= partial "partials/links" %>
