@@ -9,7 +9,7 @@
 vendor/
 
 # Ignore the build directory
-/build
+/build/*
 
 # Ignore cache
 /.sass-cache
@@ -18,4 +18,5 @@ vendor/
 # Ignore .DS_store file
 .DS_Store
 
-Staticfile.auth
+# Do not ignore Staticfile.auth from the build folder
+!/build/Staticfile.auth
