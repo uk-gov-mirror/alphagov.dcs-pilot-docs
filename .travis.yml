@@ -1,0 +1,13 @@
+language: ruby
+cache: bundler
+script: bundle exec middleman build
+deploy:
+  provider: cloudfoundry
+  api: https://api.cloud.service.gov.uk
+  username: tech-doc-tool@digital.cabinet-office.gov.uk
+  password:
+    secure: "Z4egbNPmwjLbMYpBNZF+0h7aOVyqEkz1jMoC5p0aXsH9PGKH5lIoKrQ39i6OBewmCYTML3sLt5wF/DJTY8yzYN3x3/66G0xnoux+o92hGb0epsBfjDvn9bFAf0Sh2MqW6hfu3UT3JWRC20iku6VZZ32DxoiXBqmrUIeb/vZq/z+57R7F8zB3ARkj05IKFd4OFMmuuTll1NmyKDK+RnN5Oa5VUDESKRdoFi18dNozYLd/NQR8p3e97Ogwn6nuJlZiyYYNvZPSfUy6kFHQrvB6YVY7ART2/DQ9fM5DD8OggA5Rc81yEPOFVKrhUWZ9y0eEElakrVtfhxX5bSwrE0wK27nDvmm/pkOWQL53tjdyCRKCjeP896ydFqmXNdW/zmrvzPDDDcxh4VH3ol17aTXZkotbw2rVHc+YIV9SbkFKgmiXkGIGJvX+1lnOMDwspxWZ/N8MJn9RzqeQzMh3ha/9NBTyHJSk158j7OwzO4a5qanWyE9Ji2yjSKR/+6LRya/XKpsm3OpIOHgE9pnjiSyf8xsIAiAzKBJ8gqJd9vU4SSu/fUZYnGIWNTHzzSGfYQtpWr4lPeDrvxMAZy5YYG6H1JNMbxx5AzFNMUjJt4hu218uaEjpSiucILtbkr5q2GdQ8JJParPnZixGCL+cEKrwLLCIAk6JukeRoIX+hnvduJ4="
+  organization: govuk-verify
+  space: docs
+  on:
+    repo: alphagov/dcs-pilot-docs
