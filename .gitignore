@@ -11,10 +11,6 @@ vendor/
 # Ignore everything inside the build directory
 /build/*
 
-# Add ignore exception: do not ignore Staticfile and Staticfile.auth from the build directory
-!/build/Staticfile.auth
-!/build/Staticfile
-
 # Ignore cache
 /.sass-cache
 /.cache

@@ -3,5 +3,3 @@ applications:
 - name: dcs-pilot-docs
   memory: 64M
   instances: 2
-  path: ./build
-  buildpack: staticfile_buildpack
