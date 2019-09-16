@@ -42,29 +42,25 @@ For example, if you made the request during an outage period the JSON object in 
 }
 ```
 
-### `available`
-Whether the Document Checking Service is available and serving requests
-Type: Boolean
+### Response Fields
 
-### `message`
-Information about the current status, for example whether there is currently a planned outage
-Type: String
+#### available
+Boolean. Whether the Document Checking Service is available and serving requests.
 
-### `scheduledOutages`
-A list of upcoming scheduled outages, empty if none
-Type: List of Objects (as below)
+#### message
+String. Information about the current status, for example whether there is currently a planned outage.
 
-#### `scheduledOutages.start`
-When an outage is scheduled to start
-Type: String, ISO 8601 Compliant - Complete date plus hours, minutes, seconds and a decimal fraction of a second
+#### scheduledOutages
+A list of upcoming scheduled outages, empty if none.
 
-### `scheduledOutages.end`
-When an outage is scheduled to end
-Type: String, ISO 8601 Compliant - Complete date plus hours, minutes, seconds and a decimal fraction of a second
+#### scheduledOutages.start
+String, ISO 8601 format. When an outage is scheduled to start.
 
-### `scheduledOutages.message`
-The reason for the scheduled outage
-Type: String
+#### scheduledOutages.end
+String, ISO 8601 format. When an outage is scheduled to end.
+
+#### scheduledOutages.message
+String. The reason for the scheduled outage.
 
 
 <%= partial "partials/links" %>
