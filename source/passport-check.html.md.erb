@@ -33,37 +33,43 @@ For example, this is the structure of the JSON object in a request body without 
 }
 ```
 
+### Request Fields
+
 All fields are required except for `issuingCountryCode`.
 
-### correlationId
-RFC 4122 compliant Universally Unique Identifier (UUID)          
+Surname and forename values must only be comprised of the characters a-z, A-Z, space, hyphen, full stop and both types of apostrophe.
 
-### requestId            
-RFC 4122 compliant Universally Unique IDentifier (UUID)          
+All Universally Unique Identifier (UUID) fields must be in RFC 4112 format.
 
-### timestamp            
-ISO 8601 compliant date and time                                    
+#### correlationId
+String, UUID. Ties together multiple requests in the same session.
 
-### clientId             
-String less than 50 characters issued by the DCS team team              
+#### requestId            
+String, UUID. Identifies a single request within a session.
 
-### passportNumber       
-Integer between 1 and 899999999                                    
+#### timestamp            
+String, ISO 8601 format. Identifies when the request took place.
 
-### surname              
-Maximum length 30. Contains only the characters `A`-`Z` and `.'’-`         
+#### clientId             
+String. Unique identifier issued by the DCS team.
 
-### forenames            
-A list of maximum 30 forenames containing only the characters `A`-`Z` and `.'’-`   
+#### passportNumber       
+Integer, between 1 and 899999999. The designated number of the passport being checked.
 
-### dateOfBirth          
-Valid date in the format YYYY-MM-DD                                     
+#### surname              
+String, maximum length 30. The surname as on the passport.
 
-### expiryDate           
-Valid date in the format YYYY-MM-DD. Must be in the future.            
+#### forenames            
+String, maximum length 30 when concatenated with a space delimiter. List of forenames as on the passport. 
 
-### issuingCountryCode   
-ISO 3166-1 alpha-3 code with modifications                            
+#### dateOfBirth          
+Date in the format YYYY-MM-DD. Birth date as on on the passport.
+
+#### expiryDate           
+Date in the format YYYY-MM-DD. The future expiration date of the passport.          
+
+#### issuingCountryCode (optional)  
+String, ISO 3166-1 alpha-3 format. The country code of the country which issued the passport.                         
 
 ## Response
 
