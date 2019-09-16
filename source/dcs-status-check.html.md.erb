@@ -5,26 +5,25 @@ weight: 6
 
 # Check the DCS status
 
-You can check the status of the Document Checking Service (DCS) by making a GET request on the service endpoint.
+You can check the status of the Document Checking Service (DCS) by making a HTTP GET request to the service endpoint.
 
-It is up to you to decide how to use this call to build appropriate levels of reliability into your app.
+We recommend clients use this endpoint to build appropriate levels of reliability into their service.
 
 ## Request
 
-`GET: https://<DCS-URI>/checks/passport`
+Checking the status of the Document Checking Service is an HTTP GET request
 
-The `<DCS-URI>` will be supplied at a later date.
+The end point is https://<DCS-URI>/checks/passport
 
-As part of the GET request, the client will be required to pass their SSL certificate to authenticate themselves. If it’s not supplied, or if it’s incorrect, an `"Untrusted Certificate"` response will be returned. The SSL certificate should be passed in the request header, and be named  `X-ssl-client-s-dn`.
+The request to this endpoint is a plain JSON document detailing the service status and does not require signing and encryption.
 
 ## Response
 
-The responses to the status request can be:
+When DCS is unavailable, the `message` field will contain one of the following:
 
-* `Limit exceeded`, if you went beyond the rate limit.
-* `Scheduled outage`, if for example DCS or HMPO are doing routine maintenance
-* `Untrusted Certificate`, if your SSL certificate sent in the header is incorrect
-* `Unplanned outage`, if something else went wrong, used as a catch-all).
+* `Limit exceeded` - The client has exceeded their quota of API calls
+* `Planned outage in progress finishing <TIMESTAMP>` - Either HMPO or the Document Checking Service are in a period of scheduled downtime, ending at `<TIMESTAMP>`
+* `Unplanned outage` - Either HMPO or the Document Checking Service are experiencing a period of unscheduled downtime 
 
 For example, if you made the request during an outage period the JSON object in the response body without the [signature and encryption wrapper][cryptography] will be similar to:
 
@@ -43,24 +42,29 @@ For example, if you made the request during an outage period the JSON object in 
 }
 ```
 
-### available
+### `available`
+Whether the Document Checking Service is available and serving requests
+Type: Boolean
 
-Boolean field that indicates if DCS is available or not.
+### `message`
+Information about the current status, for example whether there is currently a planned outage
+Type: String
 
-### message
+### `scheduledOutages`
+A list of upcoming scheduled outages, empty if none
+Type: List of Objects (as below)
 
-Is it always present?
+#### `scheduledOutages.start`
+When an outage is scheduled to start
+Type: String, ISO 8601 Compliant - Complete date plus hours, minutes, seconds and a decimal fraction of a second
 
-String which describes the status?
+### `scheduledOutages.end`
+When an outage is scheduled to end
+Type: String, ISO 8601 Compliant - Complete date plus hours, minutes, seconds and a decimal fraction of a second
 
-### scheduledOutages
-
-#### start
-
-#### end
-
-#### message
-
+### `scheduledOutages.message`
+The reason for the scheduled outage
+Type: String
 
 
 <%= partial "partials/links" %>
