@@ -17,82 +17,115 @@ For example, this is the structure of the JSON object in a request body without 
 
 ```json
 {
-  "correlationId" : "550e8400-e29b-41d4-a716-446655440000",
-  "requestId" : "550e8400-e29b-41d4-a716-446655440003",
-  "timestamp" : "1997-07-16T19:20:30.45+01:00",
-  "clientId" : "idpName",
-  "passportNumber":"123456789",
-  "surname":"Smith",
-  "forenames":["Bob", "Dave"],
+  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
+  "requestId": "550e8400-e29b-41d4-a716-446655440003",
+  "timestamp": "1997-07-16T19:20:30.45+01:00",
+  "clientId": "idpName",
+  "passportNumber": "123456789",
+  "surname": "Smith",
+  "forenames": [
+    "Bob",
+    "Dave"
+  ],
   "dateOfBirth": "1950-02-13",
   "expiryDate": "2020-01-01",
   "issuingCountryCode": "GBR"
 }
 ```
 
+### Request Fields
+
 All fields are required except for `issuingCountryCode`.
 
-### correlationId
-RFC 4122 compliant Universally Unique Identifier (UUID)          
+Surname and forename values must only be comprised of the characters a-z, A-Z, space, hyphen, full stop and both types of apostrophe.
 
-### requestId            
-RFC 4122 compliant Universally Unique IDentifier (UUID)          
+All Universally Unique Identifier (UUID) fields must be in RFC 4112 format.
 
-### timestamp            
-ISO 8601 compliant date and time                                    
+#### correlationId
+String, UUID. Ties together multiple requests in the same session.
 
-### clientId             
-String less than 50 characters issued by the DCS team team              
+#### requestId            
+String, UUID. Identifies a single request within a session.
 
-### passportNumber       
-Integer between 1 and 899999999                                    
+#### timestamp            
+String, ISO 8601 format. Identifies when the request took place.
 
-### surname              
-Maximum length 30. Contains only the characters `A`-`Z` and `.'’-`         
+#### clientId             
+String. Unique identifier issued by the DCS team.
 
-### forenames            
-A list of maximum 30 forenames containing only the characters `A`-`Z` and `.'’-`   
+#### passportNumber       
+Integer, between 1 and 899999999. The designated number of the passport being checked.
 
-### dateOfBirth          
-Valid date in the format YYYY-MM-DD                                     
+#### surname              
+String, maximum length 30. The surname as on the passport.
 
-### expiryDate           
-Valid date in the format YYYY-MM-DD. Must be in the future.            
+#### forenames            
+String, maximum length 30 when concatenated with a space delimiter. List of forenames as on the passport. 
 
-### issuingCountryCode   
-ISO 3166-1 alpha-3 code with modifications                            
+#### dateOfBirth          
+Date in the format YYYY-MM-DD. Birth date as on on the passport.
+
+#### expiryDate           
+Date in the format YYYY-MM-DD. The future expiration date of the passport.          
+
+#### issuingCountryCode (optional)  
+String, ISO 3166-1 alpha-3 format. The country code of the country which issued the passport.                         
 
 ## Response
 
-If the call to DCS was successful, the response JSON object in a response body without the [signature and encryption wrapper][cryptography] will be similar to:
+A successful request is one that completes without error, regardless of whether the passport is valid or not.
 
+If the request was successful, the unwrapped response object will look like:
+
+#### Successful response 
 ```json
 {
-  "correlationId" : "550e8400-e29b-41d4-a716-446655440000",
-  "requestId" : "550e8400-e29b-41d4-a716-446655440003",
+  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
+  "requestId": "af47ddc1-faa9-42fe-be1f-8131df114713",
   "error": false,
-  "valid": true,
-  "errorMessage" : "<Error description>"
+  "valid": true
 }
 ```
 
-All fields are required, except for `errorMessage`.
+#### Failure response
 
-### correlationId
-RFC 4122 compliant UUID
+```json
+{
+  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
+  "requestId": "af47ddc1-faa9-42fe-be1f-8131df114713",
+  "error": false,
+  "valid": false
+}
+```
 
+#### Error response
 
-### requestId
-RFC 4122 compliant UUID
+```json
+{
+  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
+  "requestId": "af47ddc1-faa9-42fe-be1f-8131df114713",
+  "error": true,
+  "errorMessage": [
+    "Unplanned outage"
+  ]
+}
+```
 
+### Response Fields
 
-### error
-`error` is a boolean field. Indicates if there has been an error when HMPO processed the request received via DCS.
+#### correlationId
+String, RFC 4122 compliant UUID. The correlation ID from the original request
 
-### valid
-Boolean - the field does not exist if `"error": true`.
+#### requestId
+String, RFC 4122 compliant UUID. The request ID from the original request.
 
-### errorMessage
-List of Strings. This is not a required field. A description of the error.
+#### error
+Boolean. Indicates whether there was an error when checking the passport data.
+
+#### valid
+Boolean. Whether the passport is valid or not. This field is not included if there is an error.
+
+#### errorMessage
+List of Strings. A description of the error. This field is non-empty only if there was an upstream error from HMPO.
 
 <%= partial "partials/links" %>
