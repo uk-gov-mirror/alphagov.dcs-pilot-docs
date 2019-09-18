@@ -12,13 +12,13 @@ These documents outline the API's resources with example requests, and valid, in
 * [Check Passport Validity](/passport-check)
 * [Check DCS status](/dcs-status-check)
 
-# Check the DCS status
+## Check the DCS status
 
 You can check the status of the Document Checking Service (DCS) by making a HTTP GET request to the service endpoint.
 
 We recommend clients use this endpoint to build appropriate levels of reliability into their service.
 
-## Request
+### Request
 
 Checking the status of the Document Checking Service is an HTTP GET request
 
@@ -26,7 +26,7 @@ The end point is https://<DCS-URI>/checks/passport
 
 The request to this endpoint is a plain JSON document detailing the service status and does not require signing and encryption.
 
-## Response
+### Response
 
 When DCS is unavailable, the `message` field will contain one of the following:
 
@@ -51,8 +51,6 @@ For example, if you made the request during an outage period the JSON object in 
 }
 ```
 
-### Response Fields
-
 #### available
 Boolean. Whether the Document Checking Service is available and serving requests.
 
@@ -71,11 +69,11 @@ String, ISO 8601 format. When an outage is scheduled to end.
 #### scheduledOutages.message
 String. The reason for the scheduled outage.
 
-# Check passport validity
+## Check passport validity
 
 You can use the Document Checking Service (DCS) API to check if a passport is valid.
 
-## Request
+### Request
 
 `POST: https://<DCS-URI>/checks/passport`
 
@@ -100,8 +98,6 @@ For example, this is the structure of the JSON object in a request body without 
   "issuingCountryCode": "GBR"
 }
 ```
-
-### Request Fields
 
 All fields are required except for `issuingCountryCode`.
 
@@ -139,7 +135,7 @@ Date in the format YYYY-MM-DD. The future expiration date of the passport.
 #### issuingCountryCode (optional)  
 String, ISO 3166-1 alpha-3 format. The country code of the country which issued the passport.                         
 
-## Response
+### Response
 
 A successful request is one that completes without error, regardless of whether the passport is valid or not.
 
@@ -178,8 +174,6 @@ If the request was successful, the unwrapped response object will look like:
   ]
 }
 ```
-
-### Response Fields
 
 #### correlationId
 String, RFC 4122 compliant UUID. The correlation ID from the original request
