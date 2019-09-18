@@ -9,7 +9,10 @@ The Document Checking Service (DCS) acts as an interface between your client and
 
 <%= image_tag "dcs-overview.svg" %>
 
-A client in your application makes a request over a secure HTTP connection to DCS. After handling the authentication, DCS forwards the request to HMPO. Then HMPO sends a response back to DCS which interprets the response. DCS then sends response back to your application indicating if the passport is valid or not.
+1. A client in your application makes a secure HTTP request to DCS. 
+2. After authentication, DCS forwards the request to HMPO. 
+3. HMPO responds to DCS which interprets the response. 
+4. DCS responds to your application indicating if the passport is valid or not.
 
 Find out more about:
 
