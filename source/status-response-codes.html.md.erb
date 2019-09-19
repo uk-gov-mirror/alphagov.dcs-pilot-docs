@@ -14,6 +14,6 @@ The Document Checking Service (DCS) uses standard HTTP response code conventions
 | 429                | Request rate is above the rate limit.  |
 | 5xx                | There is an internal DCS server error. |
 
-Note that the `HTTP 200` response code means DCS handled your request successfully. It makes no statement about whether the check found a valid document or not. An `HTTP 200` also doesn't make any statements about the operational status.
+Note that the `HTTP 200` response code means DCS handled your request successfully. It does not confirm whether the check found a valid document or not. Likewise, an `HTTP 200` does not necessarily mean that the service is operational.
 
 <%= partial "partials/links" %>
