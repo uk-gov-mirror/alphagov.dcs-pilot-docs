@@ -1,13 +1,79 @@
 ---
-title: Check passport validity
-weight: 5
+title: API Reference
+weight: 6
 ---
 
-# Check passport validity
+# API Reference
+
+These documents outline the API's resources with example requests, and valid, invalid and erroneous responses.
+
+## Supported API resources
+
+* [Check Passport Validity](/passport-check)
+* [Check DCS status](/dcs-status-check)
+
+## Check DCS status
+
+You can check the status of the Document Checking Service (DCS) by making a HTTP GET request to the service endpoint.
+
+We recommend clients use this endpoint to build appropriate levels of reliability into their service.
+
+### Request
+
+Checking the status of the Document Checking Service is an HTTP GET request
+
+The endpoint is https://<DCS-URI>/checks/passport
+
+The request to this endpoint is a plain JSON document detailing the service status and does not require signing and encryption.
+
+### Response
+
+When DCS is unavailable, the `message` field will contain one of the following:
+
+* `Limit exceeded` - the client has exceeded their quota of API calls
+* `Planned outage in progress finishing <TIMESTAMP>` - either HMPO or the Document Checking Service are in a period of scheduled downtime, ending at `<TIMESTAMP>`
+* `Unplanned outage` - either HMPO or the Document Checking Service are experiencing a period of unscheduled downtime
+
+For example, if you made the request during an outage period, the JSON object in the response body without the [signature and encryption wrapper][cryptography] will be similar to:
+
+```json
+{
+  "available": false,
+  "message": "Planned outage in progress finishing 2019-09-12T00:00:00.000Z",
+  "scheduledOutages":
+    [
+      {
+      	"start":"2019-09-05T00:00:00.000Z",
+      	"end":"2019-09-12T00:00:00.000Z",
+      	"message":"HMPO is doing some maintenance work."
+      }
+    ]
+}
+```
+
+#### available
+Boolean. Whether the Document Checking Service is available and serving requests.
+
+#### message
+String. Information about the current status, for example whether there is currently a planned outage.
+
+#### scheduledOutages
+A list of upcoming scheduled outages, empty if none.
+
+#### scheduledOutages.start
+String, ISO 8601 format. When an outage is scheduled to start.
+
+#### scheduledOutages.end
+String, ISO 8601 format. When an outage is scheduled to end.
+
+#### scheduledOutages.message
+String. The reason for the scheduled outage.
+
+## Check passport validity
 
 You can use the Document Checking Service (DCS) API to check if a passport is valid.
 
-## Request
+### Request
 
 `POST: https://<DCS-URI>/checks/passport`
 
@@ -32,8 +98,6 @@ For example, this is the structure of the JSON object in a request body without 
   "issuingCountryCode": "GBR"
 }
 ```
-
-### Request Fields
 
 All fields are required except for `issuingCountryCode`.
 
@@ -60,7 +124,7 @@ Integer, between 1 and 899999999. The designated number of the passport being ch
 String, maximum length 30. The surname as on the passport.
 
 #### forenames            
-String, maximum length 30 when concatenated with a space delimiter. List of forenames as on the passport. 
+String, maximum length 30 when concatenated with a space delimiter. List of forenames as on the passport.
 
 #### dateOfBirth          
 Date in the format YYYY-MM-DD. Birth date as on on the passport.
@@ -71,13 +135,13 @@ Date in the format YYYY-MM-DD. The future expiration date of the passport.
 #### issuingCountryCode (optional)  
 String, ISO 3166-1 alpha-3 format. The country code of the country which issued the passport.                         
 
-## Response
+### Response
 
 A successful request is one that completes without error, regardless of whether the passport is valid or not.
 
 If the request was successful, the unwrapped response object will look like:
 
-#### Successful response 
+#### Successful response
 ```json
 {
   "correlationId": "550e8400-e29b-41d4-a716-446655440000",
@@ -111,8 +175,6 @@ If the request was successful, the unwrapped response object will look like:
 }
 ```
 
-### Response Fields
-
 #### correlationId
 String, RFC 4122 compliant UUID. The correlation ID from the original request
 
@@ -127,5 +189,6 @@ Boolean. Whether the passport is valid or not. This field is not included if the
 
 #### errorMessage
 List of Strings. A description of the error. This field is non-empty only if there was an upstream error from HMPO.
+
 
 <%= partial "partials/links" %>
