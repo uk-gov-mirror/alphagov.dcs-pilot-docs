@@ -26,11 +26,11 @@ Our Certificate Authority provides certificates for the public key infrastructur
 
 ### Signing
 
-Requests must be signed using RSASSA-PKCS1-V1_5 with RS256s, which corresponds to using SHA256 in the JWE “alg” header.
+Requests must be signed using RSASSA-PKCS1-V1_5 with RS256s, which corresponds to using SHA256 in the JWE `alg` header.
 
 ### Encryption
 
-Requests must be encrypted using RSAES OAEP with A128CBC-HS256 (which uses a SHA256 HMAC), corresponding to the JWE “enc” header.
+Requests must be encrypted using RSAES OAEP with A128CBC-HS256 (which uses a SHA256 HMAC), corresponding to the JWE `enc` header.
 
 ## Building a request
 
