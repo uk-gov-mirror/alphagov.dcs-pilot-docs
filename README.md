@@ -35,18 +35,17 @@ Install the application's dependencies:
 bundle install
 ```
 
-That's it!
 
 ## Making changes
 To make changes, edit the markdown files in the source folder.
 
 Although a single page of HTML is generated, the markdown is spread across multiple files to make it easier to manage. They can be found in `source/`.
 
-A new markdown file isn't automatically included in the generated output. If you add a new markdown file at the location `source/agile/scrum.md`, the following snippet in `source/index.html.md.erb` will include it in the generated output.
+A new markdown file is not automatically included in the generated output. If you add a new markdown file at the location `source/agile/scrum.md`, the following snippet in `source/index.html.md.erb` will include it in the generated output.
 
 `<%= partial 'documentation/scrum' %>`
 
-Including files manually like this enables you to specify the position they appear in the page.
+Including files manually like this enables you to specify the position they appear on the page.
 
 The sections in the documentation are controlled by the use of markdown headers, not the file structure.
 
@@ -56,7 +55,7 @@ In order to configure some aspects of layout, like the header, edit `config/tech
 
 ### Workflow
 
-The repository uses [Travis CI](https://travis-ci.com/alphagov/dcs-pilot-docs/) to run a basic pre-commit. This ensures that changes don't break the application.
+The repository uses [Travis CI](https://travis-ci.com/alphagov/dcs-pilot-docs/) to run a basic pre-commit. This ensures that changes do not break the application.
 
 Before commiting any changes, the contributor should run this command in the application directory:
 
@@ -64,12 +63,12 @@ Before commiting any changes, the contributor should run this command in the app
 bundle exec middlemand build
 ```
 
-This command mimics the command ran by the Travis Build Agent.
+This command mimics the command run by the Travis Build Agent.
 
 ### Preview
 Whilst writing documentation, you can run a middleman server to preview how the published version will look in the browser.
 
-The preview is only available on your own computer. Others won't be able to access it if they are given the link.
+The preview is only available on your own computer. Others will not be able to access it if you give them the link.
 
 Type the following to start the server:
 
@@ -77,7 +76,7 @@ Type the following to start the server:
 bundle exec middleman server
 ```
 
-If all goes well something like the following output will be displayed:
+If all goes well, something like the following output will be displayed:
 
 ```
 == The Middleman is loading
@@ -86,8 +85,8 @@ If all goes well something like the following output will be displayed:
 == Inspect your site configuration at "http://Laptop.local:4567/__middleman", "http://192.168.0.8:4567/__middleman"
 You should now be able to view a live preview at http://localhost:4567.
 ```
+Changes to the tech-docs.yml file require stopping and restarting the server to show up in the preview. You can stop it with Ctrl-C.
 
-Changes to the tech-docs.yml file require stopping and restarting the server to show up in the preview. (Stop it with Ctrl-C).
 
 ## Licence
 
