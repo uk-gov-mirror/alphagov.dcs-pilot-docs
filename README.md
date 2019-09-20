@@ -11,9 +11,9 @@ The pages are hosted at https://dcs-pilot-docs.cloudapps.digital on the [GOV.UK 
 
 To see the version of Ruby used by the application, see [the ruby-version file](.ruby-version).
 
-## Install Ruby 
+## Install Ruby
 
-Start by installing [rbenv](https://github.com/rbenv/rbenv) and [ruby-build](https://github.com/rbenv/ruby-build): 
+Start by installing [rbenv](https://github.com/rbenv/rbenv) and [ruby-build](https://github.com/rbenv/ruby-build):
 ```
 brew upgrade rbenv ruby-build
 ```
@@ -58,7 +58,7 @@ In order to configure some aspects of layout, like the header, edit `config/tech
 
 The repository uses [Travis CI](https://travis-ci.com/alphagov/dcs-pilot-docs/) to run a basic pre-commit. This ensures that changes don't break the application.
 
-Before commiting any changes, the contributor should run this command in the application directory: 
+Before commiting any changes, the contributor should run this command in the application directory:
 
 ```
 bundle exec middlemand build
@@ -88,3 +88,14 @@ You should now be able to view a live preview at http://localhost:4567.
 ```
 
 Changes to the tech-docs.yml file require stopping and restarting the server to show up in the preview. (Stop it with Ctrl-C).
+
+## Licence
+
+Unless stated otherwise, the codebase is released under [the MIT License][mit].
+This covers both the codebase and any sample code in the documentation.
+
+The documentation is [© Crown copyright][copyright] and available under the terms of the [Open Government 3.0][ogl] licence.
+
+[mit]: LICENCE
+[copyright]: http://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/
+[ogl]: http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
