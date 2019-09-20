@@ -18,6 +18,12 @@ Messages your client exchanges with the DCS must use the following IETF standard
  - [JSON Web Signature (JWS)][JWS]
  - [JSON Web Encryption (JWE)][JWE]
 
+
+### Mutual Authentication
+
+Mutual-auth [Transport Layer Security (TLS) Protocol Version 1.2][TLS] secures the messages your client exchanges with the Document Checking Service (DCS).
+Our Certificate Authority provides certificates for the public key infrastructure (PKI). Details about how to raise a certificate signing request with our Certificate Authority will follow after the Expression of Interest phase.
+
 ### Signing
 
 Requests must be signed using RSASSA-PKCS1-V1_5 with RS256s, which corresponds to using SHA256 in the JWE “alg” header.
