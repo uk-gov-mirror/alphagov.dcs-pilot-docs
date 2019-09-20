@@ -9,8 +9,9 @@ These documents outline the API's resources with example requests, and valid, in
 
 ## Supported API resources
 
-* [Check Passport Validity](/passport-check)
-* [Check the DCS status](/dcs-status-check)
+* [Check DCS status][check-status]
+* [Check Passport Validity][check-passport]
+
 
 ## Check the DCS status
 
@@ -28,13 +29,13 @@ The request to this endpoint is a plain JSON document detailing the service stat
 
 ### Response
 
-When the DCS is unavailable, the `message` field will contain one of the following:
+When DCS is unavailable, the `message` field will contain one of the following:
 
-* `Limit exceeded` - the client has exceeded their quota of API calls
-* `Planned outage in progress finishing <TIMESTAMP>` - either HMPO or the Document Checking Service are in a period of scheduled downtime, ending at `<TIMESTAMP>`
-* `Unplanned outage` - either HMPO or the Document Checking Service are experiencing a period of unscheduled downtime
+* `Limit exceeded` - The client has exceeded their quota of API calls
+* `Planned outage in progress finishing <TIMESTAMP>` - Either HMPO or the Document Checking Service are in a period of scheduled downtime, ending at `<TIMESTAMP>`
+* `Unplanned outage` - Either HMPO or the Document Checking Service are experiencing a period of unscheduled downtime
 
-For example, if you made the request during an outage period, the JSON object in the response body without the [signature and encryption wrapper][cryptography] will be similar to:
+For example, if you made the request during an outage period the JSON object in the response body without the [signature and encryption wrapper][cryptography] will be similar to:
 
 ```json
 {
