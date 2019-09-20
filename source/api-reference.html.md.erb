@@ -10,9 +10,9 @@ These documents outline the API's resources with example requests, and valid, in
 ## Supported API resources
 
 * [Check Passport Validity](/passport-check)
-* [Check DCS status](/dcs-status-check)
+* [Check the DCS status](/dcs-status-check)
 
-## Check DCS status
+## Check the DCS status
 
 You can check the status of the Document Checking Service (DCS) by making a HTTP GET request to the service endpoint.
 
@@ -28,7 +28,7 @@ The request to this endpoint is a plain JSON document detailing the service stat
 
 ### Response
 
-When DCS is unavailable, the `message` field will contain one of the following:
+When the DCS is unavailable, the `message` field will contain one of the following:
 
 * `Limit exceeded` - the client has exceeded their quota of API calls
 * `Planned outage in progress finishing <TIMESTAMP>` - either HMPO or the Document Checking Service are in a period of scheduled downtime, ending at `<TIMESTAMP>`
