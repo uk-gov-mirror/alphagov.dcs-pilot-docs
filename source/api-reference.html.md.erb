@@ -9,8 +9,9 @@ These documents outline the API's resources with example requests, and valid, in
 
 ## Supported API resources
 
-* [Check Passport Validity](/passport-check)
-* [Check DCS status](/dcs-status-check)
+* [Check DCS status][check-status]
+* [Check Passport Validity][check-passport]
+
 
 ## Check the DCS status
 
@@ -22,7 +23,7 @@ We recommend clients use this endpoint to build appropriate levels of reliabilit
 
 Checking the status of the Document Checking Service is an HTTP GET request
 
-The end point is https://<DCS-URI>/checks/passport
+The endpoint is https://<DCS-URI>/checks/passport
 
 The request to this endpoint is a plain JSON document detailing the service status and does not require signing and encryption.
 

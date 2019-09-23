@@ -9,22 +9,23 @@ The Document Checking Service (DCS) acts as an interface between your client and
 
 <%= image_tag "dcs-overview.svg" %>
 
-1. A [passport check][check-passport] request is sent to the DCS.
-2. Provided the request is from a trusted client, is signed and encrypted correctly, then the request is forwarded to HMPO.
-3. HMPO responds to the provided request. The response can have three potential states:
-    - The passport check is valid.
-    - The passport check is invalid.
-    - Something is wrong with HMPO.
-4. The response is forwarded to the client as outlined in [check if a passport is valid][check-passport-response].
+1. A client sends a [passport check][check-passport] request to the DCS.
+2. After authentication to prove the request is from a trusted client and the client has signed and encrypted the payload correctly, the DCS sends the request to HMPO.
+3. HMPO responds to the provided request. The response can have three possible states:
+    - The passport check is valid
+    - The passport check is invalid
+    - HMPO has an internal server error
+4. The DCS sends the response to the client as outlined in [check if a passport is valid][check-passport-response].
 
 ----
 
+
 Find out more about:
 
-* how to [connect to DCS][connect]
+* how to [integrate with the DCS API][integrate]
 * the [cryptography involved in authenticating][message-structure]
 * how to [check if a passport is valid][check-passport]
-* how to [check the status of DCS][check-status]
+* how to [check the status of the DCS][check-status]
 
 
 <%= partial "partials/links" %>
