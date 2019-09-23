@@ -8,23 +8,29 @@ weight: 4
 
 ## Cryptography
 
-Mutual-auth [Transport Layer Security (TLS) Protocol Version 1.2][TLS] secures the messages your client exchanges with the Document Checking Service (DCS).
+Mutual authentication [Transport Layer Security (TLS) Protocol Version 1.2][TLS] secures the messages your client exchanges with the Document Checking Service (DCS).
 
 Our Certificate Authority provides certificates for the public key infrastructure (PKI). Details about how to raise a certificate signing request with our Certificate Authority will follow after the Expression of Interest phase.
 
-Messages your client exchanges with DCS must use the following IETF standards:
+Messages your client exchanges with the DCS must use the following IETF standards:
 
  - [Javascript Object Signing and Encryption (JOSE)][JOSE]
  - [JSON Web Signature (JWS)][JWS]
  - [JSON Web Encryption (JWE)][JWE]
 
+
+### Mutual Authentication
+
+Mutual authentication secures the messages your client exchanges with the DCS. This is implemented using client certificates over [Transport Layer Security (TLS) Protocol Version 1.2][TLS].
+Our Certificate Authority provides certificates for the public key infrastructure (PKI). Details about how to raise a certificate signing request with our Certificate Authority will follow after the Expression of Interest phase.
+
 ### Signing
 
-Requests must be signed using RSASSA-PKCS1-V1_5 with RS256s, which corresponds to using SHA256 in the JWE “alg” header.
+Requests must be signed using RSASSA-PKCS1-V1_5 with RS256s, which corresponds to using SHA256 in the JWE `alg` header.
 
 ### Encryption
 
-Requests must be encrypted using RSAES OAEP with A128CBC-HS256 (which uses a SHA256 HMAC), corresponding to the JWE “enc” header.
+Requests must be encrypted using RSAES OAEP with A128CBC-HS256 (which uses a SHA256 HMAC), corresponding to the JWE `enc` header.
 
 ## Building a request
 
@@ -36,21 +42,21 @@ The API messages contained in the JWS and JWE wrappers are JSON objects. To buil
 
 <%= image_tag "dcs-message-structure.svg" %>
 
-- Encode your request as a JSON object
-- Sign the request using the client signing key using JWS 
-- Encrypt the request using the client encryption key using JWE
-- Sign the request with the client signing key using JWS
+1. Encode your request as a JSON object.
+2. Sign the request with the client signing key using JWS.
+3. Encrypt the request with the client encryption key using JWE.
+4. Sign the request with the client signing key using JWS.
 
 
 The signatures and encryption use the [JSON Web Signature (JWS)][JWS] and [JSON Web Encryption JWE][JWE] compact serialisations.
 
-All JWS Headers must include the `x5t` header parameter. This is to allow DCS to identify the correct certificate to use to check that the message was sent by a specific entity.
+All JWS Headers must include the `x5t` header parameter. This is to allow the DCS to identify the correct certificate to use to check that the message was sent by a specific entity.
 
 All requests and responses must include:
 
 * a correlation ID, which is the same for a particular session
 * a request ID, which is unique to that request
 
-For example, if you check the same user's document several times in the same session, all requests to DCS will have the same correlation ID. Each request will have a unique request ID.
+For example, if you check the same user's document several times in the same session, all requests to the DCS will have the same correlation ID. Each request will have a unique request ID.
 
 <%= partial "partials/links" %>
