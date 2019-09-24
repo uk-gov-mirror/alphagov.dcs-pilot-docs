@@ -27,7 +27,7 @@ The `<DCS-URI>` will be supplied at a later date.
 
 The HTTP header must contain `Content-Type: application/jose`.
 
-The request to this endpoint is a plain JSON document detailing the service status and does not require signing and encryption.
+The request body for a DCS status check is empty and therefore does not require the [signature and encryption wrapper][wrapper].
 
 ### Response
 
@@ -71,6 +71,9 @@ String, ISO 8601 format. When an outage is scheduled to end.
 
 #### scheduledOutages.message
 String. The reason for the scheduled outage.
+
+
+
 
 ## Check passport validity
 
