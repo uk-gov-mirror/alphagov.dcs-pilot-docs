@@ -8,29 +8,57 @@ weight: 4
 
 ## Cryptography
 
-Mutual authentication [Transport Layer Security (TLS) Protocol Version 1.2][TLS] secures the messages your client exchanges with the Document Checking Service (DCS).
-
-Our Certificate Authority provides certificates for the public key infrastructure (PKI). Details about how to raise a certificate signing request with our Certificate Authority will follow after the Expression of Interest phase.
-
 Messages your client exchanges with the DCS must use the following IETF standards:
 
  - [Javascript Object Signing and Encryption (JOSE)][JOSE]
  - [JSON Web Signature (JWS)][JWS]
  - [JSON Web Encryption (JWE)][JWE]
 
+Our Certificate Authority will issue certificates for the [public key infrastructure (PKI)][RFC 6712]. Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest phase.
 
 ### Mutual Authentication
 
 Mutual authentication secures the messages your client exchanges with the DCS. This is implemented using client certificates over [Transport Layer Security (TLS) Protocol Version 1.2][TLS].
-Our Certificate Authority provides certificates for the public key infrastructure (PKI). Details about how to raise a certificate signing request with our Certificate Authority will follow after the Expression of Interest phase.
+
+You must generate a private key and certificate signing request to obtain your mutual authentication certificate.
+
+Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest phase.
 
 ### Signing
 
-Requests must be signed using RSASSA-PKCS1-V1_5 with RS256s, which corresponds to using SHA256 in the JWE `alg` header.
+Signing provides the receiver with assurance of who authored the message. The signature also guarantees that the message hasn’t been tampered with since the author signed it.
+
+Your client signs requests with your private signing key. When receiving the request, the DCS uses your signing certificate to verify that you sent the request.
+
+Responses from the DCS are signed with the DCS's private signing key. Your client uses the DCS's signing certificate to verify that the response came from the DCS.
+
+#### Signing keys and certificates
+
+You must generate a private signing key and raise a certificate signing request to our Certificate Authority. The DCS will get your signing certificate once it's issued by our Certificate Authority.
+
+You will receive the DCS's signing certificate.
+
+#### Signing algorithms
+
+Requests to the DCS must be signed using [RSASSA-PKCS1-V1_5] with RS256s, which corresponds to using SHA256 in the JWE `alg` header.
 
 ### Encryption
 
-Requests must be encrypted using RSAES OAEP with A128CBC-HS256 (which uses a SHA256 HMAC), corresponding to the JWE `enc` header.
+Encryption provides the sender with assurance that only the intended receiver can see the message.
+
+Your client encrypts requests using the DCS's encryption certificate. When receiving the request, the DCS uses its private encryption key to decrypt your request.
+
+Responses from the DCS are encrypted with your encryption certificate. Your client then uses your private encryption key to decrypt the response form DCS.
+
+#### Encryption keys and certificates
+
+You must generate a private encryption key and raise a certificate signing request with our Certificate Authority. The DCS will get your encryption certificate once it's issued by our Certificate Authority.
+
+You will receive the DCS's signing certificate.
+
+#### Encryption algorithms
+
+Requests must be encrypted using [RSAES OAEP] with A128CBC-HS256 (which uses a SHA256 HMAC), corresponding to the JWE `enc` header.
 
 ## Building a request
 
