@@ -75,11 +75,4 @@ To build the [signature (JWS)][JWS] and [encryption (JWE)][JWE] wrapper for your
 
 All JWS Headers must include the `x5t` header parameter. This is to allow the DCS to identify the correct certificate to use to check that the message was sent by a specific entity.
 
-All requests and responses must include:
-
-* a correlation ID, which is the same for a particular session
-* a request ID, which is unique to that request
-
-For example, if you check the same user's document several times in the same session, all requests to the DCS will have the same correlation ID. Each request will have a unique request ID.
-
 <%= partial "partials/links" %>
