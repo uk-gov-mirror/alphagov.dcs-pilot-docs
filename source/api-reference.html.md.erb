@@ -25,6 +25,8 @@ We recommend clients use this endpoint to build appropriate levels of reliabilit
 
 The `<DCS-URI>` will be supplied at a later date.
 
+The HTTP header must contain `Content-Type: application/jose`.
+
 The request to this endpoint is a plain JSON document detailing the service status and does not require signing and encryption.
 
 ### Response
@@ -79,6 +81,8 @@ You can use the DCS API to check if a passport is valid.
 `POST: https://<DCS-URI>/checks/passport`
 
 The `<DCS-URI>` will be supplied at a later date.
+
+The HTTP header must contain `Content-Type: application/jose`.
 
 For example, this is the structure of the JSON object in a request body without the [signature and encryption wrapper][cryptography]:
 

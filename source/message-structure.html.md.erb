@@ -63,8 +63,6 @@ Requests must be encrypted using [RSAES OAEP] with A128CBC-HS256 (which uses a S
 
 ## Building a request
 
-The HTTP header must contain `Content-Type: application/jose`.
-
 The API messages contained in the JWS and JWE wrappers are JSON objects. To build the JOSE wrapper, your JSON object is first signed, then encrypted, and then signed again.
 
 <%= image_tag "dcs-message-structure.svg" %>
