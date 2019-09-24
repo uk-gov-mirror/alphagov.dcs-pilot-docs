@@ -61,7 +61,7 @@ You will receive the DCS's signing certificate.
 
 Requests must be encrypted using [RSAES OAEP] with A128CBC-HS256 (which uses a SHA256 HMAC), corresponding to the JWE `enc` header.
 
-## Building a request
+## Signature and encryption wrapper
 
 The API messages contained in the JWS and JWE wrappers are JSON objects. To build the JOSE wrapper, your JSON object is first signed, then encrypted, and then signed again.
 
