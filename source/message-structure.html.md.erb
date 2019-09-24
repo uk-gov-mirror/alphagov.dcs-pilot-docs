@@ -73,10 +73,6 @@ To build the [signature (JWS)][JWS] and [encryption (JWE)][JWE] wrapper for your
 
 <%= image_tag "dcs-message-structure.svg" %>
 
-
-
-The signatures and encryption use the [JSON Web Signature (JWS)][JWS] and [JSON Web Encryption JWE][JWE] compact serialisations.
-
 All JWS Headers must include the `x5t` header parameter. This is to allow the DCS to identify the correct certificate to use to check that the message was sent by a specific entity.
 
 All requests and responses must include:
