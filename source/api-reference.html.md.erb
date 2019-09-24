@@ -99,12 +99,9 @@ For example, this is the structure of the JSON object in a request body without 
     "Dave"
   ],
   "dateOfBirth": "1950-02-13",
-  "expiryDate": "2020-01-01",
-  "issuingCountryCode": "GBR"
+  "expiryDate": "2020-01-01"
 }
 ```
-
-All fields are required except for `issuingCountryCode`.
 
 Surname and forename values must only be comprised of the characters a-z, A-Z, space, hyphen, full stop and both types of apostrophe.
 
@@ -135,10 +132,7 @@ String, maximum length 30 when concatenated with a space delimiter. List of fore
 Date in the format YYYY-MM-DD. Birth date as on the passport.
 
 #### expiryDate           
-Date in the format YYYY-MM-DD. The expiration date of the passport.          
-
-#### issuingCountryCode (optional)  
-String, ISO 3166-1 alpha-3 format. The country code of the country which issued the passport.                         
+Date in the format YYYY-MM-DD. The expiration date of the passport.                                  
 
 ### Response
 
