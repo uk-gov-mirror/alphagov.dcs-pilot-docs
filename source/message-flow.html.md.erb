@@ -5,15 +5,15 @@ weight: 3
 
 # Message flow
 
-The Document Checking Service (DCS) acts as an interface between your client and HM Passport Office (HMPO).
+The Document Checking Service (DCS) acts as an interface between your service and HM Passport Office.
 
 <%= image_tag "dcs-overview.svg" %>
 
-1. Your client sends a [passport check][check-passport] request to the DCS.
-2. After the DCS confirms the request came from your client and has not been tampered with, the DCS sends the request to HMPO.
-3. HMPO checks the passport data against their database and sends a response back to the DCS.
-4. The DCS sends the response to your client as outlined in [check if a passport is valid][check-passport-response].
-## Mutual Authentication
+1. Your service sends a [passport check][check-passport] request to the DCS.
+2. After the DCS confirms the request came from your service and has not been tampered with, the DCS sends the request to HM Passport Office.
+3. HM Passport Office checks the passport data against their database and sends a response back to the DCS.
+4. The DCS sends the response to your service as outlined in [check if a passport is valid][check-passport-response].
+
 ## Mutual authentication
 
 Mutual authentication secures the messages your client exchanges with the DCS. This is implemented using client certificates over [Transport Layer Security (TLS) Protocol Version 1.2][TLS].
