@@ -31,9 +31,9 @@ You will receive the DCS's signing certificate.
 
 ### Signing algorithms
 
-Signatures in the JOSE message to communicate with the DCS MUST use [RSASSA-PKCS1-V1_5] with the `SHA-256` hashing algorithm for RSA-based keys, detailed in the [JSON Web Algorithms] specification.
+Signatures in the JOSE message to communicate with the DCS must use [RSASSA-PKCS1-V1_5] with the `SHA-256` hashing algorithm for RSA-based keys, detailed in the [JSON Web Algorithms] specification.
 
-The `alg` header in the [JWS] object MUST be set to `RS256`.
+The `alg` header in the [JWS] object must be set to `RS256`.
 
 ## Encrypting messages
 
@@ -51,12 +51,12 @@ You will receive the DCS's signing certificate.
 
 ### Encryption algorithms
 
-The encrypted component of the JOSE message to communicate with the DCS MUST use:
+The encrypted component of the JOSE message to communicate with the DCS must use:
  * [RSAES OAEP] as the algorithm, detailed in the [JSON Web Algorithms] specification
  * [A128CBC-HS256] as the encryption method, detailed in the [JSON Web Algorithms] specification.
 
-The `alg` header in the [JWE] object MUST be set to `RSA-OAEP`.
-The `enc` header in the [JWE] object MUST be set to `A128CBC-HS256`.
+The `alg` header in the [JWE] object must be set to `RSA-OAEP`.
+The `enc` header in the [JWE] object must be set to `A128CBC-HS256`.
 
 ## Signature and encryption wrapper
 
