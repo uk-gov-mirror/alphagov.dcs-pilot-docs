@@ -34,7 +34,7 @@ You will receive the DCS's signing certificate.
 
 #### Signing algorithms
 
-Requests to the DCS must be signed using [RSASSA-PKCS1-V1_5] with RS256s, which corresponds to using SHA256 in the JWE `alg` header.
+Requests to the DCS must be signed using [RSASSA-PKCS1-V1_5] with RS256s, which corresponds to using SHA256 in the [JWE] `alg` header.
 
 ### Encryption
 
@@ -52,7 +52,7 @@ You will receive the DCS's signing certificate.
 
 #### Encryption algorithms
 
-Requests must be encrypted using [RSAES OAEP] with A128CBC-HS256 (which uses a SHA256 HMAC), corresponding to the JWE `enc` header.
+Requests must be encrypted using [RSAES-OAEP] with A128CBC-HS256 (which uses a SHA256 HMAC), corresponding to the [JWE] `enc` header.
 
 ## Signature and encryption wrapper
 
