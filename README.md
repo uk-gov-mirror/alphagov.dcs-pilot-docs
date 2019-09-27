@@ -60,7 +60,7 @@ The repository uses [Travis CI](https://travis-ci.com/alphagov/dcs-pilot-docs/) 
 Before commiting any changes, the contributor should run this command in the application directory:
 
 ```
-bundle exec middlemand build
+bundle exec middleman build
 ```
 
 This command mimics the command run by the Travis Build Agent.
