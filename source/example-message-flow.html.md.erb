@@ -1,0 +1,64 @@
+---
+title: Example Message Flow
+weight: 4
+---
+
+# Example Message Flow
+
+This is an example of what the JWS/JWE setup for a passport request.
+
+You will need:
+* Your signing certificate and corresponding private key
+* Your encryption certificate and corresponding private key
+
+## Create passport request object
+
+```json
+{
+  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
+  "requestId": "550e8400-e29b-41d4-a716-446655440003",
+  "timestamp": "1997-07-16T19:20:30.45+01:00",
+  "clientId": "idpName",
+  "passportNumber": "123456789",
+  "surname": "Smith",
+  "forenames": [
+    "Bob",
+    "Dave"
+  ],
+  "dateOfBirth": "1950-02-13",
+  "expiryDate": "2020-01-01",
+  "issuingCountryCode": "GBR"
+}
+```
+
+## Create a JWS using the Signing Key
+
+1. Create the header. This contains three fields:
+ * `alg` - the algorithm used for the signature. This MUST be set to `RS256`, meaning that the message uses RSA-based private keys and `SHA256` to generate signatures. 
+ * `x5t` - the base64-encoded thumbprint of the signing certificate, using `SHA1` digest
+ * `x5t#256` - the base64-encoded thumbprint of the signing certificate, using `SHA256` digest
+
+
+```json
+{
+  "alg": "RS256",
+  "x5t": "base64-encoded-sha1-thumbprint-of-signing-cert",
+  "x5t#256": "base64-encoded-sha256-thumbpring-of-signing-cert"
+}
+```
+
+1. Create signature from the header and payload, using the signing private key.
+
+```json
+RSASHA256(base64UrlEncode(header) + "." + base64UrlEncode(payload))
+```
+
+1. Use compact output for content, which is 
+
+```json
+*<header>*.<payload>.*<signature>*
+
+*eyJ4NXQjUzI1NiI6ImdHemI1dl9NTmZpQzBRSHVyNDB4WnBaeUtDVnp5N0tlWnl6RkNWaV9CckkiLCJ4NXQiOiJLOWdGdW01bF94WXlId0NuaVlsako0TGhfdlkiLCJhbGciOiJSUzI1NiJ9*.ewogICJjb3JyZWxhdGlvbklkIiA6ICIxNWFjMDYxNy0yNjU0LTQ4ODYtOWNmZi1lYWFjM2E0N2FlOTkiLAogICJyZXF1ZXN0SWQiIDogIjJmNDI4NDBmLWJhMDctNDUwYS1hNTNmLTc5YWU3YzEyZDc4YyIsCiAgInRpbWVzdGFtcCIgOiAiMjAxOS0wOS0yN1QwOTowMjoxMi40MzIrMDE6MDAiLAogICJjbGllbnRJZCIgOiAiU3R1Yi1SZWdpc3RyYXRpb24iLAogICJwYXNzcG9ydE51bWJlciIgOiAiMjM2NTgiLAogICJzdXJuYW1lIiA6ICJCQVRTT04iLAogICJmb3JlbmFtZXMiIDogWyAiQklMTFkiIF0sCiAgImRhdGVPZkJpcnRoIiA6ICIxOTgxLTA3LTI2IiwKICAiZXhwaXJ5RGF0ZSIgOiAiMjIwMC0wNS0wNSIsCiAgImlzc3VpbmdDb3VudHJ5Q29kZSIgOiAiR0JSIiwKICAidXNlQ2FzZSIgOiAiUFVCTElDX1NFQ1RPUiIKfQ.*YEMbi6FDELVnfirqb5gF52CzrJY-9eTCiRszpPpwjqQ6z1rFBFsvcy6NjuMUuqAH0ztZ28a8Xj-LaWhLFeP20fouacuuyemiCpkun99sli8zQCkTdKh1GrSRElAJcVeXmp92lNOz0xS48dekXNWhVPBytg1NE8uVSvt6PUIBhVbbYEZqmh6U67Xjlp4TB5K0yUEpGiJcxy5a5ugEF6DLjDp4sXT9ezdNVimVD9uIMknX5BsspVZCOliwVRmiwaDS2HokI-nGoELM_lqBjeqYKtdlEP0Rr9YbeC1huTemtKtizMVxjIgqvnM2MOXnRViHAlkrjoaSrzp7_ZDgIpXr1g*
+```
+
+<%= partial "partials/links" %>
