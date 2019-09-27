@@ -5,7 +5,7 @@ weight: 6
 
 # API reference
 
-The DCS API is based on REST principles. It returns data in JSON format, and uses standard HTTP status response codes.
+The DCS API is based on [REST] principles. It returns data in [JSON] format, and uses standard [HTTP] status response codes.
 
 This section describes the calls you can make to the DCS API, along with example requests and possible responses.
 
@@ -114,29 +114,29 @@ All Universally Unique Identifier (UUID) fields must be in RFC 4112 format.
 #### correlationId
 String, UUID. Ties together multiple requests in the same session.
 
-#### requestId            
+#### requestId
 String, UUID. Identifies a single request within a session.
 
-#### timestamp            
+#### timestamp
 String, ISO 8601 format. Identifies when the request took place.
 
-#### clientId             
+#### clientId
 String. Unique identifier issued by the DCS team.
 
-#### passportNumber       
+#### passportNumber
 Integer, between 1 and 899999999. The designated number of the passport being checked.
 
-#### surname              
+#### surname
 String, maximum length 30. The surname as on the passport.
 
-#### forenames            
+#### forenames
 String, maximum length 30 when concatenated with a space delimiter. List of forenames as on the passport.
 
-#### dateOfBirth          
+#### dateOfBirth
 Date in the format YYYY-MM-DD. Birth date as on the passport.
 
-#### expiryDate           
-Date in the format YYYY-MM-DD. The expiration date of the passport.                                  
+#### expiryDate
+Date in the format YYYY-MM-DD. The expiration date of the passport.
 
 ### Response
 
