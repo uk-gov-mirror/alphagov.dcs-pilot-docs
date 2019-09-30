@@ -5,7 +5,7 @@ weight: 2
 
 # Integrating with the Document Checking Service
 
-To digitally check the validity of British passports as part of the Document Checking Service (DCS) pilot, you must integrate with the DCS API. There are several steps you must complete to integrate with the DCS API:
+To digitally check the validity of British passports as part of the Document Checking Service (DCS) pilot, you must integrate with the DCS API. There are several steps you must complete.
 
 1. Develop a client to integrate with the DCS API.
 1. Test your client in a dedicated DCS test environment.
@@ -13,18 +13,18 @@ To digitally check the validity of British passports as part of the Document Che
 
 It's up to you to decide which programming language your client is using. Your client must be able to [handle authentication][cryptography] against the DCS API.
 
-You must test your client in the dedicated test environment provided by the Government Digital Service (GDS). This environment contains test data to help you check that your application can handle all responses from the [DCS API][api-reference]. Once your client can handle all responses from the DCS API, you can connect to the DCS production environment.   
+You must test your client in the dedicated test environment provided by the Government Digital Service (GDS) before getting access to the production environment. This environment contains test data to help you check that your application can handle all responses from the [DCS API][api-reference]. Once your client can handle all responses from the DCS API, you can connect to the DCS production environment.
 
 ## Getting access to an environment
 
 The test and production environments require dedicated [sets of keys and certificates][cryptography]. To connect to an environment, you must:
 
-* generate private keys and raise certificate signing requests for your encryption, signing, and TLS keys
+* generate private keys and raise certificate signing requests for your encryption, signing, and mutual authentication certificate
 * receive the DCS's signing and encryption certificates
 
-Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest phase of the DCS pilot.
+Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest stage of the DCS pilot.
 
-We will onboard selected pilot participants individually during a 'connecting window' starting from the beginning of 2020.
+We will onboard selected pilot participants during a 'connecting window' starting from the beginning of 2020.
 We will be refining the onboarding process as we go, and participants should therefore be aware that the process may change between iterations.
 
 <%= partial "partials/links" %>

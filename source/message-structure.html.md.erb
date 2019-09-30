@@ -13,21 +13,21 @@ Messages your client exchanges with the Document Checking Service (DCS) must be 
  - [JSON Web Signature (JWS)][JWS]
  - [JSON Web Encryption (JWE)][JWE]
 
-Our Certificate Authority will issue certificates for the [public key infrastructure (PKI)][RFC 6712]. Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest phase of the DCS pilot.
+Our Certificate Authority will issue certificates for the [public key infrastructure (PKI)][RFC 6712]. Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest stage of the DCS pilot.
 
 ## Signing messages
 
 Signing provides the receiver with assurance of who authored the message. The signature also guarantees that the message hasn’t been tampered with since the author signed it.
 
-Your client signs requests with your private signing key. When receiving the request, the DCS uses your signing certificate to verify that you sent the request.
+Your client signs requests with your private signing key. When receiving the request, the DCS uses your signing certificate to verify that the request came from your client.
 
 Responses from the DCS are signed with the DCS's private signing key. Your client uses the DCS's signing certificate to verify that the response came from the DCS.
 
 ### Signing keys and certificates
 
-You must generate a private signing key and raise a certificate signing request to our Certificate Authority. Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest phase of the DCS pilot.
+You must generate a private signing key and raise a certificate signing request to our Certificate Authority. Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest stage of the DCS pilot.
 
-You will receive the DCS's signing certificate.
+You will receive the DCS’s signing certificate from the DCS team.
 
 ### Signing algorithms
 
@@ -41,13 +41,13 @@ Encryption provides the sender with assurance that only the intended receiver ca
 
 Your client encrypts requests using the DCS's encryption certificate. When receiving the request, the DCS uses its private encryption key to decrypt your request.
 
-Responses from the DCS are encrypted with your encryption certificate. Your client then uses your private encryption key to decrypt the response form DCS.
+Responses from the DCS are encrypted with your encryption certificate. Your client then uses your private encryption key to decrypt the response from DCS.
 
 ### Encryption keys and certificates
 
-You must generate a private encryption key and raise a certificate signing request with our Certificate Authority. Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest phase of the DCS pilot.
+You must generate a private encryption key and raise a certificate signing request with our Certificate Authority. Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest stage of the DCS pilot.
 
-You will receive the DCS's signing certificate.
+You will receive the DCS’s encryption certificate from the DCS team.
 
 ### Encryption algorithms
 
@@ -72,6 +72,6 @@ To build the [signature (JWS)][JWS] and [encryption (JWE)][JWE] wrapper for your
 
 <%= image_tag "dcs-message-structure.svg" %>
 
-All JWS Headers must include the `x5t` header parameter. This is to allow the DCS to identify the correct certificate to use to check that the message was sent by a specific entity.
+All JWS headers must include the `x5t` header parameter. This tells the DCS which certificate to use to check the message was sent by a specific client.
 
 <%= partial "partials/links" %>
