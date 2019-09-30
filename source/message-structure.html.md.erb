@@ -62,7 +62,7 @@ The [`alg` header in the JWE object][jwe-alg-header] must be set to `RSA-OAEP`.
 
 The [`enc` header in the JWE object][jwe-enc-header] must be set to `A128CBC-HS256`.
 
-The [`x5t`][jwe-x5t-header] and [`x5t#256`][jwe-x5t256-header] must be set according to the RFC. The DCS uses these headers to confirm that the certificate used to encrypt the [JWE][JWE] object is allowed.
+The [`x5t`][jwe-x5t-header] and [`x5t#256`][jwe-x5t256-header] must be set. The DCS uses these headers to confirm that the certificate used to encrypt the [JWE][JWE] object is allowed.
 
 ## Signature and encryption wrapper
 
