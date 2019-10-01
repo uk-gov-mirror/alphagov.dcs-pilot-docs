@@ -11,13 +11,13 @@ To digitally check the validity of British passports as part of the [Document Ch
 1. Test your client in a dedicated DCS test environment.
 1. Run your client in the production environment as part of the DCS pilot.
 
-It's up to you to decide which programming language your client is using. Your client must be able to [handle authentication][cryptography] against the DCS API.
+It's up to you to decide which programming language your client is using. Your client must be able to [handle authentication][mutual-auth] against the DCS API.
 
 You must test your client in the dedicated test environment provided by the Government Digital Service (GDS) before getting access to the production environment. This environment contains test data to help you check that your application can handle all responses from the [DCS API][api-reference]. Once your client can handle all responses from the DCS API, you can connect to the DCS production environment.
 
 ## Getting access to an environment
 
-The test and production environments require dedicated [sets of keys and certificates][cryptography]. To connect to an environment, you must:
+The test and production environments require dedicated [sets of keys and certificates][message-structure]. To connect to an environment, you must:
 
 * generate private keys and raise certificate signing requests for your encryption, signing, and mutual authentication certificate
 * receive the DCS's signing and encryption certificates
