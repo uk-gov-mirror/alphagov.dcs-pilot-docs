@@ -87,6 +87,9 @@ You should now be able to view a live preview at http://localhost:4567.
 ```
 Changes to the tech-docs.yml file require stopping and restarting the server to show up in the preview. You can stop it with Ctrl-C.
 
+## Code of conduct
+
+Please refer to the `alphagov` [code of conduct](https://github.com/alphagov/code-of-conduct).
 
 ## Licence
 
