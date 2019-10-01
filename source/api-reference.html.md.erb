@@ -56,22 +56,22 @@ For example, if you made the request during an outage period, the JSON object in
 ```
 
 #### available
-Boolean. Whether the DCS is available and serving requests.
+Boolean field indicating if the DCS is available and serving requests.
 
 #### message
-String. Information about the current status, for example whether there is currently a planned outage.
+A string with information about the current status. For example, if there is an ongoing planned outage, the field will contain detail about the duration of the outage.
 
 #### scheduledOutages
-A list of upcoming scheduled outages, empty if none.
+A list of upcoming scheduled outages. The list is empty if there are no outages.
 
 #### scheduledOutages.start
-String, ISO 8601 format. When an outage is scheduled to start.
+String in ISO 8601 format indicating when an outage is scheduled to start.
 
 #### scheduledOutages.end
-String, ISO 8601 format. When an outage is scheduled to end.
+String in ISO 8601 format indicating when an outage is scheduled to end.
 
 #### scheduledOutages.message
-String. The reason for the scheduled outage.
+String indicating the reason for the scheduled outage.
 
 
 
@@ -112,31 +112,31 @@ Surname and forename values must only be comprised of the characters a-z, A-Z, s
 All Universally Unique Identifier (UUID) fields must be in RFC 4112 format.
 
 #### correlationId
-String, UUID. Ties together multiple requests in the same session.
+String containing an RFC 4122 compliant UUID which ties together multiple requests in the same session.
 
 #### requestId
-String, UUID. Identifies a single request within a session.
+String containing a UUID which identifies a single request within a session.
 
 #### timestamp
-String, ISO 8601 format. Identifies when the request took place.
+String in ISO 8601 format which identifies when the request took place.
 
 #### clientId
-String. Unique identifier issued by the DCS team.
+String which is a unique identifier issued by the DCS team.
 
 #### passportNumber
-Integer, between 1 and 899999999. The designated number of the passport being checked.
+The number of the passport being checked, which is an integer between 1 and 899999999.
 
 #### surname
-String, maximum length 30. The surname as on the passport.
+String of maximum 30 characters containing the surname as on the passport.
 
 #### forenames
-String, maximum length 30 when concatenated with a space delimiter. List of forenames as on the passport.
+String of maximum 30 characters, including spaces between forenames. The forenames must be the same as on the passport.
 
 #### dateOfBirth
-Date in the format YYYY-MM-DD. Birth date as on the passport.
+Birth date as on the passport in YYYY-MM-DD format.
 
 #### expiryDate
-Date in the format YYYY-MM-DD. The expiration date of the passport.
+The passport expiration date in YYYY-MM-DD format.
 
 ### Response
 
@@ -179,16 +179,16 @@ If the request was successful, the unwrapped response object will look like:
 ```
 
 #### correlationId
-String, RFC 4122 compliant UUID. The correlation ID from the original request.
+String containing an RFC 4122 compliant UUID which ties together multiple requests in the same session.
 
 #### requestId
-String, RFC 4122 compliant UUID. The request ID from the original request.
+String containing an RFC 4122 compliant UUID which identifies a single request within a session. This is the request ID from the original request.
 
 #### error
-Boolean. Indicates whether there was an error when checking the passport data.
+Boolean indicating if there was an error when checking the passport data.
 
 #### valid
-Boolean. Whether the passport is valid or not. This field is not included if there is an error.
+Boolean indicating if the passport is valid or not. This field is not included if there is an error.
 
 #### errorMessage
 A list of strings which describes the error. This field is present if there was an error processing the request.
