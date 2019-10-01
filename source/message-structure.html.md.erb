@@ -5,86 +5,73 @@ weight: 4
 
 # Message structure
 
+Messages your client exchanges with the Document Checking Service (DCS) must be signed and encrypted using the following Internet Engineering Task Force
+(IETF) standards:
 
-## Cryptography
-
-Messages your client exchanges with the DCS must use the following IETF standards:
-
- - [Javascript Object Signing and Encryption (JOSE)][JOSE]
+ - [JavaScript Object Notation (JSON)][JSON]
+ - [JavaScript Object Signing and Encryption (JOSE)][JOSE]
  - [JSON Web Signature (JWS)][JWS]
  - [JSON Web Encryption (JWE)][JWE]
 
-Our Certificate Authority will issue certificates for the [public key infrastructure (PKI)][RFC 6712]. Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest phase.
+Our Certificate Authority will issue certificates for the [public key infrastructure (PKI)][RFC 6712]. Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest stage of the DCS pilot.
 
-### Mutual Authentication
-
-Mutual authentication secures the messages your client exchanges with the DCS. This is implemented using client certificates over [Transport Layer Security (TLS) Protocol Version 1.2][TLS].
-
-You must generate a private key and certificate signing request to obtain your mutual authentication certificate.
-
-Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest phase.
-
-### Signing
+## Signing messages
 
 Signing provides the receiver with assurance of who authored the message. The signature also guarantees that the message hasn’t been tampered with since the author signed it.
 
-Your client signs requests with your private signing key. When receiving the request, the DCS uses your signing certificate to verify that you sent the request.
+Your client signs requests with your private signing key. When receiving the request, the DCS uses your signing certificate to verify that the request came from your client.
 
 Responses from the DCS are signed with the DCS's private signing key. Your client uses the DCS's signing certificate to verify that the response came from the DCS.
 
-#### Signing keys and certificates
+### Signing keys and certificates
 
-You must generate a private signing key and raise a certificate signing request to our Certificate Authority. The DCS will get your signing certificate once it's issued by our Certificate Authority.
+You must generate a private signing key and raise a certificate signing request to our Certificate Authority. Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest stage of the DCS pilot.
 
-You will receive the DCS's signing certificate.
+You will receive the DCS’s signing certificate from the DCS team.
 
-#### Signing algorithms
+### Signing algorithms
 
-Requests to the DCS must be signed using [RSASSA-PKCS1-V1_5] with RS256s, which corresponds to using SHA256 in the JWE `alg` header.
+Signatures in the JOSE message must use [RSASSA-PKCS1-V1_5] with the `SHA-256` hashing algorithm for RSA-based keys, as detailed in the [JSON Web Algorithms] specification.
 
-### Encryption
+The [`alg` header in the JWS object][jws-alg-header] must be set to `RS256`.
+
+## Encrypting messages
 
 Encryption provides the sender with assurance that only the intended receiver can see the message.
 
 Your client encrypts requests using the DCS's encryption certificate. When receiving the request, the DCS uses its private encryption key to decrypt your request.
 
-Responses from the DCS are encrypted with your encryption certificate. Your client then uses your private encryption key to decrypt the response form DCS.
+Responses from the DCS are encrypted with your encryption certificate. Your client then uses your private encryption key to decrypt the response from DCS.
 
-#### Encryption keys and certificates
+### Encryption keys and certificates
 
-You must generate a private encryption key and raise a certificate signing request with our Certificate Authority. The DCS will get your encryption certificate once it's issued by our Certificate Authority.
+You must generate a private encryption key and raise a certificate signing request with our Certificate Authority. Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest stage of the DCS pilot.
 
-You will receive the DCS's signing certificate.
+You will receive the DCS’s encryption certificate from the DCS team.
 
-#### Encryption algorithms
+### Encryption algorithms
 
-Requests must be encrypted using [RSAES OAEP] with A128CBC-HS256 (which uses a SHA256 HMAC), corresponding to the JWE `enc` header.
+The encrypted component of the JOSE message must use:
 
-## Building a request
+ * [RSAES-OAEP] as the algorithm, detailed in the [JSON Web Algorithms specification][JWA]
+ * [A128CBC-HS256] as the encryption method, detailed in the [JSON Web Algorithms specification][JWA].
 
-API calls to check the validity of a document are synchronous POST requests over HTTPS.
+The [`alg` header in the JWE object][jwe-alg-header] must be set to `RSA-OAEP`.
 
-The HTTP header must contain `Content-Type: application/jose`.
+The [`enc` header in the JWE object][jwe-enc-header] must be set to `A128CBC-HS256`.
 
-The API messages contained in the JWS and JWE wrappers are JSON objects. To build the JOSE wrapper, your JSON object is first signed, then encrypted, and then signed again.
+## Signature and encryption wrapper
+
+The JSON object in request and response bodies is protected by a signature and encryption wrapper.
+
+To build the [signature (JWS)][JWS] and [encryption (JWE)][JWE] wrapper for your JSON object, you must:
+
+1. Sign your JSON object with your signing key using JWS.
+2. Encrypt your signed JSON object with your encryption key using JWE.
+3. Sign the encrypted content with your signing key using JWS.
 
 <%= image_tag "dcs-message-structure.svg" %>
 
-1. Encode your request as a JSON object.
-2. Sign the request with the client signing key using JWS.
-3. Encrypt the request with the client encryption key using JWE.
-4. Sign the request with the client signing key using JWS.
-
-
-The signatures and encryption use the [JSON Web Signature (JWS)][JWS] and [JSON Web Encryption JWE][JWE] compact serialisations.
-
-All JWS Headers must include the `x5t` header parameter. This is to allow the DCS to identify the correct certificate to use to check that the message was sent by a specific entity.
-
-All requests and responses must include:
-
-* a correlation ID, which is the same for a particular session
-* a request ID, which is unique to that request
-
-For example, if you check the same user's document several times in the same session, all requests to the DCS will have the same correlation ID. Each request will have a unique request ID.
+All JWS headers must include the `x5t` header parameter. This tells the DCS which certificate to use to check the message was sent by a specific client.
 
 <%= partial "partials/links" %>
