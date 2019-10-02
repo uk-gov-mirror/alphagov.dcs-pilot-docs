@@ -10,7 +10,7 @@ The Document Checking Service (DCS) acts as an interface between your service an
 <%= image_tag "dcs-overview.svg" %>
 
 1. Your service sends a [passport check][check-passport] request to the DCS.
-2. After the DCS confirms the request came from your service and has not been tampered with, the DCS sends the request to HM Passport Office.
+2. The DCS validates the request and sends it to HM Passport Office.
 3. HM Passport Office checks the passport data against their database and sends a response back to the DCS.
 4. The DCS sends the response to your service as outlined in [check if a passport is valid][check-passport-response].
 
@@ -20,6 +20,6 @@ Mutual authentication secures the messages your client exchanges with the DCS. T
 
 You must generate a private key and certificate signing request to obtain your mutual authentication certificate.
 
-Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest phase of the DCS pilot.
+Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest stage of the DCS pilot.
 
 <%= partial "partials/links" %>
