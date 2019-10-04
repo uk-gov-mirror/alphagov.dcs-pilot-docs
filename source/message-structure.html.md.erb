@@ -35,7 +35,7 @@ Signatures in the JOSE message must use [RSASSA-PKCS1-V1_5] with the `SHA-256` h
 
 The [`alg` header in the JWS object][jws-alg-header] must be set to `RS256`.
 
-The [`x5t`][jws-x5t-header] and [`x5t#256`][jws-x5t256-header] must be set. The DCS uses these headers to confirm that the certificate used to sign the [JWS][JWE] object is allowed.
+You must set the [`x5t`][jws-x5t-header] and [`x5t#256`][jws-x5t256-header] headers. The DCS uses these headers to confirm that the certificate used to sign the [JWS][JWE] object is allowed.
 
 ## Encrypting messages
 
@@ -62,7 +62,7 @@ The [`alg` header in the JWE object][jwe-alg-header] must be set to `RSA-OAEP`.
 
 The [`enc` header in the JWE object][jwe-enc-header] must be set to `A128CBC-HS256`.
 
-The [`x5t`][jwe-x5t-header] and [`x5t#256`][jwe-x5t256-header] must be set. The DCS uses these headers to confirm that the certificate used to encrypt the [JWE][JWE] object is allowed.
+You must set the [`x5t`][jwe-x5t-header] and [`x5t#256`][jwe-x5t256-header] headers. The DCS uses these headers to confirm that the certificate used to encrypt the [JWE][JWE] object is allowed.
 
 ## Signature and encryption wrapper
 
