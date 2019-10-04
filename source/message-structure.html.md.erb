@@ -35,6 +35,8 @@ Signatures in the JOSE message must use [RSASSA-PKCS1-V1_5] with the `SHA-256` h
 
 The [`alg` header in the JWS object][jws-alg-header] must be set to `RS256`.
 
+You must set the [`x5t`][jws-x5t-header] and [`x5t#256`][jws-x5t256-header] headers. The DCS uses these headers to confirm that the certificate used to sign the JWS object was signed by our Certificate Authority.
+
 ## Encrypting messages
 
 Encryption provides the sender with assurance that only the intended receiver can see the message.
@@ -60,18 +62,18 @@ The [`alg` header in the JWE object][jwe-alg-header] must be set to `RSA-OAEP`.
 
 The [`enc` header in the JWE object][jwe-enc-header] must be set to `A128CBC-HS256`.
 
+You must set the [`x5t`][jwe-x5t-header] and [`x5t#256`][jwe-x5t256-header] headers. The DCS uses these headers to confirm that the certificate used to encrypt the JWE object was signed by our Certificate Authority.
+
 ## Signature and encryption wrapper
 
 The JSON object in request and response bodies is protected by a signature and encryption wrapper.
 
-To build the [signature (JWS)][JWS] and [encryption (JWE)][JWE] wrapper for your JSON object, you must:
+To build the signature (JWS) and encryption (JWE) wrapper for your JSON object, you must:
 
 1. Sign your JSON object with your signing key using JWS.
 2. Encrypt your signed JSON object with your encryption key using JWE.
 3. Sign the encrypted content with your signing key using JWS.
 
 <%= image_tag "dcs-message-structure.svg" %>
-
-All JWS headers must include the `x5t` header parameter. This tells the DCS which certificate to use to check the message was sent by a specific client.
 
 <%= partial "partials/links" %>
