@@ -32,15 +32,7 @@ The request body for a DCS status check is empty and therefore does not require 
 
 ### Response
 
-When the DCS is unavailable, the `message` field will contain one of the following:
-
-* `Limit exceeded` - You have exceeded your allocated number of API calls
-* `Planned outage in progress finishing <TIMESTAMP>` - Either the DCS or HM Passport Office (HMPO) are in a period of scheduled downtime, ending at `<TIMESTAMP>`
-* `Unplanned outage` - Either the DCS or HMPO are experiencing a period of unscheduled downtime
-
-If the request was successful, the response object will look like:
-
-#### Response when the DCS is operating as normal
+If the DCS is available, the JSON response body will be similar to:
 
 ```json
 {
@@ -49,7 +41,14 @@ If the request was successful, the response object will look like:
 }
 ```
 
-#### Response during a planned outage
+If the DCS is unavailable, the `message` field in the response describes the cause. The cause for unavailability can be:
+
+* `Limit exceeded` - you have exceeded your allocated number of API calls
+* `Planned outage in progress finishing <TIMESTAMP>` - the DCS or HM Passport Office (HMPO) are in a period of scheduled downtime, ending at `<TIMESTAMP>`
+* `Unplanned outage` - the DCS or HMPO are experiencing a period of unscheduled downtime
+
+For example, during a planned outage, the response is similar to:
+
 ```json
 {
   "available": false,
