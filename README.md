@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/alphagov/dcs-pilot-docs.svg?branch=master)](https://travis-ci.com/alphagov/dcs-pilot-docs)
 
-We are in the process of building the first iteration of this documentation.
+This is the documentation for the [Document Checking Sytem (DCS) pilot](https://www.gov.uk/guidance/apply-for-the-document-checking-service-pilot-scheme)
 
 The pages are hosted at https://dcs-pilot-docs.cloudapps.digital on the [GOV.UK PaaS](https://www.cloud.service.gov.uk/)
 
@@ -60,7 +60,7 @@ The repository uses [Travis CI](https://travis-ci.com/alphagov/dcs-pilot-docs/) 
 Before commiting any changes, the contributor should run this command in the application directory:
 
 ```
-bundle exec middlemand build
+bundle exec middleman build
 ```
 
 This command mimics the command run by the Travis Build Agent.
@@ -87,6 +87,9 @@ You should now be able to view a live preview at http://localhost:4567.
 ```
 Changes to the tech-docs.yml file require stopping and restarting the server to show up in the preview. You can stop it with Ctrl-C.
 
+## Code of conduct
+
+Please refer to the `alphagov` [code of conduct](https://github.com/alphagov/code-of-conduct).
 
 ## Licence
 

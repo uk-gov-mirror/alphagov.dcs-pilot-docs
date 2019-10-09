@@ -5,19 +5,20 @@ weight: 6
 
 # API reference
 
-These documents outline the API's resources with example requests, and valid, invalid and erroneous responses.
+The Document Checking Service (DCS) API is based on [REST principles][REST]. It returns data in [JSON format][JSON], and uses standard [HTTP status response codes][status-response-codes].
 
-## Supported API resources
+This section describes the calls you can make to the DCS API, along with example requests and possible responses.
 
-* [Check DCS status][check-status]
-* [Check passport validity][check-passport]
+Using the DCS API you can:
 
+* [see the operational status of the DCS][check-status]
+* [check passport validity][check-passport]
 
 ## Check the DCS status
 
-You can check the status of the Document Checking Service (DCS) by making a HTTP GET request to the service endpoint.
+You can check the status of the DCS by making a HTTP GET request to the service endpoint.
 
-We recommend clients use this endpoint to build appropriate levels of reliability into their service.
+We recommend you use this endpoint to build appropriate levels of reliability into your service.
 
 ### Request
 
@@ -31,13 +32,22 @@ The request body for a DCS status check is empty and therefore does not require 
 
 ### Response
 
-When DCS is unavailable, the `message` field will contain one of the following:
+If the DCS is available, the JSON response body will be similar to:
 
-* `Limit exceeded` - You have exceeded your allocated number of API calls
-* `Planned outage in progress finishing <TIMESTAMP>` - Either the DCS or HM Passport Office (HMPO) are in a period of scheduled downtime, ending at `<TIMESTAMP>`
-* `Unplanned outage` - Either HMPO or the DCS are experiencing a period of unscheduled downtime
+```json
+{
+  "available":true,
+  "scheduledOutages":[]
+}
+```
 
-For example, if you made the request during an outage period the JSON object in the response body without the [signature and encryption wrapper][cryptography] will be similar to:
+If the DCS is unavailable, the `message` field in the response describes the cause. The cause for unavailability can be:
+
+* `Limit exceeded` - you have exceeded your allocated number of API calls
+* `Planned outage in progress finishing <TIMESTAMP>` - the DCS or HM Passport Office (HMPO) are in a period of scheduled downtime, ending at `<TIMESTAMP>`
+* `Unplanned outage` - the DCS or HMPO are experiencing a period of unscheduled downtime
+
+For example, during a planned outage, the response is similar to:
 
 ```json
 {
@@ -48,29 +58,29 @@ For example, if you made the request during an outage period the JSON object in 
       {
       	"start":"2019-09-05T00:00:00.000Z",
       	"end":"2019-09-12T00:00:00.000Z",
-      	"message":"HMPO is doing some maintenance work."
+      	"message":"Maintenance work is underway."
       }
     ]
 }
 ```
 
 #### available
-Boolean. Whether the DCS is available and serving requests.
+Boolean field indicating if the DCS is available and serving requests.
 
 #### message
-String. Information about the current status, for example whether there is currently a planned outage.
+A string explaining why the DCS is unavailable. For example, if there is an ongoing planned outage, the field will contain detail about the duration of the outage.
 
 #### scheduledOutages
-A list of upcoming scheduled outages, empty if none.
+A list of upcoming scheduled outages. The list is empty if there are no outages.
 
 #### scheduledOutages.start
-String, ISO 8601 format. When an outage is scheduled to start.
+String in ISO 8601 format indicating when an outage is scheduled to start.
 
 #### scheduledOutages.end
-String, ISO 8601 format. When an outage is scheduled to end.
+String in ISO 8601 format indicating when an outage is scheduled to end.
 
 #### scheduledOutages.message
-String. The reason for the scheduled outage.
+String indicating the reason for the scheduled outage.
 
 
 
@@ -87,7 +97,7 @@ The `<DCS-URI>` will be supplied at a later date.
 
 The HTTP header must contain `Content-Type: application/jose`.
 
-For example, this is the structure of the JSON object in a request body without the [signature and encryption wrapper][cryptography]:
+For example, this is the structure of the JSON object in a request body without the [signature and encryption wrapper][wrapper]:
 
 ```json
 {
@@ -106,36 +116,36 @@ For example, this is the structure of the JSON object in a request body without 
 }
 ```
 
-Surname and forename values must only be comprised of the characters a-z, A-Z, space, hyphen, full stop and both types of apostrophe.
+Surname and forename values must only be comprised of the characters a-z, A-Z, space, hyphen, full stop and apostrophe.
 
 All Universally Unique Identifier (UUID) fields must be in RFC 4112 format.
 
 #### correlationId
-String, UUID. Ties together multiple requests in the same session.
+String containing an RFC 4122 compliant UUID which ties together multiple requests in the same session.
 
-#### requestId            
-String, UUID. Identifies a single request within a session.
+#### requestId
+String containing a UUID which identifies a single request within a session.
 
-#### timestamp            
-String, ISO 8601 format. Identifies when the request took place.
+#### timestamp
+String in ISO 8601 format which identifies when the request took place.
 
-#### clientId             
-String. Unique identifier issued by the DCS team.
+#### clientId
+String which is a unique identifier issued by the DCS team.
 
-#### passportNumber       
-Integer, between 1 and 899999999. The designated number of the passport being checked.
+#### passportNumber
+The number of the passport being checked, which is an integer between 1 and 899999999.
 
-#### surname              
-String, maximum length 30. The surname as on the passport.
+#### surname
+String of maximum 30 characters containing the surname as on the passport.
 
-#### forenames            
-String, maximum length 30 when concatenated with a space delimiter. List of forenames as on the passport.
+#### forenames
+List of strings containing the forenames on the passport. The concatenated strings, including spaces between forenames, must be maximum 30 characters.
 
-#### dateOfBirth          
-Date in the format YYYY-MM-DD. Birth date as on the passport.
+#### dateOfBirth
+Birth date as on the passport in YYYY-MM-DD format.
 
-#### expiryDate           
-Date in the format YYYY-MM-DD. The expiration date of the passport.                                  
+#### expiryDate
+The passport expiration date in YYYY-MM-DD format.
 
 ### Response
 
@@ -178,19 +188,19 @@ If the request was successful, the unwrapped response object will look like:
 ```
 
 #### correlationId
-String, RFC 4122 compliant UUID. The correlation ID from the original request
+String containing an RFC 4122 compliant UUID which ties together multiple requests in the same session.
 
 #### requestId
-String, RFC 4122 compliant UUID. The request ID from the original request.
+String containing an RFC 4122 compliant UUID which identifies a single request within a session. This is the request ID from the original request.
 
 #### error
-Boolean. Indicates whether there was an error when checking the passport data.
+Boolean indicating if there was an error when checking the passport data.
 
 #### valid
-Boolean. Whether the passport is valid or not. This field is not included if there is an error.
+Boolean indicating if the passport is valid or not. This field is not included if there is an error.
 
 #### errorMessage
-List of Strings. A description of the error. This field is non-empty only if there was an upstream error from HMPO.
+A list of strings which describes the error. This field is present if there was an error processing the request.
 
 
 <%= partial "partials/links" %>

@@ -19,11 +19,15 @@ header_links:
   GitHub: https://www.github.com/alphagov/dcs-pilot-docs
   Support: /support
 
+# Links to show in the page footer
+footer_links:
+  Accessibility: /accessibility-statement
+
 # Enables search functionality. This indexes pages only and is not recommended for single-page sites.
 enable_search: true
 
 # Tracking ID from Google Analytics (e.g. UA-XXXX-Y)
-ga_tracking_id: UA-122212471-4 
+ga_tracking_id: UA-122212471-4
 
 # Enable multipage navigation in the sidebar
 multipage_nav: true
