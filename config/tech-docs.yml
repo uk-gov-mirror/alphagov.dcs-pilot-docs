@@ -45,3 +45,6 @@ prevent_indexing: true
 # Contribution banner
 show_contribution_banner: true
 github_repo: alphagov/dcs-pilot-docs # used to generate links in the contribution banner
+
+owner_slack_workspace: gds
+default_owner_slack: '#verify-dcs'
