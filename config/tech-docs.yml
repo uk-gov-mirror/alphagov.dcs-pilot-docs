@@ -48,3 +48,6 @@ github_repo: alphagov/dcs-pilot-docs # used to generate links in the contributio
 
 owner_slack_workspace: gds
 default_owner_slack: '#verify-dcs'
+
+# Setting show_expiry: false to not have a red banner at the bottom of the page when it's past the review due date. We'll only have the blue banner saying when the page was last reviewed. The expiry date (determined by the review_in parameter in the frontmatter) is for our internal regular review process.
+show_expiry: false
