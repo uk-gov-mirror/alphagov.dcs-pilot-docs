@@ -1,6 +1,6 @@
 # Host to use for canonical URL generation (without trailing slash)
 # Hosting on PaaS on the default domain for now
-host: dcs-pilot-docs.cloudapps.digital
+host: https://dcs-pilot-docs.cloudapps.digital
 
 # Header-related options
 show_govuk_logo: false
