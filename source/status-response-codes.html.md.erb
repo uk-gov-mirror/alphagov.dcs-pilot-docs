@@ -14,7 +14,7 @@ The Document Checking Service (DCS) uses standard [HTTP response code][HTTP-Stat
 | 200                | The DCS handled your request successfully. |
 | 404                | The DCS URI is incorrect.              |
 | 429                | You have exceeded your allocated number of API calls.  |
-| 503                | The requested government service is experiencing a planned outage |
+| 503                | The requested government service is experiencing a planned outage. |
 | 5xx                | There is an internal server error. |
 
 Note that the `HTTP 200` response code means the DCS handled your request successfully. It does not confirm whether the passport is valid or not. Likewise, an `HTTP 200` does not necessarily mean that the DCS is operational.
