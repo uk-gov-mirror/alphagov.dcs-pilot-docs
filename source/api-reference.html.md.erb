@@ -150,9 +150,9 @@ The passport expiration date in YYYY-MM-DD format.
 
 A successful request is one that completes without error, regardless of whether the passport is valid or not.
 
-If the DCS was able to handle the request successfully, it will return a response with a `200` [HTTP response code][status-response-codes] and a response body as follows:
+The DCS returns a `200` [HTTP response code][status-response-codes] for successful requests.
 
-#### Successful response for a valid passport
+Example response body for a valid passport:
 
 ```json
 {
@@ -163,7 +163,7 @@ If the DCS was able to handle the request successfully, it will return a respons
 }
 ```
 
-#### Successful response for an invalid passport
+Example response body for an invalid passport:
 
 ```json
 {
@@ -174,7 +174,7 @@ If the DCS was able to handle the request successfully, it will return a respons
 }
 ```
 
-#### Error response
+Example response body for a successful response containing an error:
 
 ```json
 {
