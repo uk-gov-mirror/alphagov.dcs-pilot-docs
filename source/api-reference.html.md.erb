@@ -84,9 +84,6 @@ String in ISO 8601 format indicating when an outage is scheduled to end.
 #### scheduledOutages.message
 String indicating the reason for the scheduled outage.
 
-
-
-
 ## Check passport validity
 
 You can use the DCS API to check if a passport is valid.
@@ -153,9 +150,10 @@ The passport expiration date in YYYY-MM-DD format.
 
 A successful request is one that completes without error, regardless of whether the passport is valid or not.
 
-If the request was successful, the unwrapped response object will look like:
+The DCS returns a `200` [HTTP response code][status-response-codes] for successful requests.
 
-#### Successful response for a valid passport
+Example response body for a valid passport:
+
 ```json
 {
   "correlationId": "550e8400-e29b-41d4-a716-446655440000",
@@ -165,7 +163,7 @@ If the request was successful, the unwrapped response object will look like:
 }
 ```
 
-#### Successful response for an invalid passport
+Example response body for an invalid passport:
 
 ```json
 {
@@ -176,7 +174,7 @@ If the request was successful, the unwrapped response object will look like:
 }
 ```
 
-#### Error response
+Example response body for a successful response containing an error:
 
 ```json
 {
