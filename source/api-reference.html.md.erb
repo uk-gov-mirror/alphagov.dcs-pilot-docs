@@ -150,7 +150,10 @@ The passport expiration date in YYYY-MM-DD format.
 
 A successful request is one that completes without error, regardless of whether the passport is valid or not.
 
-The DCS returns a `200` [HTTP response code][status-response-codes] for successful requests.
+The DCS returns a:
+
+* `200` [HTTP response code][status-response-codes] for successful requests
+* `503` [HTTP response code][status-response-codes] if HMPO is having a planned outage
 
 Example response body for a valid passport:
 
@@ -187,6 +190,12 @@ Example response body for a successful response containing an error:
 }
 ```
 
+Example plain text response body for a planned outage:
+
+```
+Service passport check: Planned outage in progress finishing at 2019-10-24T03:00:00.000+01:00
+```
+
 #### correlationId
 String containing an RFC 4122 compliant UUID which ties together multiple requests in the same session.
 
@@ -201,6 +210,5 @@ Boolean indicating if the passport is valid or not. This field is not included i
 
 #### errorMessage
 A list of strings which describes the error. This field is present if there was an error processing the request.
-
 
 <%= partial "partials/links" %>
