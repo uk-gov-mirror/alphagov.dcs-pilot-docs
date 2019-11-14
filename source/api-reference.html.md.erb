@@ -96,7 +96,7 @@ The `<DCS-URI>` will be supplied at a later date.
 
 The HTTP header must contain `Content-Type: application/jose`.
 
-For example, this is the structure of the JSON object in a request body without the [signature and encryption wrapper][wrapper]:
+For example, below is the structure of the JSON object in a request body without the [signature and encryption wrapper][wrapper]. All fields in the JSON object are mandatory:
 
 ```json
 {
@@ -119,7 +119,6 @@ Surname and forename values must only be comprised of the characters a-z, A-Z, s
 
 All Universally Unique Identifier (UUID) fields must be in RFC 4112 format.
 
-All specified fields are mandatory.
 
 #### correlationId
 String containing an RFC 4122 compliant UUID which ties together multiple requests in the same session.
