@@ -115,31 +115,26 @@ For example, below is the structure of the JSON object in a request body without
 }
 ```
 
-Surname and forename values must only be comprised of the characters a-z, A-Z, space, hyphen, full stop and apostrophe.
-
-All Universally Unique Identifier (UUID) fields must be in RFC 4112 format.
-
-
 #### correlationId
-String containing an RFC 4122 compliant UUID which ties together multiple requests in the same session.
+String containing an [RFC 4122] compliant Universally Unique Identifier (UUID) which ties together multiple requests in the same session.
 
 #### requestId
-String containing a UUID which identifies a single request within a session.
+String containing an [RFC 4122] compliant UUID which identifies a single request within a session.
 
 #### timestamp
 String in ISO 8601 format which identifies when the request took place.
 
 #### clientId
-String which is a unique identifier issued by the DCS team.
+String which is an unique identifier issued by the DCS team.
 
 #### passportNumber
 The number of the passport being checked, which is an integer between 1 and 899999999.
 
 #### surname
-String of maximum 30 characters containing the surname as on the passport.
+String of maximum 30 characters containing the surname as on the passport. The surname must only contain the characters a-z, A-Z, space, hyphen, full stop and apostrophe.
 
 #### forenames
-List of strings containing the forenames on the passport. The concatenated strings, including spaces between forenames, must be maximum 30 characters.
+List of strings containing the forenames on the passport. The concatenated strings, including spaces between forenames, must be maximum 30 characters. The forenames must only contain the characters a-z, A-Z, space, hyphen, full stop and apostrophe.
 
 #### dateOfBirth
 Birth date as on the passport in YYYY-MM-DD format.
@@ -198,10 +193,10 @@ Service passport check: Planned outage in progress finishing at 2019-10-24T03:00
 ```
 
 #### correlationId
-String containing an RFC 4122 compliant UUID which ties together multiple requests in the same session.
+String containing an [RFC 4122] compliant UUID which ties together multiple requests in the same session.
 
 #### requestId
-String containing an RFC 4122 compliant UUID which identifies a single request within a session. This is the request ID from the original request.
+String containing an [RFC 4122] compliant UUID which identifies a single request within a session. This is the request ID from the original request.
 
 #### error
 Boolean indicating if there was an error when checking the passport data.
