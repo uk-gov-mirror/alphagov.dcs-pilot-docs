@@ -21,12 +21,12 @@ This will allow you to compile Ruby, and makes it easier to manage multiple Ruby
 
 Download the current version of Ruby that the [application uses](.ruby-version):
 ```
-rbenv install 2.6.4 # substitute <2.6.4> with version found in .ruby-version
+rbenv install 2.6.5 # substitute <2.6.5> with version found in .ruby-version
 ```
 
 Set your Ruby version to match what `rbenv` installed in the previous step:
 ```
-rbenv local 2.6.4 # substitute with version installed. change local to global, if wanted.
+rbenv local 2.6.5 # substitute with version installed. change local to global, if wanted.
 ```
 
 Install the application's dependencies:
