@@ -70,11 +70,10 @@ Whilst writing documentation, you can run a middleman server to preview how the 
 
 The preview is only available on your own computer. Others will not be able to access it if you give them the link.
 
-Type the following to start the server:
+Type one of the following to start the server:
 
-```
-bundle exec middleman server
-```
+* `bundle exec middleman server` - if you have ruby installed locally
+* `./preview-with-docker.sh` - if you have Docker installed
 
 If all goes well, something like the following output will be displayed:
 
