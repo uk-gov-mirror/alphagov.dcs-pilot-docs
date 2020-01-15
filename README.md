@@ -21,12 +21,12 @@ This will allow you to compile Ruby, and makes it easier to manage multiple Ruby
 
 Download the current version of Ruby that the [application uses](.ruby-version):
 ```
-rbenv install 2.6.4 # substitute <2.6.4> with version found in .ruby-version
+rbenv install 2.6.5 # substitute <2.6.5> with version found in .ruby-version
 ```
 
 Set your Ruby version to match what `rbenv` installed in the previous step:
 ```
-rbenv local 2.6.4 # substitute with version installed. change local to global, if wanted.
+rbenv local 2.6.5 # substitute with version installed. change local to global, if wanted.
 ```
 
 Install the application's dependencies:
@@ -70,11 +70,10 @@ Whilst writing documentation, you can run a middleman server to preview how the 
 
 The preview is only available on your own computer. Others will not be able to access it if you give them the link.
 
-Type the following to start the server:
+Type one of the following to start the server:
 
-```
-bundle exec middleman server
-```
+* `bundle exec middleman server` - if you have ruby installed locally
+* `./preview-with-docker.sh` - if you have Docker installed
 
 If all goes well, something like the following output will be displayed:
 
