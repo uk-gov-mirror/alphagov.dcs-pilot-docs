@@ -20,7 +20,7 @@ The JSON object in request and response bodies is protected by a signature and e
 To build the signature (JWS) and encryption (JWE) wrapper for your JSON object, you must:
 
 1. Sign your JSON object with your signing key using JWS.
-2. Encrypt your signed JSON object with your encryption key using JWE.
+2. Encrypt your signed JSON object with the DCS's public encryption certificate using JWE.
 3. Sign the encrypted content with your signing key using JWS.
 
 <%= image_tag "dcs-message-structure-sequence.svg", { :alt => '' } %>
