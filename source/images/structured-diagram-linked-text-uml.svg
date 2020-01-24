@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="55px" preserveAspectRatio="none" style="width:661px;height:55px;" version="1.1" viewBox="0 0 661 55" width="661px" zoomAndPan="magnify"><defs/><g><!--MD5=[a264f174970795e6f8e9a8e3ba271873]
+entity json--><rect fill="#F8F8F8" height="36.2969" style="stroke: #000000; stroke-width: 1.5;" width="100" x="6" y="8"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="80" x="16" y="30.9951">JSON object</text><!--MD5=[b71288ae379be931f4b76657d13ca82a]
+entity jws1--><rect fill="#F8F8F8" height="36.2969" style="stroke: #000000; stroke-width: 1.5;" width="92" x="188" y="8"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="72" x="198" y="30.9951">JWS object</text><!--MD5=[5c869f3df3dda19986f95de160178db7]
+entity jwe--><rect fill="#F8F8F8" height="36.2969" style="stroke: #000000; stroke-width: 1.5;" width="92" x="384" y="8"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="72" x="394" y="30.9951">JWE object</text><!--MD5=[3f9d86838112b485207ba09e2f835007]
+entity jws2--><rect fill="#F8F8F8" height="36.2969" style="stroke: #000000; stroke-width: 1.5;" width="92" x="558" y="8"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="72" x="568" y="30.9951">JWS object</text><!--MD5=[1ccf8bdfa3408bd33c296086cbdff554]
+link json to jws1--><path d="M106.057,26 C130.057,26 158.763,26 182.897,26 " fill="none" id="json-&gt;jws1" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="187.974,26,178.974,22,182.974,26,178.974,30,187.974,26" style="stroke: #383838; stroke-width: 1.0;"/><a href="/message-structure/#signing-messages" target="_top" title="/message-structure/#signing-messages" xlink:actuate="onRequest" xlink:href="/message-structure/#signing-messages" xlink:show="new" xlink:title="/message-structure/#signing-messages" xlink:type="simple"><text fill="#1C1C1C" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="45" x="124.5" y="19.0669">signing</text></a><!--MD5=[c180c4cbb946f7b95fe8eb9c304fdbc0]
+link jws1 to jwe--><path d="M280.449,26 C309.985,26 348.253,26 378.685,26 " fill="none" id="jws1-&gt;jwe" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="383.884,26,374.884,22,378.884,26,374.884,30,383.884,26" style="stroke: #383838; stroke-width: 1.0;"/><a href="/message-structure/#encrypting-messages" target="_top" title="/message-structure/#encrypting-messages" xlink:actuate="onRequest" xlink:href="/message-structure/#encrypting-messages" xlink:show="new" xlink:title="/message-structure/#encrypting-messages" xlink:type="simple"><text fill="#1C1C1C" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="67" x="298.5" y="19.0669">encryption</text></a><!--MD5=[23d388537e330a346b4484c96673f441]
+link jwe to jws2--><path d="M476.172,26 C499.765,26 528.538,26 552.807,26 " fill="none" id="jwe-&gt;jws2" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="557.914,26,548.914,22,552.914,26,548.914,30,557.914,26" style="stroke: #383838; stroke-width: 1.0;"/><a href="/message-structure/#signing-messages" target="_top" title="/message-structure/#signing-messages" xlink:actuate="onRequest" xlink:href="/message-structure/#signing-messages" xlink:show="new" xlink:title="/message-structure/#signing-messages" xlink:type="simple"><text fill="#1C1C1C" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="45" x="494.5" y="19.0669">signing</text></a><!--MD5=[af3d850b94de0e024608e79192a2a88f]
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "JSON object" as json
+rectangle "JWS object" as jws1
+rectangle "JWE object" as jwe
+rectangle "JWS object" as jws2
+json ->jws1 : [[/message-structure/#signing-messages signing]]
+jws1 -> jwe : [[/message-structure/#encrypting-messages encryption]]
+jwe -> jws2 : [[/message-structure/#signing-messages signing]]
+@enduml
+PlantUML version 1.2020.01beta5(Unknown compile time)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Java Version: 1.7.0_25-b15
+Operating System: Linux
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
