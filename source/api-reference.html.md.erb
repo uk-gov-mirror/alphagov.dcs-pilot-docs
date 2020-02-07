@@ -209,12 +209,13 @@ A list of strings which describes the error. This field is present if there was 
   
 ## Rate limits
 
-DCS will handle up to 50 requests in total every 10 seconds. 
+DCS handles up to 50 requests in total every 10 seconds. 
   
-Each organisation which connects to DCS for the pilot will be given a share of this rate limit. 
+This rate limit is divided fairly between the organisations connected to DCS for the pilot. 
   
-You'll get a 503 (Service unavailable) HTTP status code if, at the time you submitted your request, the combined traffic from all organisations connected to the DCS pilot exceeds the rate limit.
-
-You'll get a 429 (Too many requests) HTTP status code if you have gone over your individual share of the limit.
+DCS returns a:
+  
++ 503 (Service unavailable) HTTP status code if, at the time you submit a request, the combined total traffic from all pilot organisations is over the rate limit
++ 429 (Too many requests) HTTP status code if you have gone over your individual share of the limit
 
 <%= partial "partials/links" %>
