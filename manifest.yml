@@ -1,5 +1,5 @@
 ---
 applications:
-- name: dcs-pilot-docs
+- name: dcs-pilot-docs-test
   memory: 64M
   instances: 2
