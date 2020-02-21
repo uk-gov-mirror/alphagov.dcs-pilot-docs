@@ -2,12 +2,18 @@ language: ruby
 cache: bundler
 script: bundle exec middleman build
 deploy:
-  provider: cloudfoundry
-  api: https://api.cloud.service.gov.uk
-  username: tech-doc-tool@digital.cabinet-office.gov.uk
-  password:
-    secure: YdOlNet68nBzCYX047eNh7hvgr4dsI87GnpliVi6EYJg3laCR31fi2d7iPTJ+E2FYwypgJUzdqoVhPNIQWc8OvAQ4nn7QefcDf3+5+i7ASRdsnhXwTq2Pb6wJGO01de/Ai4M39jlo7XEDdPyKXwYYd2tgQ6LpjPudZ3RTnX3JAV1z4GCB/Gb9eeoKvs6eGibJBynq/NAhAtFCn0Wy3+SAJjjJ5qJPzxOeY2TXtE7AmCFTihRPfssQofKCSo+AXBbm+eJndyg0If3nD4zAhehlG3oi/TOUbNALlZgiQdamdYRY8wGd2KaVkrNo21NtM7/KDOZiOCYC/T7Rz1ktov+iWD8qUtQJmDWYXbkNtj5OkboChmnU8RrY4R+O5t2zpIEGA4nmWCEKAUuPd8XlwjKVjTXQlVMGlIN5niZpfV7/Ou7b8OLqJMQkcMABAMifYv5K48ihb3RI6X+yhH+jc2kQcrijtkN2bT4C0rPDYxkUt0bkwZS6lzRbtR7bB7shVz99VZyQwbU6p5sjCw3JwEyb4HH2nMDWS6eu8w5xMCHQi58/x20RyKeaUnOENbadqInuKxGriCFrQjoRB+YhCjj7D3V2mRxyBrhqaGN15YhT3CdJgOZS49Hr4OBOc/I0U4G/OKwhvzSN2xke2DE9Rx66HSjQba4ZsPOT/ZQZpyKuQE=
-  organization: govuk-verify
-  space: docs
-  on:
-    repo: alphagov/dcs-pilot-docs
+  - on:
+      repo: alphagov/dcs-pilot-docs
+      branch: master
+    <<: &deploy
+      provider: cloudfoundry
+      api: https://api.cloud.service.gov.uk
+      username: tech-doc-tool@digital.cabinet-office.gov.uk
+      password:
+        secure: YdOlNet68nBzCYX047eNh7hvgr4dsI87GnpliVi6EYJg3laCR31fi2d7iPTJ+E2FYwypgJUzdqoVhPNIQWc8OvAQ4nn7QefcDf3+5+i7ASRdsnhXwTq2Pb6wJGO01de/Ai4M39jlo7XEDdPyKXwYYd2tgQ6LpjPudZ3RTnX3JAV1z4GCB/Gb9eeoKvs6eGibJBynq/NAhAtFCn0Wy3+SAJjjJ5qJPzxOeY2TXtE7AmCFTihRPfssQofKCSo+AXBbm+eJndyg0If3nD4zAhehlG3oi/TOUbNALlZgiQdamdYRY8wGd2KaVkrNo21NtM7/KDOZiOCYC/T7Rz1ktov+iWD8qUtQJmDWYXbkNtj5OkboChmnU8RrY4R+O5t2zpIEGA4nmWCEKAUuPd8XlwjKVjTXQlVMGlIN5niZpfV7/Ou7b8OLqJMQkcMABAMifYv5K48ihb3RI6X+yhH+jc2kQcrijtkN2bT4C0rPDYxkUt0bkwZS6lzRbtR7bB7shVz99VZyQwbU6p5sjCw3JwEyb4HH2nMDWS6eu8w5xMCHQi58/x20RyKeaUnOENbadqInuKxGriCFrQjoRB+YhCjj7D3V2mRxyBrhqaGN15YhT3CdJgOZS49Hr4OBOc/I0U4G/OKwhvzSN2xke2DE9Rx66HSjQba4ZsPOT/ZQZpyKuQE=
+      organization: govuk-verify
+      space: docs
+  - on:
+      repo: alphagov/dcs-pilot-docs
+      branch: test
+    <<: *deploy
