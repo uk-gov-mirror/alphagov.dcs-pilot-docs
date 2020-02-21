@@ -6,7 +6,6 @@ This is the documentation for the [Document Checking Sytem (DCS) pilot](https://
 
 The pages are hosted at https://dcs-pilot-docs.cloudapps.digital on the [GOV.UK PaaS](https://www.cloud.service.gov.uk/)
 
-
 # Getting Started
 
 To see the version of Ruby used by the application, see [the ruby-version file](.ruby-version).
@@ -21,12 +20,12 @@ This will allow you to compile Ruby, and makes it easier to manage multiple Ruby
 
 Download the current version of Ruby that the [application uses](.ruby-version):
 ```
-rbenv install 2.6.5 # substitute <2.6.5> with version found in .ruby-version
+rbenv install $(cat .ruby-version)
 ```
 
-Set your Ruby version to match what `rbenv` installed in the previous step:
+Set your local Ruby version to match what `rbenv` installed in the previous step:
 ```
-rbenv local 2.6.5 # substitute with version installed. change local to global, if wanted.
+rbenv local $(cat .ruby-version)
 ```
 
 Install the application's dependencies:
@@ -34,7 +33,6 @@ Install the application's dependencies:
 ```
 bundle install
 ```
-
 
 ## Making changes
 To make changes, edit the markdown files in the source folder.
@@ -57,7 +55,7 @@ In order to configure some aspects of layout, like the header, edit `config/tech
 
 The repository uses [Travis CI](https://travis-ci.com/alphagov/dcs-pilot-docs/) to run a basic pre-commit. This ensures that changes do not break the application.
 
-Before commiting any changes, the contributor should run this command in the application directory:
+Before committing any changes, the contributor should run this command in the application directory:
 
 ```
 bundle exec middleman build
@@ -85,6 +83,12 @@ If all goes well, something like the following output will be displayed:
 You should now be able to view a live preview at http://localhost:4567.
 ```
 Changes to the tech-docs.yml file require stopping and restarting the server to show up in the preview. You can stop it with Ctrl-C.
+
+### Prototyping
+
+The 'test' branch is used for producing prototypes of the documentation for user testing. It is hosted at https://test:test@dcs-pilot-docs-test.cloudapps.digital.
+
+The DCS for user testing is different to the DCS used in production. Do not use this prototype documentation to connect to DCS unless instructed by the DCS team.
 
 ## Code of conduct
 
