@@ -27,15 +27,15 @@ Make sure you have network access to the DCS (for example, you might not have ne
 
 [Contact the DCS helpdesk](/support) if you don’t have the DCS URL.
 
-Using a tool like curl or Postman, make a GET request to the DCS URL.
+Using a tool like [curl](https://curl.haxx.se/) or [Postman](https://www.postman.com/), make a GET request to the DCS URL.
 
 For example, using the curl command line utility tool:
 
-```$ curl --cacert <path to CA bundle>\
---cert <path to client certificate> \
---key <path to private key> \ 
--v <DCS URL>/checks/passport
-
+```
+curl --cacert <path to CA bundle> \
+     --cert <path to client certificate> \
+     --key <path to private key> \ 
+     -v <DCS URL>/checks/passport
 ```
 
 You should get a response as follows:
@@ -84,7 +84,7 @@ Configure your library to use the DCS CA bundle, your client certificate and you
 
 Make an HTTP GET request to: 
 
-```[DCS URL]/checks/passport```
+```<DCS URL>/checks/passport```
 
 You should get back a response with an HTTP status of 200 and a JSON body as follows: 
 
@@ -99,7 +99,7 @@ This response shows that mTLS is working and your client can now make secure req
 
 ### Potential errors
 
-You may get a 400 Bad Request response, with either of these messages:
+You may get an `HTTP 400` Bad Request response, with either of these messages:
 
 + “No required SSL certificate was sent” - this means you did not send the client certificate
 + “SSL certificate error” - this means you sent the wrong client certificate
