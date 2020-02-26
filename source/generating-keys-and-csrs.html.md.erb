@@ -15,16 +15,17 @@ To send requests to DCS you will need to generate separate keys and certificate 
 
 Each environment (integration or production) will require a unique set of keys and certificates for each of these purposes. The certificates must be signed and issued by GDS’ Certificate Authority (CA).
 
-For each purpose, you will need to generate a private key, create a Certificate Signing Request (CSR) and submit it to the GDS CA who will issue you with the certificate. Please note, the issuing process can take up to 2 working days.
+For each purpose, you will need to generate a private key, create a Certificate Signing Request (CSR) and submit the CSR to the GDS CA. The GDS CA will then issue your certificate, please note, the issuing
+process can take up to 2 working days.
 
-We give examples of how you’d follow this process using OpenSSL. You can use other methods if you prefer, however, please ensure you use the naming conventions stated below when raising your CSR.
+We give examples of how you’d follow this process using OpenSSL. You can use other methods if you prefer, however, you must use the naming conventions stated below when raising your CSR.
 
 ## 1. Generate a private key
 
 Generate a private key using OpenSSL:
 
 ```
-$ openssl genrsa -out <private key filename>.pem 4096
+$ openssl genrsa -out <private key filename>.pem 2048
 ```
 
 Check that the key file has been written to your current directory.
@@ -82,9 +83,9 @@ Once you’ve filled in the information, the CSR will be created. Check that the
 
 ## 3. Submit the CSR to the Certificate Authority
 
-Note, there are separate CAs (with different trust chains) for each environment, when submitting requests, please ensure you submit to the correct CA. Certificates issued by the  integration CA will not work in production, and vice versa.
+Note, there are separate CAs (with different trust chains) for each environment. When submitting requests, please ensure you submit to the correct CA. Certificates issued by the integration CA will not work in production, and vice versa.
 
-The [helpdesk](/support) will provide you with the URL to correct CA for your environment.
+The [helpdesk](/support) will provide you with the URL for the correct CA for your environment.
 
 To submit the CSR:
 
