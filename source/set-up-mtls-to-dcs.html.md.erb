@@ -1,0 +1,111 @@
+---
+title: Set up a mutual TLS connection to the DCS
+weight: 3
+last_reviewed_on: 2020-02-26
+review_in: 6 weeks
+---
+
+# Set up a mutual TLS connection to the DCS
+
+You need to use mutual Transport Layer Security (mTLS) to send requests to the DCS. 
+
+mTLS is where the DCS and your service present certificates to each other, so each is sure who the other is. This extra layer of authentication means the DCS can be confident that it only sends information to authorised clients.
+
+Your client will need to present an mTLS certificate to the DCS, which is signed by the GDS Certificate Authority (CA). 
+
+mTLS is also sometimes referred to as ‘client certificate authentication’ or ‘X509 client certificate authentication’.
+
+## Before you start
+
+You’ll need to [generate a private key and request a GDS-signed certificate](/) before you can establish an mTLS connection. It can take up to 2 days for the certificate to be issued.
+
+You’ll also need the DCS CA bundle. Request it from the [DCS pilot helpdesk](/support) if you haven’t received it already.
+
+## 1. Check you have basic connectivity to the DCS
+
+Make sure you have network access to the DCS (for example, you might not have network access if you’re blocked by a firewall).
+
+[Contact the DCS helpdesk](/support) if you don’t have the DCS URL.
+
+Using a tool like curl or Postman, make a GET request to the DCS URL.
+
+For example, using the curl command line utility tool:
+
+```$ curl --cacert <path to CA bundle>\
+--cert <path to client certificate> \
+--key <path to private key> \ 
+-v <DCS URL>/checks/passport
+
+```
+
+You should get a response as follows:
+
+```
+...
+< HTTP/1.1 200 OK
+< Server: nginx
+< Date: Mon, 24 Feb 2020 15:51:42 GMT
+< Content-Type: application/json
+< Content-Length: 40
+< Connection: close
+< Vary: Accept-Encoding
+< Strict-Transport-Security: max-age=31536000
+< 
+* Closing connection 0
+* TLSv1.2 (OUT), TLS alert, Client hello (1):
+{"available":true,"scheduledOutages":[]}%  
+```
+
+If you see anything different, speak to the team that manages your infrastructure. 
+
+## 2. Find a library to make HTTPS calls
+
+You need a library in the language you’re using that supports:
+
++ TLS version 1.2
++ client certificates (so you can add your private and public keys)
++ a custom certificate chain (so you can use the DCS CA bundle, which include certificates signed by the private GDS CA)
+
+Your standard library may support these features.
+
+### You may need to convert your private key to another format
+
+You may need to convert the private key into a format your library can use. For example, this command would convert it to PK8 format:
+
+```
+openssl pkcs8 -in <path to private key file>.pem -nocrypt -out <new private key file>.pk8 -topk8 -outform DER
+```
+
+## 3. Check your connection works
+
+To prove that mTLS is working correctly, you can call the status endpoint.
+
+Configure your library to use the DCS CA bundle, your client certificate and your private key.
+
+Make an HTTP GET request to: 
+
+```[DCS URL]/checks/passport```
+
+You should get back a response with an HTTP status of 200 and a JSON body as follows: 
+
+```
+{
+“available”: true,
+“scheduleOutages”: []
+}
+```
+
+This response shows that mTLS is working and your client can now make secure requests to the DCS.
+
+### Potential errors
+
+You may get a 400 Bad Request response, with either of these messages:
+
++ “No required SSL certificate was sent” - this means you did not send the client certificate
++ “The SSL certificate error” - this means you sent the wrong client certificate
+
+You could also get a TLS error from your library such as: 
+
++ “SSL certificate problem: unable to get local issuer certificate” - this means you did not use the correct CA bundle and your service has not trusted the DCS certificates
+
+If you have any of these errors and you cannot resolve them, [contact the helpdesk](/support).
