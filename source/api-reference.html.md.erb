@@ -1,13 +1,13 @@
 ---
 title: API reference
 weight: 16
-last_reviewed_on: 2020-02-07
+last_reviewed_on: 2020-02-26
 review_in: 3 weeks
 ---
 
 # API reference
 
-The Document Checking Service (DCS) API is based on [REST principles][REST]. It returns data in [JSON format][JSON], and uses standard [HTTP status response codes][status-response-codes].
+The Document Checking Service (DCS) API is based on [REST principles][REST]. It returns data in [JSON format][JSON], and uses standard [HTTP status response codes][HTTP-Status-Code].
 
 This section describes the calls you can make to the DCS API, along with example requests and possible responses.
 
@@ -72,14 +72,19 @@ The passport expiration date in YYYY-MM-DD format.
 
 ### Response
 
-A successful request is one that completes without error, regardless of whether the passport is valid or not.
+The table shows the meaning of the HTTP response codes in DCS responses. The DCS may return [other HTTP response codes][HTTP-Status-Code], which have their standard meaning. Non-`200` responses may include a message in the body that provides more explanation of the error.
 
-The DCS returns a:
+| HTTP response code | Description                            |
+| ------------------ | -------------------------------------- |
+| 200                | The DCS handled your request. You must decrypt the response body to discover the outcome of your passport check. |
+| 403                | You have exceeded your total allocated number of API calls. |
+| 404                | The DCS URI is incorrect.              |
+| 429                | You have exceeded your rate limit. |
+| 503                | The DCS is temporarily unavailable because of high traffic. |
 
-* `200` [HTTP response code][status-response-codes] for successful requests
-* `503` [HTTP response code][status-response-codes] if HMPO is having a planned outage
+The DCS returns a `200` HTTP response code with signed and encrypted responses. You must decrypt and verify the body to find out whether the passport was valid, the passport was invalid, or an error occurred.
 
-Example response body for a valid passport:
+Example decrypted body for a valid passport:
 
 ```json
 {
@@ -90,7 +95,7 @@ Example response body for a valid passport:
 }
 ```
 
-Example response body for an invalid passport:
+Example decrypted body for an invalid passport:
 
 ```json
 {
@@ -101,7 +106,7 @@ Example response body for an invalid passport:
 }
 ```
 
-Example response body for a successful response containing an error:
+Example decrypted body for a response containing an error:
 
 ```json
 {
@@ -112,12 +117,6 @@ Example response body for a successful response containing an error:
     "Unplanned outage"
   ]
 }
-```
-
-Example plain text response body for a planned outage:
-
-```
-Service passport check: Planned outage in progress finishing at 2019-10-24T03:00:00.000+01:00
 ```
 
 #### correlationId
@@ -147,11 +146,21 @@ We recommend you use this endpoint to build appropriate levels of reliability in
 
 The `<DCS-URI>` will be supplied at a later date.
 
-The HTTP header must contain `Content-Type: application/jose`.
-
 The request body for a DCS status check is empty and therefore does not require the [signature and encryption wrapper][wrapper].
 
 ### Response
+
+The table shows the meaning of the HTTP response codes in DCS responses. The DCS may return [other HTTP response codes][HTTP-Status-Code], which have their standard meaning. Non-`200` responses may include a message in the body that provides more explanation of the error.
+
+| HTTP response code | Description                            |
+| ------------------ | -------------------------------------- |
+| 200                | The DCS handled your request. You must inspect the response body to discover whether the DCS is available or unavailable. |
+| 403                | You have exceeded your total allocated number of API calls. |
+| 404                | The DCS URI is incorrect.              |
+| 429                | You have exceeded your rate limit. |
+| 503                | The DCS is temporarily unavailable because of high traffic. |
+
+A `200` response will contain a JSON response body.
 
 If the DCS is available, the JSON response body will be similar to:
 
@@ -162,7 +171,7 @@ If the DCS is available, the JSON response body will be similar to:
 }
 ```
 
-If the DCS is unavailable, the `message` field in the response describes the cause. The cause for unavailability can be:
+If the DCS is unavailable, the `message` field in the response describes the cause. Possible causes for unavailability include:
 
 * `Limit exceeded` - you have exceeded your allocated number of API calls
 * `Planned outage in progress finishing <TIMESTAMP>` - the DCS or HM Passport Office (HMPO) are in a period of scheduled downtime, ending at `<TIMESTAMP>`
