@@ -1,7 +1,7 @@
 ---
 title: Message structure
 weight: 4
-last_reviewed_on: 2019-12-27
+last_reviewed_on: 2020-02-24
 review_in: 6 weeks
 ---
 
@@ -68,7 +68,7 @@ The encrypted component of the JOSE message must use:
  * [RSAES-OAEP] as the algorithm, detailed in the [JSON Web Algorithms specification][JWA]
  * [A128CBC-HS256] as the encryption method, detailed in the [JSON Web Algorithms specification][JWA].
 
-The [`alg` header in the JWE object][jwe-alg-header] must be set to `RSA-OAEP`.
+The [`alg` header in the JWE object][jwe-alg-header] must be set to `RSA-OAEP` or `RSA-OAEP-256`.
 
 The [`enc` header in the JWE object][jwe-enc-header] must be set to `A128CBC-HS256`.
 
