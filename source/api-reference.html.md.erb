@@ -103,7 +103,6 @@ For example, below is the structure of the JSON object in a request body without
   "correlationId": "550e8400-e29b-41d4-a716-446655440000",
   "requestId": "550e8400-e29b-41d4-a716-446655440003",
   "timestamp": "1997-07-16T19:20:30.45+01:00",
-  "clientId": "clientName",
   "passportNumber": "123456789",
   "surname": "Smith",
   "forenames": [
@@ -123,9 +122,6 @@ String containing an [RFC 4122] compliant UUID which identifies a single request
 
 #### timestamp
 String in ISO 8601 format which identifies when the request took place.
-
-#### clientId
-String which is an unique identifier issued by the DCS team.
 
 #### passportNumber
 The number of the passport being checked, which is an integer between 1 and 899999999.
@@ -206,15 +202,15 @@ Boolean indicating if the passport is valid or not. This field is not included i
 
 #### errorMessage
 A list of strings which describes the error. This field is present if there was an error processing the request.
-  
+
 ## Rate limits
 
-DCS handles up to 50 requests in total every 10 seconds. 
-  
-This rate limit is divided fairly between the organisations connected to DCS for the pilot. 
-  
+DCS handles up to 50 requests in total every 10 seconds.
+
+This rate limit is divided fairly between the organisations connected to DCS for the pilot.
+
 DCS returns a:
-  
+
 + 503 (Service unavailable) HTTP status code if, at the time you submit a request, the combined total traffic from all pilot organisations is over the rate limit
 + 429 (Too many requests) HTTP status code if you have gone over your individual share of the limit
 
