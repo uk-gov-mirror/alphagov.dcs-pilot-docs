@@ -13,76 +13,8 @@ This section describes the calls you can make to the DCS API, along with example
 
 Using the DCS API you can:
 
-* [see the operational status of the DCS][check-status]
 * [check passport validity][check-passport]
-
-## Check the DCS status
-
-You can check the status of the DCS by making a HTTP GET request to the service endpoint.
-
-We recommend you use this endpoint to build appropriate levels of reliability into your service.
-
-### Request
-
-`GET: https://<DCS-URI>/checks/passport`
-
-The `<DCS-URI>` will be supplied at a later date.
-
-The HTTP header must contain `Content-Type: application/jose`.
-
-The request body for a DCS status check is empty and therefore does not require the [signature and encryption wrapper][wrapper].
-
-### Response
-
-If the DCS is available, the JSON response body will be similar to:
-
-```json
-{
-  "available":true,
-  "scheduledOutages":[]
-}
-```
-
-If the DCS is unavailable, the `message` field in the response describes the cause. The cause for unavailability can be:
-
-* `Limit exceeded` - you have exceeded your allocated number of API calls
-* `Planned outage in progress finishing <TIMESTAMP>` - the DCS or HM Passport Office (HMPO) are in a period of scheduled downtime, ending at `<TIMESTAMP>`
-* `Unplanned outage` - the DCS or HMPO are experiencing a period of unscheduled downtime
-
-For example, during a planned outage, the response is similar to:
-
-```json
-{
-  "available": false,
-  "message": "Planned outage in progress finishing 2019-09-12T00:00:00.000Z",
-  "scheduledOutages":
-    [
-      {
-      	"start":"2019-09-05T00:00:00.000Z",
-      	"end":"2019-09-12T00:00:00.000Z",
-      	"message":"Maintenance work is underway."
-      }
-    ]
-}
-```
-
-#### available
-Boolean field indicating if the DCS is available and serving requests.
-
-#### message
-A string explaining why the DCS is unavailable. For example, if there is an ongoing planned outage, the field will contain detail about the duration of the outage.
-
-#### scheduledOutages
-A list of upcoming scheduled outages. The list is empty if there are no outages.
-
-#### scheduledOutages.start
-String in ISO 8601 format indicating when an outage is scheduled to start.
-
-#### scheduledOutages.end
-String in ISO 8601 format indicating when an outage is scheduled to end.
-
-#### scheduledOutages.message
-String indicating the reason for the scheduled outage.
+* [see the operational status of the DCS][check-status]
 
 ## Check passport validity
 
@@ -202,6 +134,74 @@ Boolean indicating if the passport is valid or not. This field is not included i
 
 #### errorMessage
 A list of strings which describes the error. This field is present if there was an error processing the request.
+
+## Check the DCS status
+
+You can check the status of the DCS by making a HTTP GET request to the service endpoint.
+
+We recommend you use this endpoint to build appropriate levels of reliability into your service.
+
+### Request
+
+`GET: https://<DCS-URI>/checks/passport`
+
+The `<DCS-URI>` will be supplied at a later date.
+
+The HTTP header must contain `Content-Type: application/jose`.
+
+The request body for a DCS status check is empty and therefore does not require the [signature and encryption wrapper][wrapper].
+
+### Response
+
+If the DCS is available, the JSON response body will be similar to:
+
+```json
+{
+  "available":true,
+  "scheduledOutages":[]
+}
+```
+
+If the DCS is unavailable, the `message` field in the response describes the cause. The cause for unavailability can be:
+
+* `Limit exceeded` - you have exceeded your allocated number of API calls
+* `Planned outage in progress finishing <TIMESTAMP>` - the DCS or HM Passport Office (HMPO) are in a period of scheduled downtime, ending at `<TIMESTAMP>`
+* `Unplanned outage` - the DCS or HMPO are experiencing a period of unscheduled downtime
+
+For example, during a planned outage, the response is similar to:
+
+```json
+{
+  "available": false,
+  "message": "Planned outage in progress finishing 2019-09-12T00:00:00.000Z",
+  "scheduledOutages":
+    [
+      {
+      	"start":"2019-09-05T00:00:00.000Z",
+      	"end":"2019-09-12T00:00:00.000Z",
+      	"message":"Maintenance work is underway."
+      }
+    ]
+}
+```
+
+#### available
+Boolean field indicating if the DCS is available and serving requests.
+
+#### message
+A string explaining why the DCS is unavailable. For example, if there is an ongoing planned outage, the field will contain detail about the duration of the outage.
+
+#### scheduledOutages
+A list of upcoming scheduled outages. The list is empty if there are no outages.
+
+#### scheduledOutages.start
+String in ISO 8601 format indicating when an outage is scheduled to start.
+
+#### scheduledOutages.end
+String in ISO 8601 format indicating when an outage is scheduled to end.
+
+#### scheduledOutages.message
+String indicating the reason for the scheduled outage.
 
 ## Rate limits
 
