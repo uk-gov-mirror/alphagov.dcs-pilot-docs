@@ -37,6 +37,6 @@ Use your JWS library again to validate (remove) the inner signature by passing i
 
 ## 5. Review and consume the human-readable response
 
-If all has gone well you will have one of these example [responses][check-passport-response].  Note that because DCS returns `HTTP 200` does not mean that the passport is actually valid.  You will need to look at the contents of the response body itself to find out.  Convert the json document in the response to the format required by your application.
+You now have a plain text JSON object for your application to use. [Parse the object][check-passport-response] to discover whether the password was valid, the password was invalid, or an error occurred.
 
 <%= partial "partials/links" %>
