@@ -43,7 +43,7 @@ xHllK2Kqd5dTQQavfdPYdGIm8w8j6ow/LUPvoCLwwDu+wtgb5Q==
 
 It may also have a large block of text describing the contents of the certificate before the certificate block. This can be ignored.
 
-In the PEM format the text between '-----BEGIN CERTIFICATE-----' and '-----END CERTIFICATE-----' is the Base64 encoding of the binary DER format.
+In the PEM format the text between `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----` is the Base64 encoding of the binary DER format.
 
 1. Make sure you have your certificate in binary DER format.
 
@@ -55,7 +55,7 @@ In the PEM format the text between '-----BEGIN CERTIFICATE-----' and '-----END C
 
     For example the certificate above has the following hashes as hex strings:
 
-    SHA1: `9d1fd0948e3841932405bff38d66fcb0ec834677`
+    SHA1: `9d1fd0948e3841932405bff38d66fcb0ec834677`\
     SHA256: `d490851292d75b97b3e0c294b67b1f9cbaee60ba8a25eeb19d8e6b4b54cb6e37`
 
 1. Convert the hash into to Base64url with no padding. This is your thumbprint for DCS.
@@ -64,7 +64,7 @@ In the PEM format the text between '-----BEGIN CERTIFICATE-----' and '-----END C
 
     For example the certificate above has the following thumbprints for DCS:
 
-    SHA1: `nR_QlI44QZMkBb_zjWb8sOyDRnc`
+    SHA1: `nR_QlI44QZMkBb_zjWb8sOyDRnc`\
     SHA256: `1JCFEpLXW5ez4MKUtnsfnLruYLqKJe6xnY5rS1TLbjc`
 
 
@@ -78,6 +78,6 @@ Generate thumbprints for a certificate of your choice. Then run the following co
 check_thumbprint --certificate <PATH> --sha1-thumbprint <SHA1> --sha256-thumbprint <SHA256>
 ```
 
-For `--certificate` replace `<PATH>` with the path to the certificate that you are generating thumbprints for
-For `--sha1-thumbprint` replace `<SHA1>` with the SHA1 thumbprint you have generated 
+For `--certificate` replace `<PATH>` with the path to the certificate that you are generating thumbprints for\
+For `--sha1-thumbprint` replace `<SHA1>` with the SHA1 thumbprint you have generated\
 For `--sha256-thumbprint` replace `<SHA256>` with the SHA256 thumbprint you have generated

@@ -7,9 +7,26 @@ review_in: 6 weeks
 
 # Sign and encrypt a DCS payload
 
-## Before you start
-
 ## Build a plain JSON payload
+
+You start off with a JSON object containing the details of the passport you want to check.
+
+```json
+{
+  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
+  "requestId": "550e8400-e29b-41d4-a716-446655440003",
+  "timestamp": "1997-07-16T19:20:30.45+01:00",
+  "clientId": "clientName",
+  "passportNumber": "123456789",
+  "surname": "Smith",
+  "forenames": [
+    "Bob",
+    "Dave"
+  ],
+  "dateOfBirth": "1950-02-13",
+  "expiryDate": "2020-01-01"
+}
+```
 
 ## Create JWS headers
 
@@ -17,14 +34,16 @@ The JWS headers contain information about how the payload is signed. For DCS we 
 
 1. `x5t` containing the SHA1 thumbprint of your certificate.
 1. `x5t#S256` containing the SHA256 thumbprint of your certificate.
-1. `alg` must be set to `RS256`
+1. `alg` must be set to `RS256`.
 
 Depending on the library you use, you might have to manually construct the JWS header. Your header should look like this:
 
 ```json
-    "x5t":"K9gFum5l_xYyHwCniYljJ4Lh_vY",
-    "x5t#S256":"gGzb5v_MNfiC0QHur40xZpZyKCVzy7KeZyzFCVi_BrI",
-    "alg":"RS256"
+{
+  "x5t":"K9gFum5l_xYyHwCniYljJ4Lh_vY",
+  "x5t#S256":"gGzb5v_MNfiC0QHur40xZpZyKCVzy7KeZyzFCVi_BrI",
+  "alg":"RS256"
+}
 ```
 
 ## Sign your JSON payload to get a JWS object
@@ -44,8 +63,8 @@ Generate a signed JWS using your signing key. Then run the following command, wh
 ```
 check_signing --client-signing-certificate <PATH> --jws <JWS> [--payload <PAYLOAD>]
 ```
-For `--client-signing-certificate` replace `<PATH>` with the path to the certificate that is the counterpart to the key you used to sign the JWS
-For `--jws` replace `<JWS>` with the string that is output by your signing implementation
+For `--client-signing-certificate` replace `<PATH>` with the path to the certificate that is the counterpart to the key you used to sign the JWS.  
+For `--jws` replace `<JWS>` with the string that is output by your signing implementation.  
 OPTIONAL. For `--payload` replace `<PAYLOAD>` with the expected payload of the JWS object. Provide this if you wish to check that the JWS object contains the expected payload.
 
 ## Encrypt your JWS object to get a JWE object
@@ -54,9 +73,9 @@ Encrypting your JWS object using the JWE protocol produces a JWE object. You enc
 
 The JWE headers contain information about how the payload is encrypted. For DCS we require these headers to be set.
 
-1. `elc` must be set to `A128CBC-HS256`
-1. `alg` must be set to `RSA-OAEP`
-1. `type` must be set to `JWE`
+1. `elc` must be set to `A128CBC-HS256`.
+1. `alg` must be set to `RSA-OAEP`.
+1. `type` must be set to `JWE`.
 1. `x5t` containing the SHA1 thumbprint of the encryption certificate.
 1. `x5t#S256` containing the SHA256 thumbprint of the encryption certificate.
 
@@ -87,13 +106,14 @@ You must set the [`x5t`][jwe-x5t-header] and [`x5t#S256`][jwe-x5t256-header] hea
 
 If you want to read more about the Internet Engineering Task Force (IETF) standards, you can learn more about:
 
- [JavaScript Object Notation (JSON)][JSON]
- [JavaScript Object Signing and Encryption (JOSE)][JOSE]
- [JSON Web Signature (JWS)][JWS]
- [JSON Web Encryption (JWE)][JWE]
+ [JavaScript Object Notation (JSON)][JSON]  
+ [JavaScript Object Signing and Encryption (JOSE)][JOSE]  
+ [JSON Web Signature (JWS)][JWS]  
+ [JSON Web Encryption (JWE)][JWE]  
 
 
 ### Test your JWE encryption is correct
+
 You should test that your encryption code is correct using the testing tool. 
 
 Generate an encrypted JWE using the server (dcs) encryption certificate. Then run the following command, which will check if your JWE is correct.
@@ -102,12 +122,9 @@ Generate an encrypted JWE using the server (dcs) encryption certificate. Then ru
 check_encryption --server-encryption-key <PATH> --server-encryption-certificate <PATH> --jwe <JWE> [--payload <PAYLOAD>]
 ```
 
-For `--server-encryption-key` replace `<PATH>` with the path to the key that is the counterpart to the certificate used to encrypt the JWE
-
-For `--server-encryption-certificate` replace `<PATH>` with the path to the certificate used to encrypt the JWE
-
-For `--jwe` replace `<JWE>` with the string that is output by your encryption implementation
-
+For `--server-encryption-key` replace `<PATH>` with the path to the key that is the counterpart to the certificate used to encrypt the JWE.  
+For `--server-encryption-certificate` replace `<PATH>` with the path to the certificate used to encrypt the JWE.  
+For `--jwe` replace `<JWE>` with the string that is output by your encryption implementation.  
 OPTIONAL. For `--payload` replace `<PAYLOAD>` with the expected payload of the JWE object. Provide this if you wish to check that the JWE object contains the expected payload.
 
 ## Sign your JWE object to complete the process
@@ -125,10 +142,10 @@ Generate a complete JWS for DCS (signed, encrypted and signed again). Then run t
 ```
 check_jose --server-encryption-key <PATH> --server-encryption-certificate <PATH> --client-signing-certificate <PATH> --jose <JOSE> [--payload <PAYLOAD>]
 ```
-For `--server-encryption-key` replace `<PATH>` with the path to the key that is the counterpart to the certificate used to encrypt the JWE
 
-For `--server-encryption-certificate` replace `<PATH>` with the path to the certificate used to sign the JWE
+For `--server-encryption-key` replace `<PATH>` with the path to the key that is the counterpart to the certificate used to encrypt the JWE.  
+For `--server-encryption-certificate` replace `<PATH>` with the path to the certificate used to sign the JWE.  
+For `--jose` replace `<JOSE>` with the string that is output by your final signing implementation.  
+OPTIONAL. For `--payload` replace `<PAYLOAD>` with the expected payload for DCS. This should be the payload before it was signed, encrypted and signed again. Provide this if you wish to check that the payload we extract is the expected payload.
 
-For `--jose` replace `<JOSE>` with the string that is output by your final signing implementation
-
-OPTIONAL. For `--payload` replace `<PAYLOAD>` with the expected payload for DCS. This should be the payload before it was signed, encrypted and signed again. Provide this if you wish to check that the payload we extract is the expected payload. 
+<%= partial "partials/links" %>
