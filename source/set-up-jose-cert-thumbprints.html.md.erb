@@ -26,7 +26,7 @@ BQAwIDELMAkGA1UEBhMCR0IxETAPBgNVBAMMCGRjcyBkb2NzMB4XDTIwMDIyNDEz
 NTYwNloXDTIxMDIyMzEzNTYwNlowIDELMAkGA1UEBhMCR0IxETAPBgNVBAMMCGRj
 cyBkb2NzMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6rhwmV4Eck67
 smukeuNxp0DB4S1hDCSWIMhsI3Fc0Hd9UjNJWgVn7TSjv60zS4DM9X09qzoyFa43
-jCyhbwr+fxvuL02cX6KYzauN9R0RejLx0eT7o9ov2AYh69OiMPAwrD8nZOpYibAu
+jCyhbwr+fxvuL02cX6KYzauN9R0RejLx0eT7o9ov2AYh69OiMPAwrD8nZOpYibAu 
 csz2q2BQNd/FfUaqj0nYAgj5pwyIf72bUKC/UgJpVDUKiI3+pgiL+FcEJne7vZue
 ptWEMDYcU4Gnne9SAm0yKe4pfduYTyEhNh/+A+ymHZk9pR0FdlsaxMU+fVwpXjZc
 w3skOw2hgxFeNkkT4a/FHfaxdCmHCL4dQ6iVgajjrd8au8bAc4KjLraMp+9N6VbQ
@@ -47,28 +47,29 @@ In the PEM format the text between '-----BEGIN CERTIFICATE-----' and '-----END C
 
 1. Make sure you have your certificate in binary DER format.
 
-If you already have your certificate in DER format, then you can proceed to the next step. Otherwise you can either use an x509 library to load the certificate and convert it to DER format or extract the Base64 representation and decode that into a binary representation.
+    If you already have your certificate in DER format, then you can proceed to the next step. Otherwise you can either use an x509 library to load the certificate and convert it to DER format or extract the Base64 representation and decode that into a binary representation.
 
 1. Hash the binary representation of the certificate using SHA1 or SHA256.
 
-This should normally give you a sequence of bytes, but may be represented as a Base64 string, hex string, or raw bytes.
+    This should normally give you a sequence of bytes, but may be represented as a Base64 string, hex string, or raw bytes.
 
-For example the certificate above may has the following hashes as hex strings:
+    For example the certificate above has the following hashes as hex strings:
 
-SHA1: `9d1fd0948e3841932405bff38d66fcb0ec834677`
-SHA256: `d490851292d75b97b3e0c294b67b1f9cbaee60ba8a25eeb19d8e6b4b54cb6e37`
+    SHA1: `9d1fd0948e3841932405bff38d66fcb0ec834677`
+    SHA256: `d490851292d75b97b3e0c294b67b1f9cbaee60ba8a25eeb19d8e6b4b54cb6e37`
 
 1. Convert the hash into to Base64url with no padding. This is your thumbprint for DCS.
 
-Base64url uses `-` and `_` in place of `+` and `/` characters in Base64. If your library cannot encode bytes to Base64url directly you will have to encode to Base64 and convert to Base64url in your own code.  Padding is removed by stripping any `=` characters.
+    Base64url uses `-` and `_` in place of `+` and `/` characters in Base64. If your library cannot encode bytes to Base64url directly you will have to encode to Base64 and convert to Base64url in your own code.  Padding is removed by stripping any `=` characters.
 
-For example the certificate above may has the following thumbprints for DCS:
+    For example the certificate above has the following thumbprints for DCS:
 
-SHA1: `nR_QlI44QZMkBb_zjWb8sOyDRnc`
-SHA256: `1JCFEpLXW5ez4MKUtnsfnLruYLqKJe6xnY5rS1TLbjc`
+    SHA1: `nR_QlI44QZMkBb_zjWb8sOyDRnc`
+    SHA256: `1JCFEpLXW5ez4MKUtnsfnLruYLqKJe6xnY5rS1TLbjc`
 
 
 ## Test your thumbprints are correct
+
 You should test that your thumbprint generation code is correct using the testing tool. 
 
 Generate thumbprints for a certificate of your choice. Then run the following command, which will tell you if the thumbprints are correct.
