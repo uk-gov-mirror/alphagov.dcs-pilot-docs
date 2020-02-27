@@ -7,7 +7,7 @@ review_in: 6 weeks
 
 # Handling responses from the DCS
 
-If you have submitted a technically correct [passport validity check request][check-passport] then the DCS will respond with an HTTP 200 status code (unless some kind of error occurs). As the response body is not in plain text you will need to process it in order to retrieve the human-readable content.  This is done by [unwrapping][cryptography-wrapper] the JSON object in the response: 
+When the DCS responds with a [`200` HTTP response code][check-passport-response], the response body is signed, encrypted, and signed again. To learn the outcome of your passport check, you must process the body to get the plain text response object. This process involves unwrapping the signature and encryption wrapper:
 
 1. Validate the outer signature.
 2. Decrypt the contents.
