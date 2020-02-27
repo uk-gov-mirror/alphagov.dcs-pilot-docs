@@ -72,7 +72,7 @@ The passport expiration date in YYYY-MM-DD format.
 
 ### Response
 
-The table shows the meaning of the HTTP response codes in DCS responses. The DCS may return [other HTTP response codes][HTTP-Status-Code], which have their standard meaning. Non-`200` responses may include a message in the body that provides more explanation of the error.
+The table shows the meaning of the HTTP response codes in DCS responses. [Other HTTP response codes][HTTP-Status-Code] have their standard meaning.
 
 | HTTP response code | Description                            |
 | ------------------ | -------------------------------------- |
@@ -82,7 +82,9 @@ The table shows the meaning of the HTTP response codes in DCS responses. The DCS
 | 429                | You have exceeded your rate limit. |
 | 503                | The DCS is temporarily unavailable because of high traffic. |
 
-The DCS returns a `200` HTTP response code with signed and encrypted responses. You must decrypt and verify the body to find out whether the passport was valid, the passport was invalid, or an error occurred.
+`4xx` and `5xx` responses may have an explanation of the error in the response body.
+
+Whenever the DCS returns a `200` HTTP response code, the response body will be signed and encrypted. You must decrypt and verify the body to find out whether the passport was valid, the passport was invalid, or an error occurred.
 
 Example decrypted body for a valid passport:
 
@@ -138,7 +140,7 @@ A list of strings which describes the error. This field is present if there was 
 
 You can check the status of the DCS by making a HTTP GET request to the service endpoint.
 
-We recommend you use this endpoint to build appropriate levels of reliability into your service.
+You may use this endpoint to build appropriate levels of reliability into your service.
 
 ### Request
 
@@ -150,7 +152,7 @@ The request body for a DCS status check is empty and therefore does not require 
 
 ### Response
 
-The table shows the meaning of the HTTP response codes in DCS responses. The DCS may return [other HTTP response codes][HTTP-Status-Code], which have their standard meaning. Non-`200` responses may include a message in the body that provides more explanation of the error.
+The table shows the meaning of the HTTP response codes in DCS responses. [Other HTTP response codes][HTTP-Status-Code] have their standard meaning.
 
 | HTTP response code | Description                            |
 | ------------------ | -------------------------------------- |
@@ -160,9 +162,11 @@ The table shows the meaning of the HTTP response codes in DCS responses. The DCS
 | 429                | You have exceeded your rate limit. |
 | 503                | The DCS is temporarily unavailable because of high traffic. |
 
+`4xx` and `5xx` responses may have an explanation of the error in the response body.
+
 A `200` response will contain a JSON response body.
 
-If the DCS is available, the JSON response body will be similar to:
+If the DCS is available, this JSON response body will be similar to:
 
 ```json
 {
