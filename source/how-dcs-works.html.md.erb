@@ -1,0 +1,49 @@
+---
+title: How the DCS works
+weight: 2
+last_reviewed_on: 2020-02-27
+review_in: 6 weeks
+---
+
+# How the DCS works
+
+## Message flow
+
+The Document Checking Service (DCS) acts as an interface between your service and HM Passport Office.
+
+<%= image_tag "dcs-overview.svg", { :alt => '' } %>
+
+1. Your service sends a passport check request to the DCS.
+2. The DCS validates the request and sends it to HM Passport Office.
+3. HM Passport Office checks the passport data against their database and sends a response back to the DCS.
+4. The DCS sends the response to your service.
+
+## Mutual authentication
+
+Mutual authentication secures the messages your client exchanges with the DCS. This is implemented using client certificates over Transport Layer Security (TLS) Protocol Version 1.2.
+
+You must [generate a private key and certificate signing request](/generating-keys-and-csrs) to obtain your mutual authentication certificate.
+
+## Signing and encryption
+
+Messages your client exchanges with the Document Checking Service (DCS) must be signed and encrypted using the following Internet Engineering Task Force
+(IETF) standards:
+
+ - [JavaScript Object Notation (JSON)][JSON]
+ - [JavaScript Object Signing and Encryption (JOSE)][JOSE]
+ - [JSON Web Signature (JWS)][JWS]
+ - [JSON Web Encryption (JWE)][JWE]
+
+The JSON object in request and response bodies is protected by a signature and encryption wrapper.
+
+To build the signature (JWS) and encryption (JWE) wrapper for your JSON object, you must:
+
+1. Sign your JSON object with your signing key using JWS.
+2. Encrypt your signed JSON object with the DCS's public encryption certificate using JWE.
+3. Sign the encrypted content with your signing key using JWS.
+
+<%= image_tag "dcs-message-structure-sequence.svg", { :alt => '' } %>
+
+There's a detailed guide to [how to sign and encrypt a DCS payload](/).
+
+<%= partial "partials/links" %>
