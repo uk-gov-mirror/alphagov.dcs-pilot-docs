@@ -1,0 +1,42 @@
+---
+title: Handling responses from the DCS
+weight: 8
+last_reviewed_on: 2020-02-27
+review_in: 6 weeks
+---
+
+# Handling responses from the DCS
+
+When the DCS responds with a [`200` HTTP response code][check-passport-response], the response body is signed, encrypted, and signed again. To learn the outcome of your passport check, you must process the body to get the plain text response object. This process involves unwrapping the signature and encryption wrapper:
+
+1. Validate the outer signature.
+2. Decrypt the contents.
+3. Validate the inner signature to reveal the message inside. 
+
+You will make use of your library’s JWS signature validation and JWE decryption methods to do this.
+
+## Prerequisites
+
+You should have successfully submitted a request to the DCS which returns HTTP 200.  You will need both the DCS signing certificate we provided and your own encryption private key.
+
+## 1. Retrieve the response body
+
+Using your HTTP library, extract the response body from the DCS http response in a form that can be consumed by your JWS library, such as string. 
+
+## 2. Validate the outer signature
+
+Use your JWS library to validate (remove) the outer signature by passing it the response string along with the DCS signing certificate.  Keep this string with the signature removed for the next step.
+
+## 3. Decrypt the contents
+
+Use your JWE library to decrypt the string from step 2, using your own encryption private key.  Keep this decrypted string for the next step.
+
+## 4. Validate the inner signature
+
+Use your JWS library again to validate (remove) the inner signature by passing it the string from step 3, again using the DCS signing certificate.  Keep this final output for the next step.
+
+## 5. Review and consume the human-readable response
+
+You now have a plain text JSON object for your application to use. [Parse the object][check-passport-response] to discover whether the password was valid, the password was invalid, or an error occurred.
+
+<%= partial "partials/links" %>
