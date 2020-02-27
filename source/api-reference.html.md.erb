@@ -1,88 +1,20 @@
 ---
 title: API reference
 weight: 16
-last_reviewed_on: 2020-02-07
+last_reviewed_on: 2020-02-26
 review_in: 3 weeks
 ---
 
 # API reference
 
-The Document Checking Service (DCS) API is based on [REST principles][REST]. It returns data in [JSON format][JSON], and uses standard [HTTP status response codes][status-response-codes].
+The Document Checking Service (DCS) API is based on [REST principles][REST]. It returns data in [JSON format][JSON], and uses standard [HTTP status response codes][HTTP-Status-Code].
 
 This section describes the calls you can make to the DCS API, along with example requests and possible responses.
 
 Using the DCS API you can:
 
-* [see the operational status of the DCS][check-status]
 * [check passport validity][check-passport]
-
-## Check the DCS status
-
-You can check the status of the DCS by making a HTTP GET request to the service endpoint.
-
-We recommend you use this endpoint to build appropriate levels of reliability into your service.
-
-### Request
-
-`GET: https://<DCS-URI>/checks/passport`
-
-The `<DCS-URI>` will be supplied at a later date.
-
-The HTTP header must contain `Content-Type: application/jose`.
-
-The request body for a DCS status check is empty and therefore does not require the [signature and encryption wrapper][wrapper].
-
-### Response
-
-If the DCS is available, the JSON response body will be similar to:
-
-```json
-{
-  "available":true,
-  "scheduledOutages":[]
-}
-```
-
-If the DCS is unavailable, the `message` field in the response describes the cause. The cause for unavailability can be:
-
-* `Limit exceeded` - you have exceeded your allocated number of API calls
-* `Planned outage in progress finishing <TIMESTAMP>` - the DCS or HM Passport Office (HMPO) are in a period of scheduled downtime, ending at `<TIMESTAMP>`
-* `Unplanned outage` - the DCS or HMPO are experiencing a period of unscheduled downtime
-
-For example, during a planned outage, the response is similar to:
-
-```json
-{
-  "available": false,
-  "message": "Planned outage in progress finishing 2019-09-12T00:00:00.000Z",
-  "scheduledOutages":
-    [
-      {
-      	"start":"2019-09-05T00:00:00.000Z",
-      	"end":"2019-09-12T00:00:00.000Z",
-      	"message":"Maintenance work is underway."
-      }
-    ]
-}
-```
-
-#### available
-Boolean field indicating if the DCS is available and serving requests.
-
-#### message
-A string explaining why the DCS is unavailable. For example, if there is an ongoing planned outage, the field will contain detail about the duration of the outage.
-
-#### scheduledOutages
-A list of upcoming scheduled outages. The list is empty if there are no outages.
-
-#### scheduledOutages.start
-String in ISO 8601 format indicating when an outage is scheduled to start.
-
-#### scheduledOutages.end
-String in ISO 8601 format indicating when an outage is scheduled to end.
-
-#### scheduledOutages.message
-String indicating the reason for the scheduled outage.
+* [see the operational status of the DCS][check-status]
 
 ## Check passport validity
 
@@ -140,14 +72,21 @@ The passport expiration date in YYYY-MM-DD format.
 
 ### Response
 
-A successful request is one that completes without error, regardless of whether the passport is valid or not.
+The table shows the meaning of the HTTP response codes in DCS responses. [Other HTTP response codes][HTTP-Status-Code] have their standard meaning.
 
-The DCS returns a:
+| HTTP response code | Description                            |
+| ------------------ | -------------------------------------- |
+| 200                | The DCS handled your request. You must decrypt the response body to discover the outcome of your passport check. |
+| 403                | You have exceeded your total allocated number of API calls. |
+| 404                | The DCS URI is incorrect.              |
+| 429                | You have exceeded your rate limit. |
+| 503                | The DCS is temporarily unavailable because of high traffic. |
 
-* `200` [HTTP response code][status-response-codes] for successful requests
-* `503` [HTTP response code][status-response-codes] if HMPO is having a planned outage
+`4xx` and `5xx` responses may have an explanation of the error in the response body.
 
-Example response body for a valid passport:
+Whenever the DCS returns a `200` HTTP response code, the response body will be signed and encrypted. You must decrypt and verify the body to find out whether the passport was valid, the passport was invalid, or an error occurred.
+
+Example decrypted body for a valid passport:
 
 ```json
 {
@@ -158,7 +97,7 @@ Example response body for a valid passport:
 }
 ```
 
-Example response body for an invalid passport:
+Example decrypted body for an invalid passport:
 
 ```json
 {
@@ -169,7 +108,7 @@ Example response body for an invalid passport:
 }
 ```
 
-Example response body for a successful response containing an error:
+Example decrypted body for a response containing an error:
 
 ```json
 {
@@ -180,12 +119,6 @@ Example response body for a successful response containing an error:
     "Unplanned outage"
   ]
 }
-```
-
-Example plain text response body for a planned outage:
-
-```
-Service passport check: Planned outage in progress finishing at 2019-10-24T03:00:00.000+01:00
 ```
 
 #### correlationId
@@ -202,6 +135,86 @@ Boolean indicating if the passport is valid or not. This field is not included i
 
 #### errorMessage
 A list of strings which describes the error. This field is present if there was an error processing the request.
+
+## Check the DCS status
+
+You can check the status of the DCS by making a HTTP GET request to the service endpoint.
+
+You may use this endpoint to build appropriate levels of reliability into your service.
+
+### Request
+
+`GET: https://<DCS-URI>/checks/passport`
+
+The `<DCS-URI>` will be supplied at a later date.
+
+The request body for a DCS status check is empty and therefore does not require the [signature and encryption wrapper][wrapper].
+
+### Response
+
+The table shows the meaning of the HTTP response codes in DCS responses. [Other HTTP response codes][HTTP-Status-Code] have their standard meaning.
+
+| HTTP response code | Description                            |
+| ------------------ | -------------------------------------- |
+| 200                | The DCS handled your request. You must inspect the response body to discover whether the DCS is available or unavailable. |
+| 403                | You have exceeded your total allocated number of API calls. |
+| 404                | The DCS URI is incorrect.              |
+| 429                | You have exceeded your rate limit. |
+| 503                | The DCS is temporarily unavailable because of high traffic. |
+
+`4xx` and `5xx` responses may have an explanation of the error in the response body.
+
+A `200` response will contain a JSON response body.
+
+If the DCS is available, this JSON response body will be similar to:
+
+```json
+{
+  "available":true,
+  "scheduledOutages":[]
+}
+```
+
+If the DCS is unavailable, the `message` field in the response describes the cause. Possible causes for unavailability include:
+
+* `Limit exceeded` - you have exceeded your allocated number of API calls
+* `Planned outage in progress finishing <TIMESTAMP>` - the DCS or HM Passport Office (HMPO) are in a period of scheduled downtime, ending at `<TIMESTAMP>`
+* `Unplanned outage` - the DCS or HMPO are experiencing a period of unscheduled downtime
+
+For example, during a planned outage, the response is similar to:
+
+```json
+{
+  "available": false,
+  "message": "Planned outage in progress finishing 2019-09-12T00:00:00.000Z",
+  "scheduledOutages":
+    [
+      {
+      	"start":"2019-09-05T00:00:00.000Z",
+      	"end":"2019-09-12T00:00:00.000Z",
+      	"message":"Maintenance work is underway."
+      }
+    ]
+}
+```
+
+#### available
+Boolean field indicating if the DCS is available and serving requests.
+
+#### message
+A string explaining why the DCS is unavailable. For example, if there is an ongoing planned outage, the field will contain detail about the duration of the outage.
+
+#### scheduledOutages
+A list of upcoming scheduled outages. The list is empty if there are no outages.
+
+#### scheduledOutages.start
+String in ISO 8601 format indicating when an outage is scheduled to start.
+
+#### scheduledOutages.end
+String in ISO 8601 format indicating when an outage is scheduled to end.
+
+#### scheduledOutages.message
+String indicating the reason for the scheduled outage.
 
 ## Rate limits
 
