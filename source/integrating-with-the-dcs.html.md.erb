@@ -1,24 +1,27 @@
 ---
-title: Integrating with the Document Checking Service
+title: Preparing to build a client
 weight: 3
 last_reviewed_on: 2020-02-28
 review_in: 6 weeks
 ---
 
-## Pre-requisites
+# Preparing to build a client
 
 Before you start to build a client there are several things you need.
 
-### DCS URI
+## DCS URI
+
 There is one URI for the production environment, and one URI for the integration environment. These will be provided when your pilot application is approved.
 
-### Access to DCS Certificate Authority portals
+## Access to DCS Certificate Authority portals
+
 You will be provided URIs to access to our Certificate Authority portals in order to submit a Certificate Signing Request.
 There is one portal for each environment you need to raise Certificate Signing Request (CSR) with.
 
 Each DCS environment has its own Certificate Authority portal where you can submit your CSR.
 
-### Certificates and Keys
+## Certificates and Keys
+
 There are two sets of certificates and keys that you need to call the DCS:
 
 There are two environments that you will need to integrate with:
@@ -30,7 +33,7 @@ Each environment requires their own keys and certificates.
 
 You can read about [how to generate keys and request certificates][keys-and-certificates] in this documentation.
 
-#### Your certificates and keys
+### Your certificates and keys
 
 | No. |   Purpose   |     Type    |    Origin    |           Usage               |
 |-----|-------------|-------------|--------------|-------------------------------|
@@ -41,7 +44,7 @@ You can read about [how to generate keys and request certificates][keys-and-cert
 |  5  | mTLS        | Private Key | You generate |     Your mTLS configuration   |
 |  6  | mTLS        | Certificate | You generate CSR from private key and submit to CA portal | Your mTLS configuration
 
-#### DCS certificates
+### DCS certificates
 
 These certificates will be provided to you when your pilot application has been approved:
 
