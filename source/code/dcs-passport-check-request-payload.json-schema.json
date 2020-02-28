@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://dcs-pilot-docs.cloudapps.digital/code/dcs-check-passport-request-payload.json-schema.json",
+  "title": "Document Checking Service - Passport Check Request Payload JSON Schema",
+  "description": "Use this JSON Schema to validate the request payload json for a passport check before signing and encryption is applied.",
+  "type": "object",
+  "properties": {
+    "correlationId": {
+      "description": "String containing an RFC 4122 compliant Universally Unique Identifier (UUID) which ties together multiple requests in the same session.",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}$"
+    },
+    "requestId": {
+      "description": "String containing an RFC 4122 compliant UUID which identifies a single request within a session.",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}$"
+    },
+    "timestamp": {
+      "description": "String in ISO 8601 format which identifies when the request took place.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "passportNumber": {
+      "description": "The number of the passport being checked, which is an integer between 1 and 899999999 (TBC)",
+      "type": "string",
+      "pattern": "^[1-9]{1}[0-9]{0,8}$"
+    },
+    "surname": {
+      "description": "String of maximum 30 characters containing the surname as on the passport. The surname must only contain the characters a-z, A-Z, space, hyphen, full stop and apostrophe.",
+      "type": "string",
+      "maxLength": 30,
+      "pattern": "^[A-Za-z\\.\\'\\’\\-]+( [A-Za-z\\.\\'\\’\\-]+)*"
+    },
+    "forenames": {
+      "description": "List of strings containing the forenames on the passport. The concatenated strings, including spaces between forenames, must be maximum 30 characters. The forenames must only contain the characters a-z, A-Z, space, hyphen, full stop and apostrophe.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "[A-Za-z\\.\\'\\’\\-]*"
+      },
+      "minItems": 1
+    },
+    "dateOfBirth": {
+      "description": "Birth date as on the passport in YYYY-MM-DD format.",
+      "type": "string",
+      "format": "date"
+    },
+    "expiryDate": {
+      "description": "The passport expiration date in YYYY-MM-DD format.",
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "correlationId",
+    "requestId",
+    "timestamp",
+    "passportNumber",
+    "surname",
+    "forenames",
+    "dateOfBirth",
+    "expiryDate"
+  ],
+  "maxProperties": 8
+}
