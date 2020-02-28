@@ -56,15 +56,15 @@ Once you have done this, you’ll have signed your JWS payload for the first tim
 
 ### Test your JWS signing is correct
 
-You should test that your signing code is correct using the testing tool. 
+You should test that your signing code is correct using [the testing tool][dcs-test-tool].
 
 Generate a signed JWS using your signing key. Then run the following command, which will check if your JWS is correct.
 
 ```
 check_signing --client-signing-certificate <PATH> --jws <JWS> [--payload <PAYLOAD>]
 ```
-For `--client-signing-certificate` replace `<PATH>` with the path to the certificate that is the counterpart to the key you used to sign the JWS.  
-For `--jws` replace `<JWS>` with the string that is output by your signing implementation.  
+For `--client-signing-certificate` replace `<PATH>` with the path to the certificate that is the counterpart to the key you used to sign the JWS.
+For `--jws` replace `<JWS>` with the string that is output by your signing implementation.
 OPTIONAL. For `--payload` replace `<PAYLOAD>` with the expected payload of the JWS object. Provide this if you wish to check that the JWS object contains the expected payload.
 
 ## Encrypt your JWS object to get a JWE object
@@ -106,15 +106,15 @@ You must set the [`x5t`][jwe-x5t-header] and [`x5t#S256`][jwe-x5t256-header] hea
 
 If you want to read more about the Internet Engineering Task Force (IETF) standards, you can learn more about:
 
- [JavaScript Object Notation (JSON)][JSON]  
- [JavaScript Object Signing and Encryption (JOSE)][JOSE]  
- [JSON Web Signature (JWS)][JWS]  
- [JSON Web Encryption (JWE)][JWE]  
+ [JavaScript Object Notation (JSON)][JSON]
+ [JavaScript Object Signing and Encryption (JOSE)][JOSE]
+ [JSON Web Signature (JWS)][JWS]
+ [JSON Web Encryption (JWE)][JWE]
 
 
 ### Test your JWE encryption is correct
 
-You should test that your encryption code is correct using the testing tool. 
+You should test that your encryption code is correct using [the testing tool][dcs-test-tool].
 
 Generate an encrypted JWE using the server (dcs) encryption certificate. Then run the following command, which will check if your JWE is correct.
 
@@ -122,9 +122,9 @@ Generate an encrypted JWE using the server (dcs) encryption certificate. Then ru
 check_encryption --server-encryption-key <PATH> --server-encryption-certificate <PATH> --jwe <JWE> [--payload <PAYLOAD>]
 ```
 
-For `--server-encryption-key` replace `<PATH>` with the path to the key that is the counterpart to the certificate used to encrypt the JWE.  
-For `--server-encryption-certificate` replace `<PATH>` with the path to the certificate used to encrypt the JWE.  
-For `--jwe` replace `<JWE>` with the string that is output by your encryption implementation.  
+For `--server-encryption-key` replace `<PATH>` with the path to the key that is the counterpart to the certificate used to encrypt the JWE.
+For `--server-encryption-certificate` replace `<PATH>` with the path to the certificate used to encrypt the JWE.
+For `--jwe` replace `<JWE>` with the string that is output by your encryption implementation.
 OPTIONAL. For `--payload` replace `<PAYLOAD>` with the expected payload of the JWE object. Provide this if you wish to check that the JWE object contains the expected payload.
 
 ## Sign your JWE object to complete the process
@@ -135,7 +135,7 @@ In your library, you should use the JWS headers created in the previous step and
 
 ### Test your final signed JWS for DCS is correct
 
-You should test that your code to sign, encrypt and sign again is correct for DCS using the testing tool. 
+You should test that your code to sign, encrypt and sign again is correct for DCS using [the testing tool][dcs-test-tool].
 
 Generate a complete JWS for DCS (signed, encrypted and signed again). Then run the following command, which will check if your JWS is correct.
 
@@ -143,9 +143,9 @@ Generate a complete JWS for DCS (signed, encrypted and signed again). Then run t
 check_jose --server-encryption-key <PATH> --server-encryption-certificate <PATH> --client-signing-certificate <PATH> --jose <JOSE> [--payload <PAYLOAD>]
 ```
 
-For `--server-encryption-key` replace `<PATH>` with the path to the key that is the counterpart to the certificate used to encrypt the JWE.  
-For `--server-encryption-certificate` replace `<PATH>` with the path to the certificate used to sign the JWE.  
-For `--jose` replace `<JOSE>` with the string that is output by your final signing implementation.  
+For `--server-encryption-key` replace `<PATH>` with the path to the key that is the counterpart to the certificate used to encrypt the JWE.
+For `--server-encryption-certificate` replace `<PATH>` with the path to the certificate used to sign the JWE.
+For `--jose` replace `<JOSE>` with the string that is output by your final signing implementation.
 OPTIONAL. For `--payload` replace `<PAYLOAD>` with the expected payload for DCS. This should be the payload before it was signed, encrypted and signed again. Provide this if you wish to check that the payload we extract is the expected payload.
 
 <%= partial "partials/links" %>
