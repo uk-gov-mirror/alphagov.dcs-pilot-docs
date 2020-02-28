@@ -40,6 +40,8 @@ There are two environments that you will need to integrate with:
 
 Each environment requires their own keys and certificates.
 
+You can read about [how to generate keys and request certificates][keys-and-certificates] in this documentation.
+
 #### Your certificates and keys
 
 | No. |   Purpose   |     Type    |    Origin    |           Usage               |
@@ -60,20 +62,6 @@ These certificates will be provided to you when your pilot application has been 
 |  1  | Signing     | Certificate | DCS supplies | Used to validate DCS response signatures |
 |  2  | Encryption  | Certificate | DCS supplies | Used to encrypt your request payloads   |
 |  3  | mTLS        | CA Bundle   | DCS supplies | Chain of trust for your mTLS configuration |
-
-
-## How to request your public certificates
-
-The DCS requires your public certificates to be signed by our CA.
-
-To get your certificates, you need to:
-
-1. create a private key
-2. create a CSR from your private key
-3. navigate to the relevant Certificate Authority portal (integration or production)
-4. submit the CSR
-
-You will be provided with your public certificates via email when the CSR has been signed by our Certificate Authority.
 
 
 <%= partial "partials/links" %>
