@@ -5,18 +5,6 @@ last_reviewed_on: 2020-02-28
 review_in: 6 weeks
 ---
 
-# Integrating with the Document Checking Service
-
-To digitally check the validity of British passports as part of the [Document Checking Service (DCS) pilot][govuk-link], you must integrate with the DCS API. There are several steps you must complete to integrate with the DCS API:
-
-1. Develop a client to integrate with the DCS API.
-1. Test your client in a dedicated DCS test environment.
-1. Run your client in the production environment as part of the DCS pilot.
-
-It's up to you to decide which programming language your client is using. Your client must be able to [handle authentication][mutual-auth] against the DCS API.
-
-You must test your client in the dedicated test environment provided by the Government Digital Service (GDS) before getting access to the production environment. This environment contains test data to help you check that your application can handle all responses from the [DCS API][api-reference]. Once your client can handle all responses from the DCS API, you can connect to the DCS production environment.
-
 ## Pre-requisites
 
 Before you start to build a client there are several things you need.
