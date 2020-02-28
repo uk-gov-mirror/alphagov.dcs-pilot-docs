@@ -1,7 +1,7 @@
 ---
 title: Integrating with the Document Checking Service
 weight: 2
-last_reviewed_on: 2020-02-28
+last_reviewed_on: 2020-02-24
 review_in: 6 weeks
 ---
 
@@ -17,63 +17,16 @@ It's up to you to decide which programming language your client is using. Your c
 
 You must test your client in the dedicated test environment provided by the Government Digital Service (GDS) before getting access to the production environment. This environment contains test data to help you check that your application can handle all responses from the [DCS API][api-reference]. Once your client can handle all responses from the DCS API, you can connect to the DCS production environment.
 
-## Prerequisites
+## Getting access to an environment
 
-Before you start to build a client there are several things you need.
+The test and production environments require dedicated [sets of keys and certificates][message-structure]. To connect to an environment, you must:
 
-### DCS URI
-There is one URI for the production environment, and one URI for the integration environment. These will be provided when your pilot application is approved.
+* generate private keys and raise certificate signing requests for your encryption, signing, and mutual authentication certificate
+* receive the DCS's signing and encryption certificates
 
-### Access to DCS Certificate Authority portals
-You will be provided URIs to access to our Certificate Authority portals in order to submit a Certificate Signing Request. 
-There is one portal for each environment you need to raise Certificate Signing Request (CSR) with.
+Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest stage of the DCS pilot.
 
-Each DCS environment has its own Certificate Authority portal where you can submit your CSR. 
-
-### Certificates and Keys
-There are two sets of certificates and keys that you need to call the DCS:
-
-There are two environments that you will need to integrate with:
-
-* the DCS integration environment
-* the DCS production environment
-
-Each environment requires their own keys and certificates.
-
-#### Your certificates and keys
-
-| No. |   Purpose   |     Type    |    Origin    |           Usage               |
-|-----|-------------|-------------|--------------|-------------------------------|
-|  1  | Signing     | Private Key | You generate | You use to sign your requests |
-|  2  | Signing     | Certificate | You generate CSR from private key and submit to CA portal | DCS uses to validate your client's requests signature |
-|  3  | Encryption  | Private Key | You generate | You use to decrypt responses from DCS |
-|  4  | Encryption  | Certificate | You generate CSR from private key and submit to CA portal | DCS uses it to encrypt its responses to your client |
-|  5  | mTLS        | Private Key | You generate |     Your mTLS configuration   | 
-|  6  | mTLS        | Certificate | You generate CSR from private key and submit to CA portal | Your mTLS configuration
-
-#### DCS certificates 
-
-These certificates will be provided to you when your pilot application has been approved:
-
-| No. |   Purpose   |     Type    |    Origin    |           Usage               |
-|-----|-------------|-------------|--------------|-------------------------------|
-|  1  | Signing     | Certificate | DCS supplies | Used to validate DCS request signatures |
-|  2  | Encryption  | Certificate | DCS supplies | Used to encrypt your request payloads   |
-|  3  | mTLS        | CA Bundle   | DCS supplies | Chain of trust for your mTLS configuration |
-
-
-## How to request your public certificates
-
-The DCS requires your public certificates to be signed by our CA.
-
-To get your certificates, you need to:
-
-1. create a private key
-2. create a CSR from your private key
-3. navigate to the relevant Certificate Authority portal (integration or production)
-4. submit the CSR
-
-You will be provided with your public certificates via email when the CSR has been signed by our Certificate Authority.
-
+We will onboard selected pilot participants during a 'connecting window' starting from the beginning of 2020.
+We will be refining the onboarding process as we go, and participants should therefore be aware that the process may change between iterations.
 
 <%= partial "partials/links" %>
