@@ -1,0 +1,85 @@
+---
+title: Set up your JOSE certificate thumbprints
+weight: 14
+last_reviewed_on: 2020-02-25
+review_in: 6 weeks
+---
+
+# Set up your JOSE certificate thumbprints
+
+A 'thumbprint' (also sometimes called a 'fingerprint') is required in the header for a JSON Web Signature (JWS) or JSON Web Encryption (JWE) object. It is a SHA1 or SHA256 digest (or hash) of the binary representation (DER format) of the certificate.
+
+DCS uses this thumbprint to help identify the correct certificates for verifying signatures and decrypting messages.
+
+DCS requires both SHA1 and SHA256 thumbprints.
+
+## How to generate a thumbprint from a certificate
+
+You will have a certificate in either Privacy Enhanced Mail (PEM) format, which is plain text, or binary DER format.
+
+PEM format certificates will look like this:
+
+```
+-----BEGIN CERTIFICATE-----
+MIIDITCCAgmgAwIBAgIUYrkheDECIIeoWoUM62Wuq0ng7FUwDQYJKoZIhvcNAQEL
+BQAwIDELMAkGA1UEBhMCR0IxETAPBgNVBAMMCGRjcyBkb2NzMB4XDTIwMDIyNDEz
+NTYwNloXDTIxMDIyMzEzNTYwNlowIDELMAkGA1UEBhMCR0IxETAPBgNVBAMMCGRj
+cyBkb2NzMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6rhwmV4Eck67
+smukeuNxp0DB4S1hDCSWIMhsI3Fc0Hd9UjNJWgVn7TSjv60zS4DM9X09qzoyFa43
+jCyhbwr+fxvuL02cX6KYzauN9R0RejLx0eT7o9ov2AYh69OiMPAwrD8nZOpYibAu
+csz2q2BQNd/FfUaqj0nYAgj5pwyIf72bUKC/UgJpVDUKiI3+pgiL+FcEJne7vZue
+ptWEMDYcU4Gnne9SAm0yKe4pfduYTyEhNh/+A+ymHZk9pR0FdlsaxMU+fVwpXjZc
+w3skOw2hgxFeNkkT4a/FHfaxdCmHCL4dQ6iVgajjrd8au8bAc4KjLraMp+9N6VbQ
+wed/D97sxwIDAQABo1MwUTAdBgNVHQ4EFgQUmFHWe0ZP8a4PCZqmOmnr6pUNK4gw
+HwYDVR0jBBgwFoAUmFHWe0ZP8a4PCZqmOmnr6pUNK4gwDwYDVR0TAQH/BAUwAwEB
+/zANBgkqhkiG9w0BAQsFAAOCAQEAkOjU6uRNGdhTroEuVw0unidlj5RT7/x5BxDy
+JU39dnStMO8nASBpW5Gm3uZh/z5f9RYhq3/uvJH70NRshKwuVu8xCQe2E83tpl6S
+BfUP68ykEqHgA+eNuhZoUpspY+PaQ6SdZbJqaz13mAftfFVIQhYxBO2lWlg/zMUd
+kl33AFrd5Mf4E2eRHqngsIrWL6H2SHLJbJ5l3MhqjrdgFktOGXnC57lJifeAtUsS
+/5tKej3jNUEi6FCHKUBpBp8hAKH8WOieAdqiheSAYzR8Jq7CMRYQgHRJF/bvPFHr
+xHllK2Kqd5dTQQavfdPYdGIm8w8j6ow/LUPvoCLwwDu+wtgb5Q==
+-----END CERTIFICATE-----
+```
+
+It may also have a large block of text describing the contents of the certificate before the certificate block. This can be ignored.
+
+In the PEM format the text between `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----` is the Base64 encoding of the binary DER format.
+
+1. Make sure you have your certificate in binary DER format.
+
+    If you already have your certificate in DER format, then you can proceed to the next step. Otherwise you can either use an x509 library to load the certificate and convert it to DER format or extract the Base64 representation and decode that into a binary representation.
+
+1. Hash the binary representation of the certificate using SHA1 or SHA256.
+
+    This should normally give you a sequence of bytes, but may be represented as a Base64 string, hex string, or raw bytes.
+
+    For example the certificate above has the following hashes as hex strings:
+
+    SHA1: `9d1fd0948e3841932405bff38d66fcb0ec834677`\
+    SHA256: `d490851292d75b97b3e0c294b67b1f9cbaee60ba8a25eeb19d8e6b4b54cb6e37`
+
+1. Convert the hash into to Base64url with no padding. This is your thumbprint for DCS.
+
+    Make sure you have the hash as as raw bytes, then encode into Base64url.
+
+    Base64url uses `-` and `_` in place of `+` and `/` characters in Base64. If your library cannot encode bytes to Base64url directly you will have to encode to Base64 and convert to Base64url in your own code.  Padding is removed by stripping any `=` characters.
+
+    For example the certificate above has the following thumbprints for DCS:
+
+    SHA1: `nR_QlI44QZMkBb_zjWb8sOyDRnc`\
+    SHA256: `1JCFEpLXW5ez4MKUtnsfnLruYLqKJe6xnY5rS1TLbjc`
+
+
+## Test your thumbprints are correct
+
+You should test that your thumbprint generation code is correct using [the testing tool][dcs-test-tool].
+
+Generate thumbprints for a certificate of your choice. Then run the following command, which will tell you if the thumbprints are correct.
+
+```
+check_thumbprint --certificate <PATH> --sha1-thumbprint <SHA1> --sha256-thumbprint <SHA256>
+```
+
+For `--certificate` replace `<PATH>` with the path to the certificate that you are generating thumbprints for\
+For `--sha1-thumbprint` replace `<SHA1>` with the SHA1 thumbprint you have generated\
+For `--sha256-thumbprint` replace `<SHA256>` with the SHA256 thumbprint you have generated
