@@ -60,6 +60,8 @@ In the PEM format the text between `-----BEGIN CERTIFICATE-----` and `-----END C
 
 1. Convert the hash into to Base64url with no padding. This is your thumbprint for DCS.
 
+    Make sure you have the hash as as raw bytes, then encode into Base64url.
+
     Base64url uses `-` and `_` in place of `+` and `/` characters in Base64. If your library cannot encode bytes to Base64url directly you will have to encode to Base64 and convert to Base64url in your own code.  Padding is removed by stripping any `=` characters.
 
     For example the certificate above has the following thumbprints for DCS:

@@ -49,7 +49,7 @@ Depending on the library you use, you might have to manually construct the JWS h
 
 Signing gives the receiver assurance of who authored the message. The signature also guarantees the message has not been tampered with since the author signed it. Your client signs requests with your private signing key. When receiving the request, the DCS uses your signing certificate to verify that the request came from your client. Responses from the DCS are signed with the DCS's private signing key. Your client uses the DCS's signing certificate to verify that the response came from the DCS.
 
-You need to sign your JSON payload using the JWS library found in the prerequisites. In your library, you should use the JWS headers created in the previous step, and the client signing certificate you created in the prerequisites.
+You need to sign your JSON payload using a JWS library. In your library, you should use the JWS headers created in the previous step, and use your client signing key.
 
 Once you have done this, you’ll have signed your JWS payload for the first time. After you have encrypted your JSON payload in the next step, you’ll have to sign the JWS payload for a second time with your signing key.
 
@@ -72,7 +72,7 @@ Encrypting your JWS object using the JWE protocol produces a JWE object. You enc
 
 The JWE headers contain information about how the payload is encrypted. For DCS we require these headers to be set.
 
-1. `elc` must be set to `A128CBC-HS256`.
+1. `enc` must be set to `A128CBC-HS256`.
 1. `alg` must be set to `RSA-OAEP`.
 1. `type` must be set to `JWE`.
 1. `x5t` containing the SHA1 thumbprint of the encryption certificate.
