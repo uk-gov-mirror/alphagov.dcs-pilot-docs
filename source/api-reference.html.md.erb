@@ -124,7 +124,7 @@ String containing an [RFC 4122] compliant UUID which identifies a single request
 String in ISO 8601 format which identifies when the request took place.
 
 #### passportNumber
-The number of the passport being checked, which is an integer between 1 and 899999999.
+The number of the passport being checked, which is a string containing a numerical value between 1 and 899999999.
 
 #### surname
 String of maximum 30 characters containing the surname as on the passport. The surname must only contain the characters a-z, A-Z, space, hyphen, full stop and apostrophe.
@@ -136,7 +136,7 @@ List of strings containing the forenames on the passport. The concatenated strin
 Birth date as on the passport in YYYY-MM-DD format.
 
 #### expiryDate
-The passport expiration date in YYYY-MM-DD format.
+The passport expiration date in YYYY-MM-DD format. 
 
 ### Response
 
