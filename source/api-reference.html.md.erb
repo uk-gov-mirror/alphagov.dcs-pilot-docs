@@ -72,57 +72,6 @@ Birth date as on the passport in YYYY-MM-DD format.
 #### expiryDate
 The passport expiration date in YYYY-MM-DD format.
 
-### Response
-
-The table shows the meaning of the HTTP response codes in DCS responses. [Other HTTP response codes][HTTP-Status-Code] have their standard meaning.
-
-| HTTP response code | Description                            |
-| ------------------ | -------------------------------------- |
-| 200                | The DCS handled your request. You must decrypt the response body to discover the outcome of your passport check. |
-| 403                | You have exceeded your total allocated number of API calls. |
-| 404                | The DCS URI is incorrect.              |
-| 429                | You have exceeded your rate limit. |
-| 503                | The DCS is temporarily unavailable because of high traffic. |
-
-`4xx` and `5xx` responses may have an explanation of the error in the response body.
-
-Whenever the DCS returns a `200` HTTP response code, the response body will be signed and encrypted. You must decrypt and verify the body to find out whether the passport was valid, the passport was invalid, or an error occurred.
-
-Example decrypted body for a valid passport:
-
-```json
-{
-  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
-  "requestId": "af47ddc1-faa9-42fe-be1f-8131df114713",
-  "error": false,
-  "valid": true
-}
-```
-
-Example decrypted body for an invalid passport:
-
-```json
-{
-  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
-  "requestId": "af47ddc1-faa9-42fe-be1f-8131df114713",
-  "error": false,
-  "valid": false
-}
-```
-
-Example decrypted body for a response containing an error:
-
-```json
-{
-  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
-  "requestId": "af47ddc1-faa9-42fe-be1f-8131df114713",
-  "error": true,
-  "errorMessage": [
-    "Unplanned outage"
-  ]
-}
-```
-
 #### correlationId
 String containing an [RFC 4122] compliant UUID which ties together multiple requests in the same session.
 
@@ -151,54 +100,6 @@ You may use this endpoint to build appropriate levels of reliability into your s
 The `<DCS-URI>` will be supplied at a later date.
 
 The request body for a DCS status check is empty and therefore does not require the [signature and encryption wrapper][wrapper].
-
-### Response
-
-The table shows the meaning of the HTTP response codes in DCS responses. [Other HTTP response codes][HTTP-Status-Code] have their standard meaning.
-
-| HTTP response code | Description                            |
-| ------------------ | -------------------------------------- |
-| 200                | The DCS handled your request. You must inspect the response body to discover whether the DCS is available or unavailable. |
-| 403                | You have exceeded your total allocated number of API calls. |
-| 404                | The DCS URI is incorrect.              |
-| 429                | You have exceeded your rate limit. |
-| 503                | The DCS is temporarily unavailable because of high traffic. |
-
-`4xx` and `5xx` responses may have an explanation of the error in the response body.
-
-A `200` response will contain a JSON response body.
-
-If the DCS is available, this JSON response body will be similar to:
-
-```json
-{
-  "available":true,
-  "scheduledOutages":[]
-}
-```
-
-If the DCS is unavailable, the `message` field in the response describes the cause. Possible causes for unavailability include:
-
-* `Limit exceeded` - you have exceeded your allocated number of API calls
-* `Planned outage in progress finishing <TIMESTAMP>` - the DCS or HM Passport Office (HMPO) are in a period of scheduled downtime, ending at `<TIMESTAMP>`
-* `Unplanned outage` - the DCS or HMPO are experiencing a period of unscheduled downtime
-
-For example, during a planned outage, the response is similar to:
-
-```json
-{
-  "available": false,
-  "message": "Planned outage in progress finishing 2019-09-12T00:00:00.000Z",
-  "scheduledOutages":
-    [
-      {
-      	"start":"2019-09-05T00:00:00.000Z",
-      	"end":"2019-09-12T00:00:00.000Z",
-      	"message":"Maintenance work is underway."
-      }
-    ]
-}
-```
 
 #### available
 Boolean field indicating if the DCS is available and serving requests.
