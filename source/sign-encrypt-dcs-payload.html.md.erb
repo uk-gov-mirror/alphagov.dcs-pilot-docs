@@ -7,6 +7,24 @@ review_in: 6 weeks
 
 # Sign and encrypt a DCS payload
 
+Messages your client exchanges with the Document Checking Service (DCS) must be signed and encrypted using the following Internet Engineering Task Force
+(IETF) standards:
+
+ - [JavaScript Object Notation (JSON)][JSON]
+ - [JavaScript Object Signing and Encryption (JOSE)][JOSE]
+ - [JSON Web Signature (JWS)][JWS]
+ - [JSON Web Encryption (JWE)][JWE]
+
+The JSON object in request and response bodies is protected by a signature and encryption wrapper.
+
+To build the signature (JWS) and encryption (JWE) wrapper for your JSON object, you must:
+
+1. Sign your JSON object with your signing key using JWS.
+2. Encrypt your signed JSON object with the DCS's public encryption certificate using JWE.
+3. Sign the encrypted content with your signing key using JWS.
+
+<%= image_tag "dcs-message-structure-sequence.svg", { :alt => '' } %>
+
 ## Build a plain JSON payload
 
 You start off with a JSON object containing the details of the passport you want to check.

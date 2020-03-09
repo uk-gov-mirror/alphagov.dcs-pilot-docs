@@ -1,0 +1,60 @@
+---
+title: Understanding response codes for the DCS
+weight: 16
+last_reviewed_on: 2020-02-26
+review_in: 3 weeks
+---
+
+# Understanding response codes for the DCS
+
+The table shows the meaning of the HTTP response codes in DCS responses. [Other HTTP response codes][HTTP-Status-Code] have their standard meaning.
+
+| HTTP response code | Description                            |
+| ------------------ | -------------------------------------- |
+| 200                | The DCS handled your request. You must decrypt the response body to discover the outcome of your passport check. |
+| 403                | You have exceeded your total allocated number of API calls. |
+| 404                | The DCS URI is incorrect.              |
+| 415                | NEED DESCRIPTION HERE |
+| 429                | You have exceeded your rate limit. |
+| 503                | The DCS is temporarily unavailable because of high traffic. |
+
+`4xx` and `5xx` responses may have an explanation of the error in the response body.
+
+Whenever the DCS returns a `200` HTTP response code, the response body will be signed and encrypted. You must decrypt and verify the body to find out whether the passport was valid, the passport was invalid, or an error occurred.
+
+Example decrypted body for a valid passport:
+
+```json
+{
+  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
+  "requestId": "af47ddc1-faa9-42fe-be1f-8131df114713",
+  "error": false,
+  "valid": true
+}
+```
+
+Example decrypted body for an invalid passport:
+
+```json
+{
+  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
+  "requestId": "af47ddc1-faa9-42fe-be1f-8131df114713",
+  "error": false,
+  "valid": false
+}
+```
+
+Example decrypted body for a response containing an error:
+
+```json
+{
+  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
+  "requestId": "af47ddc1-faa9-42fe-be1f-8131df114713",
+  "error": true,
+  "errorMessage": [
+    "Unplanned outage"
+  ]
+}
+```
+
+<%= partial "partials/links" %>
