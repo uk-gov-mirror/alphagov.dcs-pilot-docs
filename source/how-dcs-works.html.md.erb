@@ -16,17 +16,11 @@ The Document Checking Service (DCS) acts as an interface between your service an
 3. HM Passport Office checks the passport data against their database and sends a response back to the DCS.
 4. The DCS sends the response to your service.
 
-## Joining the DCS (used to be Integrating with the DCS API)
-
-*New section. Should intro: "To join the DCS, you will follow these topline steps" (and then include numbers list of all H1s in the documentation"*
-
-To integrate your service with the DCS API you will need to:
-
-1. Develop a client to integrate with the DCS API.
-1. Test your client in a dedicated DCS test environment.
-1. Run your client in the production environment as part of the DCS pilot.
+## Integrating with the DCS API
 
 It's up to you to decide which programming language your client uses.
+
+*New section. Should intro: "To join the DCS, you will follow these topline steps" (and then include numbers list of all H1s in the documentation"*
 
 This documentation explains [how the DCS works][how-dcs-works] and provides step by step guidance on how to:
 
@@ -48,27 +42,5 @@ You'll need to successfully complete a full journey in the test environment befo
 You'll need a different set of keys and certificates for your production connection.
 
 Contact the [DCS pilot helpdesk](/support) if you're ready to request access to production.
-
-## Signing and encryption
-
-Messages your client exchanges with the Document Checking Service (DCS) must be signed and encrypted using the following Internet Engineering Task Force
-(IETF) standards:
-
- - [JavaScript Object Notation (JSON)][JSON]
- - [JavaScript Object Signing and Encryption (JOSE)][JOSE]
- - [JSON Web Signature (JWS)][JWS]
- - [JSON Web Encryption (JWE)][JWE]
-
-The JSON object in request and response bodies is protected by a signature and encryption wrapper.
-
-To build the signature (JWS) and encryption (JWE) wrapper for your JSON object, you must:
-
-1. Sign your JSON object with your signing key using JWS.
-2. Encrypt your signed JSON object with the DCS's public encryption certificate using JWE.
-3. Sign the encrypted content with your signing key using JWS.
-
-<%= image_tag "dcs-message-structure-sequence.svg", { :alt => '' } %>
-
-There's a detailed guide to [how to sign and encrypt a DCS payload](/).
 
 <%= partial "partials/links" %>
