@@ -7,39 +7,40 @@ review_in: 6 weeks
 
 # Generate keys and request certificates
 
-Gdocs content: https://docs.google.com/document/d/1LuOsyi7NYOsUlRtyWo_j8yiNhpj8ZjOErCLoTtmHnCE/edit#
+To send requests to the Document Checking Service (DCS) you’ll need to generate separate keys and certificate requests for:
 
-To send requests to DCS you will need to generate separate keys and certificate requests for:
+* mutual TLS Client Authentication (TLS)
+* JSON signing
+* JSON encryption
 
-1. Mutual TLS Client Authentication (TLS)
-1. JSON Signing
-1. JSON Encryption
+For integration, you’ll need to generate your keys and certificates using the following steps.
 
-Each environment (integration or production) will require a unique set of keys and certificates for each of these purposes. The certificates must be signed and issued by GDS’ Certificate Authority (CA).
+1. Generate a private key.
+1. Create a Certificate Signing Request (CSR).
+1. Submit the CSR to the GDS Certificate Authority (CA).
+1. The GDS CA will issue your certificate, which can take up to 2 working days.
 
-For each purpose, you will need to generate a private key, create a Certificate Signing Request (CSR) and submit the CSR to the GDS CA. The GDS CA will then issue your certificate, please note, the issuing
-process can take up to 2 working days.
+The GDS CA must sign and issue the certificates.
 
-We give examples of how you’d follow this process using OpenSSL. You can use other methods if you prefer, however, you must use the naming conventions stated below when raising your CSR.
+This documentation gives examples of how you’d follow this process using OpenSSL. You can use other methods if you prefer.
+## Generate a private key
 
-## 1. Generate a private key
-
-Generate a private key using OpenSSL:
+Generate a private key using OpenSSL by entering this code into terminal:
 
 ```
 $ openssl genrsa -out <private key filename>.pem 2048
 ```
 
-Check that the key file has been written to your current directory.
+Check you write the key file to your current directory.
+## Create a Certificate Signing Request (CSR)
 
-## 2. Create a Certificate Signing Request (CSR)
-From your private key, create the CSR:
+From your private key, enter this code to create the CSR:
 
 ```
 $ openssl req -new -sha256 -key <private key filename>.pem -out <CSR filename>.csr
 ```
 
-You will see the following messages and be prompted to fill in the fields:
+You’ll see the following messages:
 
 ```
 You are about to be asked to enter information that will be incorporated
@@ -62,56 +63,55 @@ to be sent with your certificate request
 A challenge password []:my challenge phrase
 ```
 
-You must enter, at least, the following fields (leaving the email field empty):
+You must enter information for the following fields:
 
-- Country (for example, GB)
-- Organisation Name
-- Common Name
-- Challenge Password - this can be any password you choose, but note this down as you’ll need to enter it again when submitting the CSR
+* `Country` (for example, UK)
+* `Organization Name`
+* `Common Name`
+* `challenge password` - this can be any password you choose, but note this down as you’ll need to enter it again when submitting the CSR
 
-For "common name", use the naming convention:
+You can leave the other fields blank.
+
+For `Common Name`, use the naming convention:
 
 ```
-[Organisation name] [certificate purpose, i.e.  ‘JSON Encryption’, ‘JSON Signing’ or ‘TLS’] [environment, i.e. ‘Integration’ or ‘Production’] [date CSR created]
+[Organisation name] [certificate purpose, i.e.  ‘JSON Encryption’, ‘JSON Signing’ or ‘TLS’] [environment, for example ‘Integration’ or ‘Production’] [date CSR created]
 ```
 
 For example:
 
 ```
-Bobs Widgets TLS Integration 2020-02-24
+Bob’s Widgets TLS Integration 2020-02-02
 ```
 
-Once you’ve filled in the information, the CSR will be created. Check that the CSR file has been written to your current directory.
+Once you’ve filled in the information, you will have created the CSR.
 
-## 3. Submit the CSR to the Certificate Authority
+Check you write the CSR file to your current directory.
 
-Note, there are separate CAs (with different trust chains) for each environment. When submitting requests, please ensure you submit to the correct CA. Certificates issued by the integration CA will not work in production, and vice versa.
-
-The [helpdesk](/support) will provide you with the URL for the correct CA for your environment.
+## Submit the CSR to the Certificate Authority
 
 To submit the CSR:
 
-1. Go to the CA.
-1. Select ‘Enrol’.
+1. Go to the GDS CA - the DCS team will have emailed you a link and you can [contact the helpdesk](/support) if you cannot find the link.
+1. Select __Enrol__.
 1. Upload your CSR file.
-1. Fill in the details on the enrolment form, note some details will be pre-populated from data in the CSR, you should not change these fields..
+1. Fill in the details on the enrolment form - some details will be pre-populated from data in the CSR, and you should not change these fields.
+1. When filling in the details, make sure you choose the correct ‘Certificate profile’ - choose either __JSON signing__, __JSON encryption__ or __TLS__.
 
-Make sure you choose the correct ‘Certificate profile’ - choose either ‘JSON signing’, ‘JSON encryption’ or ‘TLS’.
+Use the challenge password you chose when you created the CSR.
+## Receive and save your certificates
 
-Use the ‘challenge phrase’ you chose when creating the CSR.
+1. You’ll receive your certificate by email in Privacy Enhanced Mail (PEM) format.
+1. Copy the certificate text from the email.
+1. Save it to a file with a .crt extension.
 
-## 4. Receive your certificates
-
-Once issued, you’ll receive your certificate by email.
-
-The certificate will be in Privacy Enhanced Mail (PEM) format. Copy the certificate text from the email and save it to a file with a .crt extension.
-
-You may then need to convert the certificate you’ve received into a format your system can use. Tools such as OpenSSL allow you do this, for example, to convert the `PEM` certificate into `DER` format:
+Depending on the library you chose, you may need to convert the certificate you’ve received into a format your system can use. You can use tools such as OpenSSL for example, to convert the `PEM` certificate into `DER` format:
 
 ```
 $ openssl x509 -inform PEM -outform DER -text -in <pem filename> -out <der filename>
 ```
 
 If you do not receive your certificate, [contact the helpdesk](/support).
+
 
 <%= partial "partials/links" %>
