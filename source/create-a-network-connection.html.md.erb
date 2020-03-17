@@ -13,16 +13,16 @@ The DCS and your service use mTLS to prove to each other that they possess the p
 ## Prerequisites
 Before setting up mTLS, you’ll need:
 
-* to [generate a private key and request a GDS-signed certificate](/generating-keys-and-csrs) before you can establish an mTLS connection - it can take up to 2 working days for the DCS to issue a certificate
+* to [generate a private key and request a GDS-signed certificate](/generate-keys-and-request-certificates) - it can take up to 2 working days for the DCS to issue a certificate
 * the DCS Certificate Authority (CA) bundle - [request it from the DCS pilot helpdesk](/support) if you have not received it already
 
 ## Test your connectivity to the DCS by making a GET request
 
-You need to have network access to the DCS. You can check you have this access by using a tool like [curl](https://curl.haxx.se/) or [Postman](https://www.postman.com/) to make a GET request to the DCS URL.
+You need to have network access to the DCS. You can check if you have this access by using a tool like [curl](https://curl.haxx.se/) or [Postman](https://www.postman.com/) to make a GET request to the DCS URL.
 
 [Contact the DCS helpdesk](/support) if you do not have the DCS URL.
 
-There are many ways to check you have the correct access. For example, using the curl command line utility tool:
+There are many ways to check if you have the correct access. For example, using the curl command line utility tool:
 
 ```
 curl --cacert <path to CA bundle> \
@@ -101,13 +101,11 @@ This response shows mTLS is working and you can now make secure requests to the 
 
 You may receive error messages if you have supplied the wrong file to your HTTPS library.
 
-Message text | What this means |
--|-
-
-`No required SSL certificate was sent` | You did not send the client certificate
-`SSL certificate error` | You sent the wrong client certificate
-`SSL certificate problem: unable to get local issuer certificate` | You did not use the correct CA bundle which means your service has not trusted the DCS certificates
-
+| What the error message says | What this means                            |
+| ------------------ | -------------------------------------- |
+| `No required SSL certificate was sent`                | You did not send the client certificate |
+| `SSL certificate error`                | You sent the wrong client certificate     |
+| `SSL certificate problem: unable to get local issuer certificate`                | You did not use the correct CA bundle which means your service has not trusted the DCS certificates  |
 
 If you have any of these errors and you cannot resolve them, [contact the DCS helpdesk](/support).
 
