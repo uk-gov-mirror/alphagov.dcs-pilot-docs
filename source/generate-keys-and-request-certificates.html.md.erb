@@ -1,0 +1,120 @@
+---
+title: Generate keys and request certificates
+weight: 4.3
+last_reviewed_on: 2020-03-16
+review_in: 6 weeks
+---
+
+# Generate keys and request certificates
+
+To send requests to the Document Checking Service (DCS) you’ll need to generate separate keys and certificate requests for:
+
+* mutual TLS Client Authentication (mTLS)
+* JSON signing
+* JSON encryption
+
+You’ll need to generate your keys and certificates using the following steps.
+
+1. Generate a private RSA key.
+1. Create a Certificate Signing Request (CSR).
+1. Submit the CSR to the GDS Certificate Authority (CA).
+1. The GDS CA will issue your certificate, which can take up to 2 working days.
+
+The GDS CA must sign and issue the certificates.
+
+This documentation gives examples of how you’d follow this process using OpenSSL. You can use other methods if you prefer.
+
+## Generate a private RSA key
+
+Generate a private RSA key using OpenSSL by entering this code into terminal:
+
+```
+$ openssl genrsa -out <private key filename>.pem 2048
+```
+
+Check you write the RSA key file to your current directory.
+
+## Create a Certificate Signing Request (CSR)
+
+From your private RSA key, enter this code to create the CSR:
+
+```
+$ openssl req -new -sha256 -key <private key filename>.pem -out <CSR filename>.csr
+```
+
+You’ll see the following messages:
+
+```
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) []:
+State or Province Name (full name) []:
+Locality Name (eg, city) []:
+Organization Name (eg, company) []:
+Organizational Unit Name (eg, section) []:
+Common Name (eg, fully qualified host name) []:
+Email Address []:
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:my challenge phrase
+```
+
+You must enter information for the following fields:
+
+* `Country` (for example, UK)
+* `Organization Name`
+* `Common Name`
+* `challenge password` - this can be any password you choose, but note this down as you’ll need to enter it again when submitting the CSR
+
+You can leave the other fields blank.
+
+For `Common Name`, use the naming convention:
+
+```
+[Organisation name] [certificate purpose, i.e.  ‘JSON Encryption’, ‘JSON Signing’ or ‘TLS’] [environment, for example ‘Integration’ or ‘Production’] [date CSR created]
+```
+
+For example:
+
+```
+Bob’s Widgets TLS Integration 2020-02-02
+```
+
+Once you’ve filled in the information, you will have created the CSR.
+
+Check you write the CSR file to your current directory.
+
+## Submit the CSR to the Certificate Authority
+
+To submit the CSR:
+
+1. Go to the GDS Certificate Authority (CA) - the DCS team will have emailed you a link and you can [contact the helpdesk](/support) if you cannot find the link.
+1. Select __Enrol__.
+1. Upload your CSR file.
+1. Fill in the details on the enrolment form - some details will be pre-populated from data in the CSR, and you should not change these fields.
+1. When filling in the details, make sure you choose the correct ‘Certificate profile’ - choose either __JSON signing__, __JSON encryption__ or __TLS__.
+
+Use the challenge password you chose when you created the CSR.
+
+## Receive and save your certificates
+
+1. You’ll receive your certificate by email in Privacy Enhanced Mail (PEM) format.
+1. Copy the certificate text from the email.
+1. Save it to a file with a .crt extension.
+
+Depending on the library you chose, you may need to convert the certificate you’ve received into a format your system can use. You can use tools such as OpenSSL for example, to convert the `PEM` certificate into `DER` format:
+
+```
+$ openssl x509 -inform PEM -outform DER -text -in <pem filename> -out <der filename>
+```
+
+If you do not receive your certificate, [contact the helpdesk](/support).
+
+
+<%= partial "partials/links" %>
