@@ -1,5 +1,5 @@
 ---
-title: Message structure
+title: Generate keys and request certificates
 weight: 4.3
 last_reviewed_on: 2020-03-16
 review_in: 6 weeks
@@ -15,7 +15,7 @@ To send requests to the Document Checking Service (DCS) you’ll need to generat
 
 You’ll need to generate your keys and certificates using the following steps.
 
-1. Generate a private key.
+1. Generate a private RSA key.
 1. Create a Certificate Signing Request (CSR).
 1. Submit the CSR to the GDS Certificate Authority (CA).
 1. The GDS CA will issue your certificate, which can take up to 2 working days.
@@ -24,19 +24,19 @@ The GDS CA must sign and issue the certificates.
 
 This documentation gives examples of how you’d follow this process using OpenSSL. You can use other methods if you prefer.
 
-## Generate a private key
+## Generate a private RSA key
 
-Generate a private key using OpenSSL by entering this code into terminal:
+Generate a private RSA key using OpenSSL by entering this code into terminal:
 
 ```
 $ openssl genrsa -out <private key filename>.pem 2048
 ```
 
-Check you write the key file to your current directory.
+Check you write the RSA key file to your current directory.
 
 ## Create a Certificate Signing Request (CSR)
 
-From your private key, enter this code to create the CSR:
+From your private RSA key, enter this code to create the CSR:
 
 ```
 $ openssl req -new -sha256 -key <private key filename>.pem -out <CSR filename>.csr
