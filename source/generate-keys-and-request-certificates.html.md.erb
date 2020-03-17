@@ -1,7 +1,7 @@
 ---
 title: Message structure
 weight: 4.3
-last_reviewed_on: 2020-03-09
+last_reviewed_on: 2020-03-16
 review_in: 6 weeks
 ---
 
@@ -9,11 +9,11 @@ review_in: 6 weeks
 
 To send requests to the Document Checking Service (DCS) you’ll need to generate separate keys and certificate requests for:
 
-* mutual TLS Client Authentication (TLS)
+* mutual TLS Client Authentication (mTLS)
 * JSON signing
 * JSON encryption
 
-For integration, you’ll need to generate your keys and certificates using the following steps.
+You’ll need to generate your keys and certificates using the following steps.
 
 1. Generate a private key.
 1. Create a Certificate Signing Request (CSR).
@@ -23,6 +23,7 @@ For integration, you’ll need to generate your keys and certificates using the 
 The GDS CA must sign and issue the certificates.
 
 This documentation gives examples of how you’d follow this process using OpenSSL. You can use other methods if you prefer.
+
 ## Generate a private key
 
 Generate a private key using OpenSSL by entering this code into terminal:
@@ -32,6 +33,7 @@ $ openssl genrsa -out <private key filename>.pem 2048
 ```
 
 Check you write the key file to your current directory.
+
 ## Create a Certificate Signing Request (CSR)
 
 From your private key, enter this code to create the CSR:
@@ -92,13 +94,14 @@ Check you write the CSR file to your current directory.
 
 To submit the CSR:
 
-1. Go to the GDS CA - the DCS team will have emailed you a link and you can [contact the helpdesk](/support) if you cannot find the link.
+1. Go to the GDS Certificate Authority (CA) - the DCS team will have emailed you a link and you can [contact the helpdesk](/support) if you cannot find the link.
 1. Select __Enrol__.
 1. Upload your CSR file.
 1. Fill in the details on the enrolment form - some details will be pre-populated from data in the CSR, and you should not change these fields.
 1. When filling in the details, make sure you choose the correct ‘Certificate profile’ - choose either __JSON signing__, __JSON encryption__ or __TLS__.
 
 Use the challenge password you chose when you created the CSR.
+
 ## Receive and save your certificates
 
 1. You’ll receive your certificate by email in Privacy Enhanced Mail (PEM) format.
