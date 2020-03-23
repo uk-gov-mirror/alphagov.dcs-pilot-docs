@@ -48,7 +48,7 @@ For the DCS, you need to set the following headers:
 1. `x5t#S256` containing the SHA256 thumbprint of your certificate.
 1. `alg` must be set to `RS256`.
 
-You must set the `x5t` and `x5t#S256` headers. To set them, you’ll need to have [generated thumbprints for your signing certificate](/set-up-your-JOSE-certificate-thumbprints/#set-up-your-jose-certificate-thumbprints).
+You must set the `x5t` and `x5t#S256` headers. To set them, you’ll need to have [generated thumbprints for your signing certificate](/set-up-your-JOSE-certificate-thumbprints).
 
 Depending on the library you use, you might have to manually construct the JWS header. Your header should look like this:
 
@@ -80,7 +80,7 @@ You must set the following headers:
 * `x5t` contains the SHA1 thumbprint of the DCS encryption certificate
 * `x5t#S256` contains the SHA256 thumbprint of the DCS encryption certificate
 
-You must set the `x5t` and `x5t#S256` headers. To set them, you’ll need to have [generated thumbprints for the DCS encryption certificate](/set-up-your-JOSE-certificate-thumbprints/#set-up-your-jose-certificate-thumbprints). The DCS will not accept the JWS or JWE objects without these headers.
+You must set the `x5t` and `x5t#S256` headers. To set them, you’ll need to have [generated thumbprints for the DCS encryption certificate](/set-up-your-JOSE-certificate-thumbprints). The DCS will not accept the JWS or JWE objects without these headers.
 
 Your header should look like this:
 
@@ -108,11 +108,6 @@ You signed your JSON payload for the first time before you encrypted the payload
 
 After creating your JWE object, you need to use JWS to sign your payload for a second time.
 
-In your library, you should use the:
-
-* JWS headers you created in the previous step
-* client signing certificate you created in the prerequisites (or in the separate certificate page)
-
-
+In your library, you should use the same JWS tools and headers you created when you first signed your JSON payload.
 
  <%= partial "partials/links" %>
