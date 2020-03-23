@@ -1,0 +1,118 @@
+---
+title: Set up your JOSE certificate thumbprints
+weight: 4.6
+last_reviewed_on: 2020-03-25
+review_in: 6 weeks
+---
+
+# Sign and encrypt a DCS payload
+
+To build the JSON Web Signature (JWS) and JSON Web Encryption (JWE) wrapper for your JSON object, you must:
+
+1. Build a plain JSON payload.
+1. Create JWS headers.
+1. Sign your JSON payload to get a JWS object.
+1. Encrypt your JWS object to get a JWE object.
+1. Sign your JWE object to complete the process.
+
+<%= image_tag "dcs-message-structure-sequence.svg", { :alt => '' } %>
+
+This diagram shows the steps you must take to build the wrapper for your JSON object. It shows starting with your JSON object and then creating JWS headers. The diagram then shows you sign your JSON payload to get a JWS object. The next step on the diagram is you must encrypt your JWS object to get a JWE object. Finally, the diagram shows you must sign your JWE object to complete the process in building your wrapper for your JSON object.
+## Build a plain JSON payload
+
+Create a JSON object containing the details of the passport you want to check, for example:
+
+```json
+{
+  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
+  "requestId": "550e8400-e29b-41d4-a716-446655440003",
+  "timestamp": "1997-07-16T19:20:30.45+01:00",
+  "passportNumber": "123456789",
+  "surname": "Smith",
+  "forenames": [
+    "Bob",
+    "Dave"
+  ],
+  "dateOfBirth": "1950-02-13",
+  "expiryDate": "2020-01-01"
+}
+```
+## Create JWS headers
+
+The JWS headers contain information about how you have signed the payload, along with certificate thumbprints which allow the DCS to look up which certificate you’re using.
+
+For the DCS, you need to set the following headers:
+
+1. `x5t` contains the SHA1 thumbprint of your certificate.
+1. `x5t#S256` containing the SHA256 thumbprint of your certificate.
+1. `alg` must be set to `RS256`.
+
+You must set the `x5t` and `x5t#S256` headers. To set them, you’ll need to have [generated thumbprints for your signing certificate](https://dcs-pilot-docs.cloudapps.digital/generate-keys-and-request-certificates/#generate-keys-and-request-certificates).
+
+Depending on the library you use, you might have to manually construct the JWS header. Your header should look like this:
+
+```json
+{
+  "x5t":"K9gFum5l_xYyHwCniYljJ4Lh_vY",
+  "x5t#S256":"gGzb5v_MNfiC0QHur40xZpZyKCVzy7KeZyzFCVi_BrI",
+  "alg":"RS256"
+}
+```
+## Sign your JSON payload to get a JWS object
+
+You need to sign your JSON payload using a JWS library. To configure your signing of the JWS object in your chosen library, you should use:
+
+* the JWS headers you created
+* the DCS’s client signing key
+
+Once you have done this, you’ll have signed your JWS payload for the first time. After you have encrypted your JSON payload in the next step, you’ll have to sign the JWS payload for a second time with your signing key.
+
+## Encrypt your JWS object to get a JWE object
+
+Encrypting your JWS object using the JWE protocol produces a JWE object. You encrypt using the DCS's encryption certificate.
+
+The JWE headers contain information about how the payload is encrypted.
+
+You must set the following headers:
+
+* `enc` must be set to `A128CBC-HS256`
+* `alg` must be set to `RSA-OAEP`
+* `type` must be set to `JWE`
+* `x5t` contains the SHA1 thumbprint of the DCS encryption certificate
+* `x5t#S256` contains the SHA256 thumbprint of the DCS encryption certificate
+
+You must set the `x5t` and `x5t#S256` headers. To set them, you’ll need to have [generated thumbprints for the DCS encryption certificate](https://dcs-pilot-docs.cloudapps.digital/generate-keys-and-request-certificates/#generate-keys-and-request-certificates). The DCS will not accept the JWS or JWE objects without these headers.
+
+Your header should look like this:
+
+```json
+{
+  "enc":"A128CBC-HS256",
+  "alg":"RSA-OAEP",
+  "typ":"JWE",
+  "x5t":"xiWgxFMOIw1M4m9LYCnKZk5eHJs",
+  "x5t#S256":"PJLEl_B6MFKaMEG6HK7BBdaueJc7e-SiimQfvEpTYj4"
+}
+```
+### Using encryption algorithms
+
+The encrypted component of the JavaScript Object Signing and Encryption (JOSE) message must use:
+
+* `RSA-OAEP` as the algorithm
+* `A128CBC-HS256` as the encryption method
+
+You can [learn more about these in the JSON Web Algorithms specification](https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40).
+## Sign your JWE object to complete the process
+
+You have already signed your JSON payload for the first time before you encrypted the payload.
+
+After encrypting your JWS object, you need to use JWS to sign your payload for a second time.
+
+In your library, you should use the:
+
+* JWS headers you created in the previous step
+* client signing certificate you created in the prerequisites (or in the separate certificate page)
+
+
+
+ <%= partial "partials/links" %>
