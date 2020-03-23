@@ -48,7 +48,7 @@ For the DCS, you need to set the following headers:
 1. `x5t#S256` containing the SHA256 thumbprint of your certificate.
 1. `alg` must be set to `RS256`.
 
-You must set the `x5t` and `x5t#S256` headers. To set them, you’ll need to have [generated thumbprints for your signing certificate](/generate-keys-and-request-certificates/#generate-keys-and-request-certificates).
+You must set the `x5t` and `x5t#S256` headers. To set them, you’ll need to have [generated thumbprints for your signing certificate](/set-up-your-JOSE-certificate-thumbprints/#set-up-your-jose-certificate-thumbprints).
 
 Depending on the library you use, you might have to manually construct the JWS header. Your header should look like this:
 
@@ -80,7 +80,7 @@ You must set the following headers:
 * `x5t` contains the SHA1 thumbprint of the DCS encryption certificate
 * `x5t#S256` contains the SHA256 thumbprint of the DCS encryption certificate
 
-You must set the `x5t` and `x5t#S256` headers. To set them, you’ll need to have [generated thumbprints for the DCS encryption certificate](/generate-keys-and-request-certificates/#generate-keys-and-request-certificates). The DCS will not accept the JWS or JWE objects without these headers.
+You must set the `x5t` and `x5t#S256` headers. To set them, you’ll need to have [generated thumbprints for the DCS encryption certificate](/set-up-your-JOSE-certificate-thumbprints/#set-up-your-jose-certificate-thumbprints). The DCS will not accept the JWS or JWE objects without these headers.
 
 Your header should look like this:
 
@@ -101,11 +101,12 @@ The encrypted component of the JavaScript Object Signing and Encryption (JOSE) m
 * `A128CBC-HS256` as the encryption method
 
 You can [learn more about these in the JSON Web Algorithms specification](https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40).
+
 ## Sign your JWE object to complete the process
 
-You have already signed your JSON payload for the first time before you encrypted the payload.
+You signed your JSON payload for the first time before you encrypted the payload.
 
-After encrypting your JWS object, you need to use JWS to sign your payload for a second time.
+After creating your JWE object, you need to use JWS to sign your payload for a second time.
 
 In your library, you should use the:
 
