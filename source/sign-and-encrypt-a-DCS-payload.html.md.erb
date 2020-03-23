@@ -17,7 +17,8 @@ To build the JSON Web Signature (JWS) and JSON Web Encryption (JWE) wrapper for 
 
 <%= image_tag "dcs-message-structure-sequence.svg", { :alt => '' } %>
 
-This diagram shows the steps you must take to build the wrapper for your JSON object. It shows starting with your JSON object and then creating JWS headers. The diagram then shows you sign your JSON payload to get a JWS object. The next step on the diagram is you must encrypt your JWS object to get a JWE object. Finally, the diagram shows you must sign your JWE object to complete the process in building your wrapper for your JSON object.
+The diagram shows the steps you must take to build the signing and encryption wrapper for your JSON object. It shows you start with a plain JSON object. You then sign this object to get a JWS object. You then encrypt this JWS object to get a JWE object. Finally, the diagram shows you sign your JWE object. This will give you a final payload which has been signed, encrypted, and signed again.
+
 ## Build a plain JSON payload
 
 Create a JSON object containing the details of the passport you want to check, for example:
@@ -64,8 +65,6 @@ You need to sign your JSON payload using a JWS library. To configure your signin
 
 * the JWS headers you created
 * the DCS’s client signing key
-
-Once you have done this, you’ll have signed your JWS payload for the first time. After you have encrypted your JSON payload in the next step, you’ll have to sign the JWS payload for a second time with your signing key.
 
 ## Encrypt your JWS object to get a JWE object
 
