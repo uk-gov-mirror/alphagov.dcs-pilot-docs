@@ -1,0 +1,86 @@
+---
+title: Set up your JOSE certificate thumbprints
+weight: 4.5
+last_reviewed_on: 2020-03-25
+review_in: 6 weeks
+---
+
+# Set up your JOSE certificate thumbprints
+
+You’ll need to include a certificate ‘thumbprint’ (also sometimes known as a ‘fingerprint’) in the JSON Web Signature (JWS) and JSON Web Encryption (JWE) objects you build when you sign and encrypt a Document Checking Service (DCS) payload.
+
+The thumbprint is a hash of the public certificate used to sign or encrypt the JWS or JWE object. DCS uses the thumbprint to look up which certificate to use to validate your signature or decrypt your message.
+
+To set up your certificate thumbprints, you’ll need to:
+
+1. Check your certificate is in binary DER format.
+1. Hash the binary representation of the certificate.
+1. Use the thumbprints to build a JWS or JWE object.
+
+## Check your certificate is in binary DER format
+
+You’ll have a certificate in either plain text Privacy Enhanced Mail (PEM) format or binary DER format.
+
+If your certificate is already in binary DER format, you can move on to hash the binary representation of the certificate.
+
+If your certificate is in PEM format, you’ll need to convert it into DER format. To do this, you can:
+
+* use an x509 library to load the whole certificate and convert it to DER format
+* extract the Base64 representation of your certificate and decode it into a binary representation
+
+### Extract the Base64 representation of your certificate
+
+PEM format certificates will look similar to this:
+
+```
+-----BEGIN CERTIFICATE-----
+MIIDITCCAgmgAwIBAgIUYrkheDECIIeoWoUM62Wuq0ng7FUwDQYJKoZIhvcNAQEL
+BQAwIDELMAkGA1UEBhMCR0IxETAPBgNVBAMMCGRjcyBkb2NzMB4XDTIwMDIyNDEz
+NTYwNloXDTIxMDIyMzEzNTYwNlowIDELMAkGA1UEBhMCR0IxETAPBgNVBAMMCGRj
+cyBkb2NzMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6rhwmV4Eck67
+smukeuNxp0DB4S1hDCSWIMhsI3Fc0Hd9UjNJWgVn7TSjv60zS4DM9X09qzoyFa43
+jCyhbwr+fxvuL02cX6KYzauN9R0RejLx0eT7o9ov2AYh69OiMPAwrD8nZOpYibAu
+csz2q2BQNd/FfUaqj0nYAgj5pwyIf72bUKC/UgJpVDUKiI3+pgiL+FcEJne7vZue
+ptWEMDYcU4Gnne9SAm0yKe4pfduYTyEhNh/+A+ymHZk9pR0FdlsaxMU+fVwpXjZc
+w3skOw2hgxFeNkkT4a/FHfaxdCmHCL4dQ6iVgajjrd8au8bAc4KjLraMp+9N6VbQ
+wed/D97sxwIDAQABo1MwUTAdBgNVHQ4EFgQUmFHWe0ZP8a4PCZqmOmnr6pUNK4gw
+HwYDVR0jBBgwFoAUmFHWe0ZP8a4PCZqmOmnr6pUNK4gwDwYDVR0TAQH/BAUwAwEB
+/zANBgkqhkiG9w0BAQsFAAOCAQEAkOjU6uRNGdhTroEuVw0unidlj5RT7/x5BxDy
+JU39dnStMO8nASBpW5Gm3uZh/z5f9RYhq3/uvJH70NRshKwuVu8xCQe2E83tpl6S
+BfUP68ykEqHgA+eNuhZoUpspY+PaQ6SdZbJqaz13mAftfFVIQhYxBO2lWlg/zMUd
+kl33AFrd5Mf4E2eRHqngsIrWL6H2SHLJbJ5l3MhqjrdgFktOGXnC57lJifeAtUsS
+/5tKej3jNUEi6FCHKUBpBp8hAKH8WOieAdqiheSAYzR8Jq7CMRYQgHRJF/bvPFHr
+xHllK2Kqd5dTQQavfdPYdGIm8w8j6ow/LUPvoCLwwDu+wtgb5Q==
+-----END CERTIFICATE-----
+```
+
+The certificate may have a large block of text describing its contents before the certificate block. You can ignore this.
+
+In the PEM format, the text between `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----` is the Base64 encoding of the binary DER format.
+
+You must then decode the Base64 string to get the binary DER.
+## Hash the binary representation of the certificate
+
+Use a library or a command line tool to hash the certificate.
+
+You need to generate SHA1 and SHA256 hashes of your certificate’s binary DER.
+
+For each hash, you need to:
+
+1. Make sure the hash is in raw bytes - some tools return a Base64 string or hex string by default.
+1. Encode the bytes into Base64url.
+1. Remove padding by stripping any `=` characters.
+
+Base64url uses `-` and `_` in place of `+` and `/` characters.
+
+If your library or command line tool cannot encode bytes to Base64url directly, you’ll have to:
+
+1. Encode the bytes to Base64.
+1. Convert the Base64 string to Base64url in your own code.
+
+## Use the thumbprints to build a JWS or JWE object
+
+Once you’ve created your SHA1 and SHA256 hashes, you can use them to [sign and encrypt your DCS payload](https://docs.google.com/document/d/1zh0SdVBzsZXCesAsLVxr8ZFAV-iXlXYU2daAgE6vTMI/edit#).
+
+
+ <%= partial "partials/links" %>
