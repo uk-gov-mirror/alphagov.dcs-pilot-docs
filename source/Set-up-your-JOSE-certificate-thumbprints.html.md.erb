@@ -11,9 +11,9 @@ You’ll need to include a certificate ‘thumbprint’ (also sometimes known as
 
 The thumbprint is a hash of the public certificate used to sign or encrypt the JWS or JWE object. DCS uses the thumbprint to look up which certificate to use to validate your signature or decrypt your message.
 
-The [library you use to build JWS and JWE objects](/sign-and-encrypt-a-DCS-payload/#choose-a-library-to-use-for-jws-and-jwe) may be able to create thumbprints for you. If you need to create the thumbprints yourself, follow this guide.
+The [library you use to build JWS and JWE objects](/sign-and-encrypt-a-DCS-payload/#choose-a-library-to-use-for-jws-and-jwe) may be able to create thumbprints for you.
 
-To manually set up your certificate thumbprints, you’ll need to:
+If you need to create the thumbprints manually yourself, you’ll need to:
 
 1. Check your certificate is in binary DER format.
 1. Hash the binary representation of the certificate.
