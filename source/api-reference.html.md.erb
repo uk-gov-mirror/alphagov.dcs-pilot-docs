@@ -214,4 +214,6 @@ DCS returns a:
 + 503 (Service unavailable) HTTP status code if, at the time you submit a request, the combined total traffic from all pilot organisations is over the rate limit
 + 429 (Too many requests) HTTP status code if you have gone over your individual share of the limit
 
+In both cases, the [`Retry-After`][Retry-After] HTTP header specifies how many seconds you should wait before retrying.
+
 <%= partial "partials/links" %>
