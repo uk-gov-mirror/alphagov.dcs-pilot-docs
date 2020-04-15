@@ -1,0 +1,81 @@
+---
+title: Access the data in a DCS response
+weight: 4.7
+last_reviewed_on: 2020-04-20
+review_in: 6 weeks
+---
+
+# Access the data in a DCS response
+
+When you make a successful request to the Document Checking Service (DCS), the DCS will respond with:
+
+* a `200` HTTP response code
+* a [JOSE object](https://dcs-pilot-docs.cloudapps.digital/Set-up-your-JOSE-certificate-thumbprints/#set-up-your-jose-certificate-thumbprints) containing the data you requested
+
+Follow these instructions to access the data in the DCS response. You’ll need to:
+
+1. Retrieve the response body.
+1. Validate the outer signature.
+1. Decrypt the JSON Web Encryption (JWE) object inside.
+1. Validate the inner signature to reveal the JSON message inside.
+
+You can read about the data contained in JSON messages in the [API reference section](https://dcs-pilot-docs.cloudapps.digital/api-reference/#api-reference).
+
+## Prerequisites
+
+You should have successfully submitted a request to the DCS which returns a `200` HTTP response code.
+
+You’ll need to use a library to work with the JSON Web Signature (JWS) and JWE objects. You can use the same one you used to [sign and encrypt your DCS request](https://dcs-pilot-docs.cloudapps.digital/sign-and-encrypt-a-DCS-payload/#sign-and-encrypt-a-dcs-payload).
+
+You’ll need:
+
+* [your encryption key](https://dcs-pilot-docs.cloudapps.digital/generate-keys-and-request-certificates/#generate-a-private-rsa-key)
+* [the DCS public signing certificate](https://dcs-pilot-docs.cloudapps.digital/generate-keys-and-request-certificates/#create-a-certificate-signing-request-csr)
+
+## Retrieve the response body
+
+Extract the response body from the DCS response and consume it using your JWS library. You must extract the response body in a form your JWS library can consume - this is likely to be a string.
+
+## Validate the outer signature
+
+Validating the outer signature means you’re removing the first layer of encryption.
+
+To validate the outer signature, you must:
+
+1. Use your JWS library’s signature validation method.
+1. Pass your JWS library the DCS response body string.
+1. Pass your JWS library the DCS signing certificate.
+
+This will return a string which is the response body string with the signature removed. Keep this for the next step.
+
+## Decrypt the string
+
+To decrypt the string, you must:
+
+1. Use your JWE library’s decryption method.
+1. Pass your decryption method the DCS response body string with the signature removed, which you generated in the previous step.
+1.  Pass your decryption method your encryption private key.
+
+The method will return the JSON payload.
+
+## Validate the inner signature
+
+Validating the inner signature means you’re removing the final layer of encryption.
+
+To validate the inner signature, you must:
+
+1. Use your JWS library.
+1. Pass your JWS library the decrypted string you generated in the previous step.
+1. Pass your JWS library the DCS signing certificate.
+
+You’ll get a JSON object containing the passport information you requested from DCS.
+
+## Review and use the human-readable response
+
+You now have a plain text JSON object for your application to use. Read the object to discover whether:
+
+* the passport was valid
+* the passport was invalid
+an error occurred in a DCS data provider
+
+ <%= partial "partials/links" %>
