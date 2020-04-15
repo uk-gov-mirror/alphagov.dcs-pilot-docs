@@ -10,7 +10,7 @@ review_in: 6 weeks
 When you make a successful request to the Document Checking Service (DCS), the DCS will respond with:
 
 * a `200` HTTP response code
-* a [JOSE object](https://dcs-pilot-docs.cloudapps.digital/Set-up-your-JOSE-certificate-thumbprints/#set-up-your-jose-certificate-thumbprints) containing the data you requested
+* a [JOSE object](/Set-up-your-JOSE-certificate-thumbprints/#set-up-your-jose-certificate-thumbprints) containing the data you requested
 
 Follow these instructions to access the data in the DCS response. You’ll need to:
 
@@ -19,18 +19,18 @@ Follow these instructions to access the data in the DCS response. You’ll need 
 1. Decrypt the JSON Web Encryption (JWE) object inside.
 1. Validate the inner signature to reveal the JSON message inside.
 
-You can read about the data contained in JSON messages in the [API reference section](https://dcs-pilot-docs.cloudapps.digital/api-reference/#api-reference).
+You can read about the data contained in JSON messages in the [API reference section](/api-reference/#api-reference).
 
-## Prerequisites
+## Prerequisites for accessing the data in a DCS response
 
 You should have successfully submitted a request to the DCS which returns a `200` HTTP response code.
 
-You’ll need to use a library to work with the JSON Web Signature (JWS) and JWE objects. You can use the same one you used to [sign and encrypt your DCS request](https://dcs-pilot-docs.cloudapps.digital/sign-and-encrypt-a-DCS-payload/#sign-and-encrypt-a-dcs-payload).
+You’ll need to use a library to work with the JSON Web Signature (JWS) and JWE objects. You can use the same one you used to [sign and encrypt your DCS request](/sign-and-encrypt-a-DCS-payload/#sign-and-encrypt-a-dcs-payload).
 
 You’ll need:
 
-* [your encryption key](https://dcs-pilot-docs.cloudapps.digital/generate-keys-and-request-certificates/#generate-a-private-rsa-key)
-* [the DCS public signing certificate](https://dcs-pilot-docs.cloudapps.digital/generate-keys-and-request-certificates/#create-a-certificate-signing-request-csr)
+* [your encryption key](/generate-keys-and-request-certificates/#generate-a-private-rsa-key)
+* [the DCS public signing certificate](/generate-keys-and-request-certificates/#create-a-certificate-signing-request-csr)
 
 ## Retrieve the response body
 
@@ -76,6 +76,6 @@ You now have a plain text JSON object for your application to use. Read the obje
 
 * the passport was valid
 * the passport was invalid
-an error occurred in a DCS data provider
+* an error occurred in a DCS data provider
 
  <%= partial "partials/links" %>
