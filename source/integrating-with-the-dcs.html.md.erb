@@ -1,32 +1,45 @@
 ---
-title: Integrating with the Document Checking Service
+title: How the DCS works
 weight: 2
-last_reviewed_on: 2020-04-07
+last_reviewed_on: 2020-04-17
 review_in: 6 weeks
 ---
 
-# Integrating with the Document Checking Service
+# How the DCS works
 
-To digitally check the validity of British passports as part of the [Document Checking Service (DCS) pilot][govuk-link], you must integrate with the DCS API. There are several steps you must complete to integrate with the DCS API:
+The Document Checking Service (DCS) acts as an interface between your service and HM Passport Office.
 
-1. Develop a client to integrate with the DCS API.
-1. Test your client in a dedicated DCS test environment.
-1. Run your client in the production environment as part of the DCS pilot.
+<%= image_tag "dcs-overview.svg", { :alt => '' } %>
 
-It's up to you to decide which programming language your client is using. Your client must be able to handle authentication against the DCS API.
+This diagram shows:
 
-You must test your client in the dedicated test environment provided by the Government Digital Service (GDS) before getting access to the production environment. This environment contains test data to help you check that your application can handle all responses from the [DCS API][api-reference]. Once your client can handle all responses from the DCS API, you can connect to the DCS production environment.
+1. Your service sends a passport check request to the DCS.
+1. The DCS validates the request and sends it to HM Passport Office.
+1. HM Passport Office checks the passport data against their database and sends a response back to the DCS.
+1. The DCS sends the response to your service.
 
-## Getting access to an environment
+## Integrating with the DCS
 
-The test and production environments require dedicated [sets of keys and certificates](https://dcs-pilot-docs.cloudapps.digital/generate-keys-and-request-certificates/#generate-keys-and-request-certificates). To connect to an environment, you must:
+You’ll need to build a client to integrate with the DCS. You can choose which programming language your client uses.
 
-* generate private keys and raise certificate signing requests for your encryption, signing, and mutual authentication certificate
-* receive the DCS's signing and encryption certificates
+This documentation shows you how to integrate with the DCS.
 
-Details about how to raise a certificate signing request with our Certificate Authority will follow after the expression of interest stage of the DCS pilot.
+1. [Generate keys and request certificates](/generate-keys-and-request-certificates/#generate-keys-and-request-certificates) - you’ll [contact DCS support](/support/#support) to get the Public Key Infrastructure (PKI) information so you can get started with integrating with the DCS.
+1. [Create a network connection to the DCS](/create-a-network-connection/#create-a-network-connection-to-the-dcs) using mutual authentication.
+1. [Set up your JOSE certificate thumbprints](/Set-up-your-JOSE-certificate-thumbprints/#set-up-your-jose-certificate-thumbprints).
+1. [Sign and encrypt a DCS payload](/sign-and-encrypt-a-DCS-payload/#sign-and-encrypt-a-dcs-payload).
+1. [Access the data in a DCS response](/access-the-data-in-a-DCS-response/#access-the-data-in-a-dcs-response).
 
-We will onboard selected pilot participants during a 'connecting window' starting from the beginning of 2020.
-We will be refining the onboarding process as we go, and participants should therefore be aware that the process may change between iterations.
+### Using mutual authentication to connect
+
+When connecting to the DCS, you’ll use mutual authentication to secure the messages your client exchanges with the DCS. You’ll use client certificates over Transport Layer Security (TLS) Protocol Version 1.2.
+
+## Getting access to production
+
+You’ll need to successfully complete a full journey in the test environment before you can get access to the production environment.
+
+You’ll need a different set of keys and certificates for your production connection.
+[Contact the DCS pilot helpdesk](/support) if you’re ready to request access to production.
+
 
 <%= partial "partials/links" %>
