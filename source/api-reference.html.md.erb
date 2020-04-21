@@ -216,4 +216,17 @@ DCS returns a:
 
 In both cases, the [`Retry-After`][Retry-After] HTTP header specifies how many seconds you should wait before retrying.
 
+## Quotas
+
+Each organisation connected to the DCS for the pilot will have a quota of DCS checks. This is a fixed limit on the number of production DCS checks that the organisation can make during the pilot.
+
+The DCS returns a 403 (Forbidden) HTTP status code if you have used up your quota. You will be able to make no further DCS checks after this point.
+
+You can see your quota usage in HTTP headers in passport validity responses from the DCS.
+
+* `DCS-Quota-Limit` is the total number of checks you will be able to make as part of the DCS pilot
+* `DCS-Quota-Remaining` is the number of checks you have remaining
+
+These headers will be present in responses with 200 and 403 HTTP status codes. The DCS may also add these headers to other responses.
+
 <%= partial "partials/links" %>
