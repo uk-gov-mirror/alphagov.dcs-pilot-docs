@@ -12,6 +12,7 @@ The Document Checking Service (DCS) uses standard [HTTP response code][HTTP-Stat
 | HTTP response code | Description                            |
 | ------------------ | -------------------------------------- |
 | 200                | The DCS handled your request successfully. |
+| 403                | You have used up [your quota of DCS checks][quotas] and cannot make any more DCS checks.
 | 404                | The DCS URI is incorrect.              |
 | 429                | You have exceeded your total allocated number of API calls or your rate limit. <p>The [`Retry-After`][Retry-After] HTTP header specifies how many seconds you should wait before retrying.</p> |
 | 503                | The DCS is temporarily unavailable because of high traffic. <p>The [`Retry-After`][Retry-After] HTTP header specifies how many seconds you should wait before retrying.</p> |
