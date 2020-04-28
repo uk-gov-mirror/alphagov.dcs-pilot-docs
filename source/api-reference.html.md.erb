@@ -209,7 +209,19 @@ DCS handles up to 50 requests in total every 10 seconds.
 
 This rate limit is divided fairly between the organisations connected to DCS for the pilot.
 
-DCS returns a:
+### Tracking your rate limit usage
+
+The DCS provides information about your rate limit usage in HTTP response headers.
+
+The DCS's HTTP response headers contain information such as:
+
+* [`X-RateLimit-Limit`](https://tools.ietf.org/id/draft-polli-ratelimit-headers-00.html#rfc.section.3.1): the maximum number of requests you can make in the current time window
+* [`X-RateLimit-Remaining`](https://tools.ietf.org/id/draft-polli-ratelimit-headers-00.html#rfc.section.3.2): the remaining number of requests you can make in the current time window
+* [`X-RateLimit-Reset`](https://tools.ietf.org/id/draft-polli-ratelimit-headers-00.html#rfc.section.3.3): the time in seconds until the current usage resets
+
+### Exceeding rate limits
+
+When you exceed the rate limit, the DCS returns a:
 
 + 503 (Service unavailable) HTTP status code if, at the time you submit a request, the combined total traffic from all pilot organisations is over the rate limit
 + 429 (Too many requests) HTTP status code if you have gone over your individual share of the limit
