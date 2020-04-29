@@ -55,12 +55,17 @@ If you see anything different, speak to the team that manages your infrastructur
 
 You need a library in the language you’re using that supports:
 
-
 * [TLS version 1.2](https://www.ncsc.gov.uk/guidance/tls-external-facing-services)
 * client certificates (so you can add your private and public keys)
 * a custom certificate chain (so you can use the DCS CA bundle, which includes certificates signed by the private GDS CA)
 
-Your standard library may support these features.
+The DCS team have tested that you can make successful requests using these libraries:
+
+* Go: [net/http + crypto/tls](https://golang.org/pkg/crypto/tls/#Config)
+* Java: [Apache HttpClient](https://hc.apache.org/httpcomponents-client-ga/index.html)
+* .NET: [System.Net.Http.HttpClientHandler](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclienthandler?view=netcore-3.1)
+* node.js: [https](https://nodejs.org/api/https.html#https_https_request_url_options_callback)
+* Python: [Requests](https://requests.readthedocs.io/)
 
 ### Convert your private key to another format
 
