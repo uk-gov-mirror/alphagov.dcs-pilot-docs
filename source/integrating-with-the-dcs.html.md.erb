@@ -1,7 +1,7 @@
 ---
 title: How the DCS works
 weight: 2
-last_reviewed_on: 2020-04-17
+last_reviewed_on: 2020-05-04
 review_in: 6 weeks
 ---
 
@@ -22,7 +22,9 @@ This diagram shows:
 
 You’ll need to build a client to integrate with the DCS. You can choose which programming language your client uses.
 
-This documentation shows you how to integrate with the DCS.
+Your client will need to be able to sign and encrypt JSON data and make HTTP requests to DCS.
+
+To build a working DCS client, you'll need to:
 
 1. [Generate keys and request certificates](/generate-keys-and-request-certificates/#generate-keys-and-request-certificates) - you’ll [contact DCS support](/support/#support) to get the Public Key Infrastructure (PKI) information so you can get started with integrating with the DCS.
 1. [Create a network connection to the DCS](/create-a-network-connection/#create-a-network-connection-to-the-dcs) using mutual authentication.
