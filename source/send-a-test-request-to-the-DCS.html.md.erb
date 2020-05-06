@@ -1,0 +1,120 @@
+---
+title: Send a test request to the DCS
+weight: 4.65
+last_reviewed_on: 2020-04-20
+review_in: 6 weeks
+---
+
+# Send a test request to the DCS
+You’ll now have a client which can:
+
+* [sign and encrypt a Document Checking Service (DCS) payload](/sign-and-encrypt-a-DCS-payload/#sign-and-encrypt-a-dcs-payload)
+* [make requests secured by mutual Transport Layer Security (mTLS)](/create-a-network-connection/#create-a-network-connection-to-the-dcs) to the DCS
+
+You must check whether your client can make successful passport validity requests using the test passport data on this page.
+
+Use the DCS integration endpoint for your test checks. [Contact the DCS team](/support) if you need the endpoint URL.
+
+
+## Generate a `valid true` response
+
+Enter these sample passport details in your client to test a `valid true` response.
+
+```json
+{
+  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
+  "requestId": "550e8400-e29b-41d4-a716-446655440003",
+  "timestamp": "1997-07-16T19:20:30.45+01:00",
+  "passportNumber": "217237799",
+  "surname": "Roberts",
+  "forenames": [
+    "Audrey"
+  ],
+  "dateOfBirth": "1940-07-23",
+  "expiryDate": "2021-03-01"
+}
+```
+
+If your request is successful, you should receive a response similar to this:
+
+```json
+{
+  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
+  "requestId": "af47ddc1-faa9-42fe-be1f-8131df114713",
+  "error": false,
+  "valid": true
+}
+```
+
+If your response does not look similar to this, [contact the DCS team](/support).
+
+## Generate a `valid false` response
+
+Enter these sample passport details in your client to test a `valid false` response.
+
+```json
+{
+  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
+  "requestId": "550e8400-e29b-41d4-a716-446655440003",
+  "timestamp": "1997-07-16T19:20:30.45+01:00",
+  "passportNumber": "532114382",
+  "surname": "Barlow",
+  "forenames": [
+    "Kenneth"
+  ],
+  "dateOfBirth": "1939-10-09",
+  "expiryDate": "2022-08-03"
+}
+```
+
+If your request is successful, you should receive a response similar to this:
+
+```json
+{
+  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
+  "requestId": "af47ddc1-faa9-42fe-be1f-8131df114713",
+  "error": false,
+  "valid": false
+}
+```
+
+If your response does not look similar to this, [contact the DCS team](/support).
+
+## Generate an `error true` response
+
+Enter these sample passport details in your client to test an `error true` response.
+
+```json
+{
+  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
+  "requestId": "550e8400-e29b-41d4-a716-446655440003",
+  "timestamp": "1997-07-16T19:20:30.45+01:00",
+  "passportNumber": "824159121",
+  "surname": "Sullivan",
+  "forenames": [
+    "Rita"
+  ],
+  "dateOfBirth": "1932-02-25",
+  "expiryDate": "2021-04-19"
+}
+```
+
+If your request is successful, you should receive a response similar to this:
+
+```json
+{
+  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
+  "requestId": "af47ddc1-faa9-42fe-be1f-8131df114713",
+  "error": true,
+  "errorMessage": [
+    "Unplanned outage"
+  ]
+}
+```
+
+If your response does not look similar to this, [contact the DCS team](/support).
+
+Once you’ve received the data, you can [access the data in a DCS response](/access-the-data-in-a-DCS-response/#access-the-data-in-a-dcs-response).
+
+
+ <%= partial "partials/links" %>
