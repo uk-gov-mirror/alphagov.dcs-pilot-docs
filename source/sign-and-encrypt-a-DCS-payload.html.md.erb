@@ -97,7 +97,7 @@ The JWE headers contain information about how the payload is encrypted.
 
 You must set the following headers:
 
-* `enc` must be set to `A128CBC-HS256` or any other [value permitted by RFC 7518](https://tools.ietf.org/html/rfc7518#section-5.1)
+* `enc` must be set to `A128CBC-HS256` or any other [value permitted by RFC 7518][supported-JWE-encodings]
 * `alg` must be set to `RSA-OAEP-256`
 * `typ` must be set to `JWE`
 * `x5t` contains the SHA1 thumbprint of the DCS encryption certificate
@@ -121,9 +121,9 @@ Your header should look like this:
 The encrypted component of the JSON Object Signing and Encryption (JOSE) message must use:
 
 * `RSA-OAEP-256` as the algorithm
-* any encryption method [permitted by RFC 7518](https://tools.ietf.org/html/rfc7518#section-5.1), e.g. `A128CBC-HS256`
+* any encryption method [permitted by RFC 7518][supported-JWE-encodings], e.g. `A128CBC-HS256`
 
-You can [learn more about these in the JSON Web Algorithms specification](https://tools.ietf.org/html/rfc7518).
+You can [learn more about these in the JSON Web Algorithms specification][RFC 7518].
 
 ## Sign your JWE object to complete the process
 
