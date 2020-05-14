@@ -22,11 +22,13 @@ You can check the status of the DCS by making a HTTP GET request to the service 
 
 We recommend you use this endpoint to build appropriate levels of reliability into your service.
 
+### The DCS integration endpoint
+
+The DCS integration endpoint is <https://dcs-integration.ida.digital.cabinet-office.gov.uk/>.
+
 ### Request
 
-`GET: https://<DCS-URI>/checks/passport`
-
-The `<DCS-URI>` will be supplied at a later date.
+`GET: /checks/passport`
 
 The HTTP header must contain `Content-Type: application/jose`.
 
@@ -90,9 +92,7 @@ You can use the DCS API to check if a passport is valid.
 
 ### Request
 
-`POST: https://<DCS-URI>/checks/passport`
-
-The `<DCS-URI>` will be supplied at a later date.
+`POST: /checks/passport`
 
 The HTTP header must contain `Content-Type: application/jose`.
 
