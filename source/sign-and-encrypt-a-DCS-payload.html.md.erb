@@ -68,8 +68,8 @@ The JWS headers contain information about how you have signed the payload, along
 For the DCS, you need to set the following headers:
 
 1. `x5t` contains the SHA1 thumbprint of your certificate.
-1. `x5t#S256` containing the SHA256 thumbprint of your certificate.
-1. `alg` must be set to `RS256`.
+1. `x5t#S256` contains the SHA256 thumbprint of your certificate.
+1. `alg` must be set to one of: `RS256`, `RS384`, `RS512`, `PS256`, `PS384`, or `PS512`.
 
 You must set the `x5t` and `x5t#S256` headers. To set them, you’ll need to have [generated thumbprints for your signing certificate](/Set-up-your-JOSE-certificate-thumbprints).
 
@@ -97,8 +97,8 @@ The JWE headers contain information about how the payload is encrypted.
 
 You must set the following headers:
 
-* `enc` must be set to `A128CBC-HS256`
-* `alg` must be set to `RSA-OAEP`
+* `enc` must be set to a value [permitted by RFC 7518][supported-JWE-encodings], for example `A128CBC-HS256`
+* `alg` must be set to `RSA-OAEP-256`
 * `typ` must be set to `JWE`
 * `x5t` contains the SHA1 thumbprint of the DCS encryption certificate
 * `x5t#S256` contains the SHA256 thumbprint of the DCS encryption certificate
@@ -110,7 +110,7 @@ Your header should look like this:
 ```json
 {
   "enc":"A128CBC-HS256",
-  "alg":"RSA-OAEP",
+  "alg":"RSA-OAEP-256",
   "typ":"JWE",
   "x5t":"xiWgxFMOIw1M4m9LYCnKZk5eHJs",
   "x5t#S256":"PJLEl_B6MFKaMEG6HK7BBdaueJc7e-SiimQfvEpTYj4"
@@ -118,12 +118,12 @@ Your header should look like this:
 ```
 ### Using encryption algorithms
 
-The encrypted component of the JavaScript Object Signing and Encryption (JOSE) message must use:
+The encrypted component of the JSON Object Signing and Encryption (JOSE) message must use:
 
-* `RSA-OAEP` as the algorithm
-* `A128CBC-HS256` as the encryption method
+* `RSA-OAEP-256` as the algorithm
+* any encryption method [permitted by RFC 7518][supported-JWE-encodings], for example `A128CBC-HS256`
 
-You can [learn more about these in the JSON Web Algorithms specification](https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40).
+You can [learn more about these in the JSON Web Algorithms specification][RFC 7518].
 
 ## Sign your JWE object to complete the process
 
@@ -133,4 +133,4 @@ After creating your JWE object, you need to use JWS to sign your payload for a s
 
 In your library, you should use the same JWS tools and headers you created when you first signed your JSON payload.
 
- <%= partial "partials/links" %>
+<%= partial "partials/links" %>
