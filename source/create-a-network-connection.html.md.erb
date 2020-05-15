@@ -18,9 +18,7 @@ Before setting up mTLS, you’ll need:
 
 ## Test your connectivity to the DCS by making a GET request
 
-You need to have network access to the DCS. You can check if you have this access by using a tool like [curl](https://curl.haxx.se/) or [Postman](https://www.postman.com/) to make a GET request to the DCS URL.
-
-[Contact the DCS helpdesk](/support) if you do not have the DCS URL.
+You need to have network access to the DCS. You can check if you have this access by using a tool like [curl](https://curl.haxx.se/) or [Postman](https://www.postman.com/) to make a GET request to the DCS URL: `https://dcs-integration.ida.digital.cabinet-office.gov.uk/checks/passport`.
 
 There are many ways to check if you have the correct access. For example, using the curl command line utility tool:
 
@@ -28,7 +26,7 @@ There are many ways to check if you have the correct access. For example, using 
 curl --cacert <path to CA bundle> \
      --cert <path to client certificate> \
      --key <path to private key> \
-     -v <DCS URL>/checks/passport
+     -v https://dcs-integration.ida.digital.cabinet-office.gov.uk/checks/passport
 ```
 
 You should get a response similar to this:
@@ -89,7 +87,7 @@ Configure your chosen language library to use:
 
 Using the code you’ve written using your chosen library, make an HTTPS GET request to:
 
-```<DCS URL>/checks/passport```
+`https://dcs-integration.ida.digital.cabinet-office.gov.uk/checks/passport`
 
 You should receive a response with an HTTP status of 200 and a JSON body as follows:
 
