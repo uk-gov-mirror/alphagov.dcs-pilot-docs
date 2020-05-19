@@ -29,8 +29,8 @@ You’ll need to use a library to work with the JSON Web Signature (JWS) and JWE
 
 You’ll need:
 
-* [your encryption key](/generate-keys-and-request-certificates/#generate-a-private-rsa-key)
-* [the DCS public signing certificate](/generate-keys-and-request-certificates/#create-a-certificate-signing-request-csr)
+* [your encryption private key](/generate-keys-and-request-certificates/#generate-a-private-rsa-key)
+* to [download the DCS public signing certificate][DCS public signing certificate]
 
 ## Retrieve the response body
 
@@ -52,7 +52,7 @@ To validate the outer signature, you must:
 
 1. Use your JWS library’s signature validation method.
 1. Pass your JWS library the DCS response body string.
-1. Pass your JWS library the DCS signing certificate.
+1. [Pass your JWS library the DCS public signing certificate][DCS public signing certificate].
 
 This will return a string which is the response body string with the signature removed. Keep this for the next step.
 
@@ -68,7 +68,7 @@ To decrypt the string, you must:
 
 1. Use your JWE library’s decryption method.
 1. Pass your decryption method the DCS response body string with the signature removed, which you generated in the previous step.
-1.  Pass your decryption method your encryption private key.
+1. Pass your decryption method your encryption private key.
 
 The method will return the JSON payload.
 
@@ -86,7 +86,7 @@ To validate the inner signature, you must:
 
 1. Use your JWS library.
 1. Pass your JWS library the decrypted string you generated in the previous step.
-1. Pass your JWS library the DCS signing certificate.
+1. [Pass your JWS library the DCS public signing certificate][DCS public signing certificate].
 
 You’ll get a JSON object containing the passport information you requested from DCS.
 
