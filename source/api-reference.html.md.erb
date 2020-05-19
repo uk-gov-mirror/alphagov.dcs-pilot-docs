@@ -203,9 +203,14 @@ A list of strings which describes the error. This field is present if there was 
 
 ## Understand rate limits in the DCS
 
-DCS handles up to 50 requests in total every 10 seconds.
+The DCS can handle up to 50 requests in total every 10 seconds.
 
-This rate limit is divided fairly between the organisations connected to DCS for the pilot.
+As a pilot participant, you will be subject to the following rate limits. Both use a sliding window rate limit algorithm.
+
+1. An overall rate limit of 50 requests every 10 seconds. This is shared between all pilot participants.
+1. An individual rate limit of (300 / number of participants) requests every 60 seconds. For instance, if 10 participants join the pilot, you would have an individual rate limit of 30 requests every 60 seconds.
+
+We may change these rate limits in future to better meet your needs.
 
 ### Tracking your rate limit usage
 
@@ -221,8 +226,8 @@ The DCS's HTTP response headers contain information such as:
 
 When you exceed the rate limit, the DCS returns a:
 
-+ 503 (Service unavailable) HTTP status code if, at the time you submit a request, the combined total traffic from all pilot organisations is over the rate limit
-+ 429 (Too many requests) HTTP status code if you have gone over your individual share of the limit
++ 503 (Service unavailable) HTTP status code if, at the time you submit a request, the combined total traffic from all pilot organisations is over the overall rate limit
++ 429 (Too many requests) HTTP status code if you have gone over your individual rate limit
 
 In both cases, the [`Retry-After`][Retry-After] HTTP header specifies how many seconds you should wait before retrying.
 
