@@ -203,12 +203,10 @@ A list of strings which describes the error. This field is present if there was 
 
 ## Understand rate limits in the DCS
 
-The DCS can handle up to 50 requests in total every 10 seconds.
+As a pilot participant, you'll be subject to both:
 
-As a pilot participant, you will be subject to the following rate limits. Both use a sliding window rate limit algorithm.
-
-1. An overall rate limit of 50 requests every 10 seconds. This is shared between all pilot participants.
-1. An individual rate limit of (300 / number of participants) requests every 60 seconds. For instance, if 10 participants join the pilot, you would have an individual rate limit of 30 requests every 60 seconds.
+* an overall rate limit of 50 requests in any 10 second period - this is shared between all pilot participants
+* an individual rate limit of (300 / number of participants) requests in any 60 second period - for example if 10 participants join the pilot, you would have an individual rate limit of 30 requests in any 60 second period
 
 These rate limits may change over the course of the pilot.
 
