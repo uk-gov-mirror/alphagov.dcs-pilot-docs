@@ -1,7 +1,7 @@
 ---
 title: Status response codes
 weight: 6
-last_reviewed_on: 2020-04-07
+last_reviewed_on: 2020-05-29
 review_in: 6 weeks
 ---
 
@@ -12,7 +12,8 @@ The Document Checking Service (DCS) uses standard [HTTP response code][HTTP-Stat
 | HTTP response code | Description                            |
 | ------------------ | -------------------------------------- |
 | 200                | The DCS handled your request successfully. |
-| 403                | You have used up [your quota of DCS checks][quotas] and cannot make any more DCS checks.
+| 400                | Your JOSE payload is incorrectly formed, the error message will tell you what is wrong |
+| 403                | You have used up [your quota of DCS checks][quotas] and cannot make any more DCS checks. |
 | 404                | The DCS URI is incorrect.              |
 | 429                | You have exceeded your total allocated number of API calls or your rate limit. <p>The [`Retry-After`][Retry-After] HTTP header specifies how many seconds you should wait before retrying.</p> |
 | 503                | The DCS is temporarily unavailable because of high traffic. <p>The [`Retry-After`][Retry-After] HTTP header specifies how many seconds you should wait before retrying.</p> |
