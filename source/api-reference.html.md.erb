@@ -1,8 +1,8 @@
 ---
 title: API reference
 weight: 6
-last_reviewed_on: 2020-05-06
-review_in: 3 weeks
+last_reviewed_on: 2020-05-29
+review_in: 6 weeks
 ---
 
 # API reference
@@ -43,26 +43,19 @@ If the DCS is available, the JSON response body will be similar to:
 }
 ```
 
+Please note the `scheduledOutages` field is deprecated and will always contain an empty array.
+
 If the DCS is unavailable, the `message` field in the response describes the cause. The cause for unavailability can be:
 
 * `Limit exceeded` - you have exceeded your allocated number of API calls
-* `Planned outage in progress finishing <TIMESTAMP>` - the DCS or HM Passport Office (HMPO) are in a period of scheduled downtime, ending at `<TIMESTAMP>`
 * `Unplanned outage` - the DCS or HMPO are experiencing a period of unscheduled downtime
 
-For example, during a planned outage, the response is similar to:
+For example, during a unplanned outage, the response will be:
 
 ```json
 {
   "available": false,
-  "message": "Planned outage in progress finishing 2019-09-12T00:00:00.000Z",
-  "scheduledOutages":
-    [
-      {
-      	"start":"2019-09-05T00:00:00.000Z",
-      	"end":"2019-09-12T00:00:00.000Z",
-      	"message":"Maintenance work is underway."
-      }
-    ]
+  "message": "Unplanned outage",
 }
 ```
 
@@ -71,18 +64,6 @@ Boolean field indicating if the DCS is available and serving requests.
 
 #### message
 A string explaining why the DCS is unavailable. For example, if there is an ongoing planned outage, the field will contain detail about the duration of the outage.
-
-#### scheduledOutages
-A list of upcoming scheduled outages. The list is empty if there are no outages.
-
-#### scheduledOutages.start
-String in ISO 8601 format indicating when an outage is scheduled to start.
-
-#### scheduledOutages.end
-String in ISO 8601 format indicating when an outage is scheduled to end.
-
-#### scheduledOutages.message
-String indicating the reason for the scheduled outage.
 
 ## Check passport validity
 
@@ -140,10 +121,9 @@ The passport expiration date in YYYY-MM-DD format. Must be in the future or no m
 
 A successful request is one that completes without error, regardless of whether the passport is valid or not.
 
-The DCS returns a:
+The DCS returns a `200` [HTTP response code][status-response-codes] for successful requests. 
 
-* `200` [HTTP response code][status-response-codes] for successful requests
-* `503` [HTTP response code][status-response-codes] if HMPO is having a planned outage
+If the requests are not successful, the DCS will return a [HTTP response code][status-response-codes] to indicate why the request was not successful.
 
 Example response body for a valid passport:
 
