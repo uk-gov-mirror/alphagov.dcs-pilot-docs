@@ -1,0 +1,50 @@
+---
+title: Reduce errors when using data from a passport chip
+weight: 5.5
+last_reviewed_on: 2020-06-03
+review_in: 6 weeks
+---
+# Reduce errors when using data from a passport chip
+
+Passports issued by Her Majesty's Passport Office (HMPO) conform to [ICAO 9303], which is the international specification for machine-readable travel documents.
+
+Many of these passports contain a near-field communication (NFC) chip which holds a copy of the document's data.
+
+Valid passports may fail a Document Checking Service (DCS) check when using data provided by the passport's chip rather than the information printed on the passport's photo page.
+
+## Understanding why valid passports might return `valid: false`
+
+The data on the chip and in the printed Machine-Readable Zone (MRZ) uses a smaller set of characters (0-9, A-Z) than the printed information in the Visual Inspection Zone (VIZ).
+
+HMPO validates passports against the VIZ data, not the MRZ data. Some passport holders’ names will appear differently in MRZ and VIZ formats because of the character omission or replacement.
+
+Characters outside the MRZ set are either omitted or replaced with a filler character (`<`) following these rules:
+
+* apostrophes (`’`) are omitted, for example, O’NEILL (VIZ) and ONEILL (MRZ)
+* spaces are replaced with `<`, for example, ANNA MARIE (VIZ) and ANNA<MARIE (MRZ)
+* hyphens (`-`) are replaced with `<`, for example, ANNA-MARIE (VIZ) and ANNA<MARIE (MRZ)
+* accents and other non-alphanumeric characters (`á`,`ß`, `Д`) should [be replaced according to Section 6 of ICAO 9303][ICAO 9303], for example, ZOË (VIZ) and ZOE (MRZ)
+
+
+DCS checks using MRZ data from the passport chip will not match the VIZ data used by HMPO and your service will receive a `valid: false` response.
+
+### Example of a failing check on a valid passport 
+
+Imagine a holder of a valid passport with a single forename, "Sarah-Jane".
+
+This is encoded in the MRZ as `SARAH<JANE` and in the VIZ as `SARAH-JANE`.
+
+As the filler character can mean a hyphen or a space, the forename field provided by the MRZ has 2 possible interpretations: "SARAH-JANE" and "SARAH JANE".
+
+Both of these interpretations pass [DCS field validation](/api-reference/#forenames) but only one is a valid document. The other will return `valid: false`.
+
+Without consulting the VIZ data, there is no way to tell which interpretation is correct.
+
+## Reduce the number of incorrectly failed checks
+
+You can improve the accuracy of the DCS checks that use data from the passport chip, for example:
+
+* if the initial check fails, allow the user to input their passport data manually 
+* if there are multiple interpretations, submit a DCS check for both (each request will contribute to your [quota](/api-reference/#understand-quotas-in-the-dcs))
+
+<%= partial "partials/links" %>
