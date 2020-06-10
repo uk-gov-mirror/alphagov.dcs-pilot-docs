@@ -1,38 +1,36 @@
 ---
 title: API reference
 weight: 6
-last_reviewed_on: 2020-05-29
+last_reviewed_on: 2020-06-10
 review_in: 6 weeks
 ---
 
 # API reference
 
-The Document Checking Service (DCS) API is based on [REST principles][REST]. It returns data in [JSON format][JSON], and uses standard [HTTP status response codes][status-response-codes].
+The Document Checking Service (DCS) API:
+
+* is based on [REST principles](https://restfulapi.net/)
+* returns data in [JSON format](https://www.rfc-editor.org/info/rfc8259)
+* uses standard [HTTP status response codes](/status-response-codes/#status-response-codes)
 
 This section describes the calls you can make to the DCS API, along with example requests and possible responses.
 
 Using the DCS API you can:
 
-* [see the operational status of the DCS][check-status]
-* [check passport validity][check-passport]
+* [check the DCS status](/api-reference/#check-the-dcs-status)
+* [check whether a passport is valid](/api-reference/#check-whether-a-passport-is-valid)
 
 ## Check the DCS status
 
-You can check the status of the DCS by making a HTTP GET request to the service endpoint.
+You can check the status of the DCS which helps you build a fallback plan if the DCS is unavailable.
 
-We recommend you use this endpoint to build appropriate levels of reliability into your service.
+### Make a status request
 
-### The DCS integration endpoint
-
-The DCS integration endpoint is <https://dcs-integration.ida.digital.cabinet-office.gov.uk/>.
-
-### Request
-
-`GET: /checks/passport`
+`GET /checks/passport`
 
 The request body for a DCS status check is empty and therefore does not require the [signature and encryption wrapper](/sign-and-encrypt-a-DCS-payload/#sign-and-encrypt-a-dcs-payload).
 
-### Response
+### Interpret the status response
 
 If the DCS is available, the JSON response body will be similar to:
 
@@ -43,89 +41,64 @@ If the DCS is available, the JSON response body will be similar to:
 }
 ```
 
-Please note the `scheduledOutages` field is deprecated and will always contain an empty array.
+If the DCS is unavailable, the `message` field in the response describes the reason. The reason for the DCS being unavailable can be:
 
-If the DCS is unavailable, the `message` field in the response describes the cause. The cause for unavailability can be:
+* `Limit exceeded` - you have exceeded your [rate limit](/api-reference/#understand-rate-limits-in-the-dcs)
+* `Unplanned outage` - the DCS or Her Majesty’s Passport Office (HMPO) is experiencing a period of unscheduled downtime
 
-* `Limit exceeded` - you have exceeded your allocated number of API calls
-* `Unplanned outage` - the DCS or HMPO are experiencing a period of unscheduled downtime
+| Field                              | Type    | Description                                                                                                                                              |
+|------------------------------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| available                | boolean | Indicates if the DCS is available and serving requests.                                                                                                  |
+| scheduledOutages         | array   | A list of upcoming scheduled outages, which is empty if there are no outages scheduled.                                                                  |
+| message                  | string  | Explains why the DCS is unavailable. For example, if there is an ongoing planned outage, the field will contain details of the outage duration.          |
+| scheduledOutages.start   | string  | Indicates when an outage is scheduled to start. Will be in [ISO 8601](https://www.w3.org/TR/NOTE-datetime) format, for example 2020-01-01T12:30:00.000Z. |
+| scheduledOutages.end     | string  | Indicates when an outage is scheduled to end. Will be in [ISO 8601](https://www.w3.org/TR/NOTE-datetime) format, for example 2020-01-01T12:30:00.000Z.   |
+| scheduledOutages.message | string  | Indicates the reason for the scheduled outage.  |
 
-For example, during a unplanned outage, the response will be:
-
-```json
-{
-  "available": false,
-  "message": "Unplanned outage",
-}
-```
-
-#### available
-Boolean field indicating if the DCS is available and serving requests.
-
-#### message
-A string explaining why the DCS is unavailable. For example, if there is an ongoing planned outage, the field will contain detail about the duration of the outage.
-
-## Check passport validity
+## Check whether a passport is valid
 
 You can use the DCS API to check if a passport is valid.
 
-### Request
+### Make a passport validity check request
 
-`POST: /checks/passport`
+`POST /checks/passport`
 
-The HTTP header must contain `Content-Type: application/jose`.
+Request HTTP headers must include `Content-Type: application/jose`.
 
-For example, below is the structure of the JSON object in a request body without the [signature and encryption wrapper](/sign-and-encrypt-a-DCS-payload/#sign-and-encrypt-a-dcs-payload). All fields in the JSON object are mandatory:
+The request body should be a [DCS payload](/sign-and-encrypt-a-DCS-payload/#build-a-plain-json-payload).
+
+| Field       | Type   | Description                                                                                                                                                                                                                                                  |
+|--------------------------------------------|--------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| correlationId  | string | Contains an [RFC 4122]-compliant Universally Unique Identifier (UUID) which ties together multiple requests in the same session.                                                                                        |
+| requestId      | string | Contains an [RFC 4122]-compliant UUID which identifies a single request within a session.                                                                                                                               |
+| timestamp      | string | When your client makes the request. Must be in [ISO 8601](https://www.w3.org/TR/NOTE-datetime), for example 2020-01-01T12:30:00.000Z.                                                                                                                        |
+| passportNumber | string | The number on the passport. This is between 1 and 899999999.                                                                                                                                                                                                 |
+| surname        | string | The surname on the passport must be maximum 30 characters and only contain the characters a-z, A-Z, space, hyphen, full stop and apostrophe.                                                                                                                 |
+| forenames      | array  | A list containing the forenames on the passport. The total length of all forenames must be maximum 30 characters, including spaces between the forenames.  The forenames must only contain the characters a-z, A-Z, space, hyphen, full stop and apostrophe. |
+| dateOfBirth    | string | Birth date on the passport in YYYY-MM-DD format.                                                                                                                                                                                                             |
+| expiryDate     | string | The passport expiration date in YYYY-MM-DD format. Must be no more than 18 months in the past at the time you submit the request.                                                                                                                            |
+
+The DCS validates each field before forwarding the evidence check to HMPO. For example, if the `requestId` field was not a valid UUID, you would receive a response similar to:
 
 ```json
 {
-  "correlationId": "a16c296f-4f03-4f25-af32-91240b1e0da7",
-  "requestId": "5d700930-c41b-4e99-92cd-e9517dce11c8",
-  "timestamp": "1997-07-16T19:20:30.45+01:00",
-  "passportNumber": "123456789",
-  "surname": "Smith",
-  "forenames": [
-    "Bob",
-    "Dave"
+  "error": true,
+  "errorMessage": [
+    "validation: requestId: must be in universally unique identifier (UUID) format"
   ],
-  "dateOfBirth": "1950-02-13",
-  "expiryDate": "2020-01-01"
+  "correlationId": "15ac0617-2654-4886-9cff-eaac3a47ae99",
+  "requestId": "not-a-valid-uuid"
 }
 ```
+### Interpret the passport validity response
 
-#### correlationId
-String containing an [RFC 4122] compliant Universally Unique Identifier (UUID) which ties together multiple requests in the same session.
+A successful request completes without any errors, regardless of whether the passport is valid or not.
 
-#### requestId
-String containing an [RFC 4122] compliant UUID which identifies a single request within a session.
-
-#### timestamp
-String in ISO 8601 format which identifies when the request took place.
-
-#### passportNumber
-The number of the passport being checked, which is an integer between 1 and 899999999.
-
-#### surname
-String of maximum 30 characters containing the surname as on the passport. The surname must only contain the characters a-z, A-Z, space, hyphen, full stop and apostrophe.
-
-#### forenames
-List of strings containing the forenames on the passport. The concatenated strings, including spaces between forenames, must be maximum 30 characters. The forenames must only contain the characters a-z, A-Z, space, hyphen, full stop and apostrophe.
-
-#### dateOfBirth
-Birth date as on the passport in YYYY-MM-DD format.
-
-#### expiryDate
-The passport expiration date in YYYY-MM-DD format. Must be in the future or no more than 18 months in the past at the time you submit the request.
-
-### Response
-
-A successful request is one that completes without error, regardless of whether the passport is valid or not.
-
-The DCS returns a `200` [HTTP response code][status-response-codes] for successful requests. 
+The DCS returns a `200` [HTTP response code][status-response-codes] for successful requests. This response is a JSON payload in a [signing and encryption wrapper](/sign-and-encrypt-a-DCS-payload/#sign-and-encrypt-a-dcs-payload).
 
 If the requests are not successful, the DCS will return a [HTTP response code][status-response-codes] to indicate why the request was not successful.
 
-Example response body for a valid passport:
+#### Example payload for a valid passport
 
 ```json
 {
@@ -136,7 +109,7 @@ Example response body for a valid passport:
 }
 ```
 
-Example response body for an invalid passport:
+#### Example payload for an invalid passport
 
 ```json
 {
@@ -147,7 +120,7 @@ Example response body for an invalid passport:
 }
 ```
 
-Example response body for a successful response containing an error:
+#### Example payload for a successful response containing an error
 
 ```json
 {
@@ -160,64 +133,51 @@ Example response body for a successful response containing an error:
 }
 ```
 
-Example plain text response body for a planned outage:
+| Field          | Type    | Description                                                                                                                              |
+|-----------------|---------|------------------------------------------------------------------------------------------------------------------------------------------|
+| correlationId | string  | Contains the same `correlationId` provided in the request, which is a [RFC 4122]-compliant UUID.                                         |
+| requestId     | string  | Contains the same `requestId` provided in the request, which is a [RFC 4122]-compliant UUID.    
+| error         | boolean | Indicates if there was an error when checking the passport data.                                                                         |
+| valid         | boolean | Indicates if the passport is valid or not. This field is not included if there is an error.                                              |
+| errorMessage  | array   | A list of error messages which indicate why there was an error processing the request. This field is only included if there is an error. |
 
-```
-Service passport check: Planned outage in progress finishing at 2019-10-24T03:00:00.000+01:00
-```
-
-#### correlationId
-String containing an [RFC 4122] compliant UUID which ties together multiple requests in the same session.
-
-#### requestId
-String containing an [RFC 4122] compliant UUID which identifies a single request within a session. This is the request ID from the original request.
-
-#### error
-Boolean indicating if there was an error when checking the passport data.
-
-#### valid
-Boolean indicating if the passport is valid or not. This field is not included if there is an error.
-
-#### errorMessage
-A list of strings which describes the error. This field is present if there was an error processing the request.
 
 ## Understand rate limits in the DCS
 
-As a pilot participant, you'll be subject to both:
+The DCS handles up to 50 requests every 10 seconds. This rate limit is divided between the pilot participants.
 
-* an overall rate limit of 50 requests in any 10 second period - this is shared between all pilot participants
-* an individual rate limit of (300 / number of participants) requests in any 60 second period - for example if 10 participants join the pilot, you would have an individual rate limit of 30 requests in any 60 second period
+Each participant will have a fixed number of requests over a 60 second period, equal to 300 divided by the number of participants. For example, if there are 10 participants, each would have an individual rate limit of 30 requests per 60 seconds.
 
 These rate limits may change over the course of the pilot.
 
 ### Tracking your rate limit usage
 
-The DCS provides information about your rate limit usage in HTTP response headers.
-
-The DCS's HTTP response headers contain information such as:
+The DCS provides rate limit information within the following HTTP response headers:
 
 * [`X-RateLimit-Limit`](https://tools.ietf.org/id/draft-polli-ratelimit-headers-00.html#rfc.section.3.1): the maximum number of requests you can make in the current time window
 * [`X-RateLimit-Remaining`](https://tools.ietf.org/id/draft-polli-ratelimit-headers-00.html#rfc.section.3.2): the remaining number of requests you can make in the current time window
-* [`X-RateLimit-Reset`](https://tools.ietf.org/id/draft-polli-ratelimit-headers-00.html#rfc.section.3.3): the time in seconds until the current usage resets
+* [`X-RateLimit-Reset`](https://tools.ietf.org/id/draft-polli-ratelimit-headers-00.html#rfc.section.3.3): the time in seconds you have to wait until your usage resets
 
 ### Exceeding rate limits
 
 When you exceed the rate limit, the DCS returns a:
 
-+ 503 (Service unavailable) HTTP status code if, at the time you submit a request, the combined total traffic from all pilot organisations is over the overall rate limit
-+ 429 (Too many requests) HTTP status code if you have gone over your individual rate limit
+* `503 Service Unavailable` HTTP status code if, at the time you submit a request, the total traffic from all pilot organisations is over the rate limit
+* `429 Too Many Requests` HTTP status code if you have exceeded your individual share of the limit
 
-In both cases, the [`Retry-After`][Retry-After] HTTP header specifies how many seconds you should wait before retrying.
+In both cases, the [`Retry-After`][Retry-After] HTTP response header specifies how many seconds you should wait before retrying.
 
-## Understand quotas in the DCS
+## Understand your quota in the DCS
 
-Each organisation connected to the DCS for the pilot will have a quota of checks for the DCS. This quota is a fixed limit on how many checks the organisation can make in DCS production during the pilot.
+Each organisation will have an allocated quota of checks in the DCS production environment during the pilot.
 
-The DCS returns a 403 (Forbidden) HTTP status code if you have used up your quota. You will not be able to make DCS checks after this point.
+The DCS provides quota usage information within the following HTTP response headers:
 
-You can see your quota usage in the HTTP headers when you receive passport validity responses from the DCS.
-
-* `DCS-Quota-Limit` is the total number of checks you'll be able to make as part of the DCS pilot
+* `DCS-Quota-Limit` is the total number of checks you'll be able to make within the DCS pilot
 * `DCS-Quota-Remaining` is the number of checks you have remaining
+
+The DCS returns a `403 Forbidden` HTTP status code if you have used up your quota. You will not be able to make DCS checks after this point. If you need more advice or help with your quota, [contact the DCS helpdesk](/support).
+
+
 
 <%= partial "partials/links" %>

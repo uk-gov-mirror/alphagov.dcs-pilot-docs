@@ -36,7 +36,7 @@ This is encoded in the MRZ as `SARAH<JANE` and in the VIZ as `SARAH-JANE`.
 
 As the filler character can mean a hyphen or a space, the forename field provided by the MRZ has 2 possible interpretations: "SARAH-JANE" and "SARAH JANE".
 
-Both of these interpretations pass [DCS field validation](/api-reference/#forenames) but only one is a valid document. The other will return `valid: false`.
+Both of these interpretations pass [DCS field validation](/api-reference/#make-a-passport-validity-check-request) but only one is a valid document. The other will return `valid: false`.
 
 Without consulting the VIZ data, there is no way to tell which interpretation is correct.
 
@@ -45,6 +45,6 @@ Without consulting the VIZ data, there is no way to tell which interpretation is
 You can improve the accuracy of the DCS checks that use data from the passport chip, for example:
 
 * if the initial check fails, allow the user to input their passport data manually 
-* if there are multiple interpretations, submit a DCS check for both (each request will contribute to your [quota](/api-reference/#understand-quotas-in-the-dcs))
+* if there are multiple interpretations, submit a DCS check for both (each request will contribute to your [quota][quotas])
 
 <%= partial "partials/links" %>
