@@ -11,8 +11,6 @@ The Document Checking Service (DCS) acts as an interface between your service an
 
 <%= image_tag "dcs-overview.svg", { :alt => '' } %>
 
-This diagram shows:
-
 1. Your service sends a passport check request to the DCS.
 1. The DCS validates the request and sends it to HM Passport Office.
 1. HM Passport Office checks the passport data against their database and sends a response back to the DCS.
@@ -20,7 +18,7 @@ This diagram shows:
 
 ## Integrating with the DCS
 
-You’ll need to build a client to integrate with the DCS. You can choose which programming language your client uses.
+You’ll need to build a client to integrate with the DCS. You can choose which programming language your client uses. There is a [worked example of creating a DCS connection](https://github.com/alphagov/dcs-python-client) on GitHub.
 
 Your client will need to be able to sign and encrypt JSON data and make HTTP requests to DCS.
 
@@ -32,12 +30,18 @@ To build a working DCS client, you'll need to:
 1. [Sign and encrypt a DCS payload](/sign-and-encrypt-a-DCS-payload/#sign-and-encrypt-a-dcs-payload).
 1. [Access the data in a DCS response](/access-the-data-in-a-DCS-response/#access-the-data-in-a-dcs-response).
 
+### Using client libraries when connecting to the DCS
+
+Currently, there are no supported client libraries for the DCS.
+
+However, there is a [worked example of creating a DCS connection](https://github.com/alphagov/dcs-python-client) on GitHub.
+
 ## Getting access to production
 
 Before you can access production, you'll need to:
 
 + successfully complete a full journey in the integration environment
-+ show your organisation meets the [DCS pilot requirements](https://www.gov.uk/guidance/requirements-for-joining-the-document-checking-service-pilot) - the DCS team will contact you about this separately 
++ show your organisation meets the [DCS pilot requirements](https://www.gov.uk/guidance/requirements-for-joining-the-document-checking-service-pilot) - the DCS team will contact you about this separately
 
 You’ll need a different set of keys and certificates for your production connection.
 [Contact the DCS pilot helpdesk](/support) if you’re ready to request access to production.
