@@ -26,9 +26,6 @@ footer_links:
 # Enables search functionality. This indexes pages only and is not recommended for single-page sites.
 enable_search: true
 
-# Tracking ID from Google Analytics (e.g. UA-XXXX-Y)
-ga_tracking_id: UA-122212471-4
-
 # Enable multipage navigation in the sidebar
 multipage_nav: true
 
