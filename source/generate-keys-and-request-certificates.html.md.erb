@@ -1,8 +1,8 @@
 ---
 title: Generate keys and request certificates
 weight: 4.3
-last_reviewed_on: 2020-05-04
-review_in: 6 weeks
+last_reviewed_on: 2020-06-30
+review_in: 2 months
 ---
 
 # Generate keys and request certificates
@@ -31,7 +31,7 @@ You must make sure you:
 + store your keys securely
 + limit access to your key material
 
-If you suspect your keys have been compromised: 
+If you suspect your keys have been compromised:
 
 + [tell the DCS support team immediately](/support/#security)
 + stop using the compromised keys
@@ -40,7 +40,7 @@ You must handle your integration keys as securely as your production keys. The D
 
 ## Generate a private RSA key
 
-Generate a private RSA key using OpenSSL by entering this code into terminal:
+Generate a private RSA key using OpenSSL by entering this code into a terminal:
 
 ```
 $ openssl genrsa -out <private key filename>.pem 2048
