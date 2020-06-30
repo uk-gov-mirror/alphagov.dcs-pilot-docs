@@ -9,12 +9,14 @@ review_in: 2 months
 
 When making requests to the DCS, you send messages over HTTPS. These messages are secured by mutual Transport Layer Security (mTLS), which is sometimes referred to as ‘client certificate authentication’ or ‘X509 client certificate authentication’.
 
-The DCS and your service use mTLS to prove to each other that they possess the private key which corresponds to the public certificate. This extra layer of authentication means the DCS can be confident it only sends information to authorised clients.
-## Prerequisites
-Before setting up mTLS, you’ll need:
+The DCS and your service use mTLS to prove to each other that they possess the private keys which correspond to their public certificates. This extra layer of authentication means the DCS can be confident it only sends information to authorised clients.
 
-* to [generate a private key and request a GDS-signed certificate](/generate-keys-and-request-certificates) - it can take up to 2 working days for the DCS to issue a certificate
-* to [download the DCS Certificate Authority (CA) certificate bundle][DCS Certificate Authority (CA) certificate bundle]
+## Prerequisites
+
+Before setting up mTLS, you need to:
+
+* [generate a private key and request a GDS-signed certificate](/generate-keys-and-request-certificates) - it can take up to 2 working days for the DCS to issue a certificate
+* [download the DCS Certificate Authority (CA) certificate bundle][DCS Certificate Authority (CA) certificate bundle]
 
 ## Test your connectivity to the DCS by making a GET request
 
@@ -65,7 +67,7 @@ The DCS team have tested that you can make successful requests using these libra
 * node.js: [https](https://nodejs.org/api/https.html#https_https_request_url_options_callback)
 * Python: [Requests](https://requests.readthedocs.io/)
 
-### Convert your private key to another format
+### Converting your private key to another format
 
 Not all HTTPS libraries can process a key in Privacy Enhanced Mail (PEM) format. You might need to convert the private key into a format your library can use. For example, this command would convert the private key to PKCS 8 format:
 
