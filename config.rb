@@ -2,6 +2,7 @@ require 'govuk_tech_docs'
 
 # Check for broken links
 require 'html-proofer'
+require_relative 'test'
 
 # Pretty URLs see https://middlemanapp.com/advanced/pretty-urls/
 activate :directory_indexes
