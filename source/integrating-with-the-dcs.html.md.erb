@@ -1,8 +1,8 @@
 ---
 title: How the DCS works
 weight: 2
-last_reviewed_on: 2020-05-20
-review_in: 6 weeks
+last_reviewed_on: 2020-06-20
+review_in: 8 weeks
 ---
 
 # How the DCS works
@@ -35,6 +35,36 @@ To build a working DCS client, you'll need to:
 Currently, there are no supported client libraries for the DCS.
 
 However, there is a [worked example of creating a DCS connection](https://github.com/alphagov/dcs-python-client) on GitHub.
+
+## Understand what responses mean when making a DCS check
+
+When you make a [DCS passport validity check](/api-reference/#check-whether-a-passport-is-valid), the DCS will return one of 3 responses:
+
+* `valid: true`
+* `valid: false`
+* `error: true`
+
+### Receiving a `valid: true` response
+
+A `valid: true` response means:
+
+* all the details on the passport, for example, first names or date of birth, exactly match the details held in Her Majesty’s Passport Office (HMPO)
+* the passport is not marked as lost, stolen or cancelled in the HMPO database
+* the passport has not expired, or expired no more than 18 months ago
+
+### Receiving a `valid: false` response
+
+A `valid: false` response means:
+
+* one or more of the passport details, for example first names or date of birth, does not exactly match the details in the HMPO database
+* the passport is marked as lost, stolen or cancelled in the HMPO database
+* HMPO has not yet sent the passport to the holder
+
+It’s possible for a valid passport to return a `valid: false` response. Check how to [reduce errors when using data from a passport chip](/reading-data-from-passport-nfc-chip/#reduce-errors-when-using-data-from-a-passport-chip).
+
+### Receiving an `error: true` response
+
+An `error: true` response means the HMPO database is unavailable. You should wait a few seconds and then try again.
 
 ## Getting access to production
 
