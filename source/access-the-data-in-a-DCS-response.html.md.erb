@@ -100,8 +100,10 @@ An example of the returned JSON string is:
 
 You now have a plain text JSON object for your application to use. Read the object to discover whether:
 
-* the passport was valid
-* the passport was invalid
-* an error occurred in a DCS data provider
+* the passport was valid (`valid: true`)
+* the passport was invalid (`valid: false`)
+* an error occurred from Her Majesty's Passport Office (`error: true`)
+
+You can [read further guidance about what responses mean when making a DCS check](/integrating-with-the-dcs/#understand-what-responses-mean-when-making-a-dcs-check).
 
  <%= partial "partials/links" %>
