@@ -20,6 +20,8 @@ Using the DCS API you can:
 * [check the DCS status](/api-reference/#check-the-dcs-status)
 * [check whether a passport is valid](/api-reference/#check-whether-a-passport-is-valid)
 
+You can [read further guidance about what responses mean when making a DCS check](/integrating-with-the-dcs/#understand-what-responses-mean-when-making-a-dcs-check).
+
 ## Check the DCS status
 
 You can check the status of the DCS which helps you build a fallback plan if the DCS is unavailable.
@@ -98,6 +100,8 @@ The DCS returns a `200` [HTTP response code][status-response-codes] for successf
 
 If the requests are not successful, the DCS will return a [HTTP response code][status-response-codes] to indicate why the request was not successful.
 
+You can [read further guidance about what responses mean when making a DCS check](/integrating-with-the-dcs/#understand-what-responses-mean-when-making-a-dcs-check).
+
 #### Example payload for a valid passport
 
 ```json
@@ -136,7 +140,7 @@ If the requests are not successful, the DCS will return a [HTTP response code][s
 | Field          | Type    | Description                                                                                                                              |
 |-----------------|---------|------------------------------------------------------------------------------------------------------------------------------------------|
 | correlationId | string  | Contains the same `correlationId` provided in the request, which is a [RFC 4122]-compliant UUID.                                         |
-| requestId     | string  | Contains the same `requestId` provided in the request, which is a [RFC 4122]-compliant UUID.    
+| requestId     | string  | Contains the same `requestId` provided in the request, which is a [RFC 4122]-compliant UUID.
 | error         | boolean | Indicates if there was an error when checking the passport data.                                                                         |
 | valid         | boolean | Indicates if the passport is valid or not. This field is not included if there is an error.                                              |
 | errorMessage  | array   | A list of error messages which indicate why there was an error processing the request. This field is only included if there is an error. |
