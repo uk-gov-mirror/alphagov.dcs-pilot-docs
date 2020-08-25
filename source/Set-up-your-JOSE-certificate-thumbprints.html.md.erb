@@ -66,9 +66,9 @@ You must then decode the Base64 string to get the binary DER.
 
 Use a library or a command line tool to hash the certificate.
 
-You need to generate SHA1 and SHA256 hashes of your certificate’s binary DER.
+You need to generate the SHA256 hash of your certificate’s binary DER.
 
-For each hash, you need to:
+You need to:
 
 1. Make sure the hash is in raw bytes - some tools return a Base64 string or hex string by default.
 1. Encode the bytes into Base64url.
@@ -83,6 +83,6 @@ If your library or command line tool cannot encode bytes to Base64url directly, 
 
 ## Use the thumbprints to build a JWS or JWE object
 
-Once you’ve created your SHA1 and SHA256 hashes, you can use them to [sign and encrypt your DCS payload](/sign-and-encrypt-a-DCS-payload/#sign-and-encrypt-a-dcs-payload).
+Once you’ve created your SHA256 hash, you can use it to [sign and encrypt your DCS payload](/sign-and-encrypt-a-DCS-payload/#sign-and-encrypt-a-dcs-payload).
 
 <%= partial "partials/links" %>
