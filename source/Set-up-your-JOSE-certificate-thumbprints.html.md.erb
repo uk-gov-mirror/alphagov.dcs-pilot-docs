@@ -17,7 +17,7 @@ If you need to create the thumbprints manually yourself, you’ll need to:
 
 1. Check your certificate is in binary DER format.
 1. Hash the binary representation of the certificate.
-1. Use the thumbprints to build a JWS or JWE object.
+1. Use the thumbprint to build a JWS or JWE object.
 
 ## Check your certificate is in binary DER format
 
@@ -81,7 +81,7 @@ If your library or command line tool cannot encode bytes to Base64url directly, 
 1. Encode the bytes to Base64.
 1. Convert the Base64 string to Base64url in your own code.
 
-## Use the thumbprints to build a JWS or JWE object
+## Use the thumbprint to build a JWS or JWE object
 
 Once you’ve created your SHA256 hash, you can use it to [sign and encrypt your DCS payload](/sign-and-encrypt-a-DCS-payload/#sign-and-encrypt-a-dcs-payload).
 

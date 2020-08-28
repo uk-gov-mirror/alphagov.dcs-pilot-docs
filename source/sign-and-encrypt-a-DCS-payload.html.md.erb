@@ -1,7 +1,7 @@
 ---
 title: Sign and encrypt a DCS payload
 weight: 4.6
-last_reviewed_on: 2020-06-30
+last_reviewed_on: 2020-08-27
 review_in: 2 months
 ---
 
@@ -64,14 +64,14 @@ We recommend using [version 4 UUIDs](https://tools.ietf.org/html/rfc4122#section
 
 ## Create JWS headers
 
-The JWS headers contain information about how you have signed the payload, along with certificate thumbprints which allow the DCS to look up which certificate you’re using.
+The JWS headers contain information about how you have signed the payload, along with a certificate thumbprint which allows the DCS to look up which certificate you’re using.
 
 For the DCS, you need to set the following headers:
 
 1. `x5t#S256` contains the SHA256 thumbprint of your certificate.
 1. `alg` must be set to one of: `RS256`, `RS384`, `RS512`, `PS256`, `PS384`, or `PS512`.
 
-You must set the `x5t#S256` header. To set it, you’ll need to have [generated thumbprints for your signing certificate](/Set-up-your-JOSE-certificate-thumbprints).
+You must set the `x5t#S256` header. To set it, you’ll need to have [generated a thumbprint for your signing certificate](/Set-up-your-JOSE-certificate-thumbprints).
 
 Depending on the library you use, you might have to manually construct the JWS header. Your header should look like this:
 
@@ -99,10 +99,9 @@ You must set the following headers:
 * `enc` must be set to a value [permitted by RFC 7518][supported-JWE-encodings], for example `A128CBC-HS256`
 * `alg` must be set to `RSA-OAEP-256`
 * `typ` must be set to `JWE`
-* `x5t` contains the SHA1 thumbprint of the DCS encryption certificate
 * `x5t#S256` contains the SHA256 thumbprint of the DCS encryption certificate
 
-You must set the `x5t` and `x5t#S256` headers. To set them, you’ll need to have [generated thumbprints for the DCS encryption certificate](/Set-up-your-JOSE-certificate-thumbprints). The DCS will not accept the JWS or JWE objects without these headers.
+You must set the `x5t#S256` header. To set it, you’ll need to have [generated a thumbprint for the DCS encryption certificate](/Set-up-your-JOSE-certificate-thumbprints).
 
 Your header should look like this:
 
@@ -111,10 +110,10 @@ Your header should look like this:
   "enc":"A128CBC-HS256",
   "alg":"RSA-OAEP-256",
   "typ":"JWE",
-  "x5t":"xiWgxFMOIw1M4m9LYCnKZk5eHJs",
   "x5t#S256":"PJLEl_B6MFKaMEG6HK7BBdaueJc7e-SiimQfvEpTYj4"
 }
 ```
+
 ### Using encryption algorithms
 
 The encrypted component of the JSON Object Signing and Encryption (JOSE) message must use:
