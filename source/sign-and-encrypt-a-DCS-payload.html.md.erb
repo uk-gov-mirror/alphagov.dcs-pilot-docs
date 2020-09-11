@@ -18,7 +18,7 @@ To build the JSON Web Signature (JWS) and JSON Web Encryption (JWE) wrapper for 
 
 <%= image_tag "dcs-message-structure-sequence.svg", { :alt => '' } %>
 
-The diagram shows the steps you must take to build the signing and encryption wrapper for your JSON object. It shows you start with a plain JSON object. You then sign this object to get a JWS object. You then encrypt this JWS object to get a JWE object. Finally, the diagram shows you sign your JWE object. This will give you a final payload which has been signed, encrypted, and signed again.
+There are steps you must take to build the signing and encryption wrapper for your JSON object. You must first start with a plain JSON object and then sign this object to get a JWS object. You then encrypt this JWS object to get a JWE object. Finally, you sign your JWE object. This will give you a final payload which has been signed, encrypted, and signed again.
 
 ## Choose a library to use for JWS and JWE
 
