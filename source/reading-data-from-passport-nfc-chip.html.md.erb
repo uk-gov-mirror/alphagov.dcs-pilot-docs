@@ -1,7 +1,7 @@
 ---
 title: Reduce errors when using data from a passport chip
 weight: 5.5
-last_reviewed_on: 2020-08-06
+last_reviewed_on: 2020-09-21
 review_in: 6 weeks
 ---
 # Reduce errors when using data from a passport chip
@@ -28,7 +28,7 @@ Characters outside the MRZ set are either omitted or replaced with a filler char
 
 DCS checks using MRZ data from the passport chip will not match the VIZ data used by HMPO and your service will receive a `valid: false` response.
 
-### Example of a failing check on a valid passport 
+### Example of a failing check on a valid passport
 
 Imagine a holder of a valid passport with a single forename, "Sarah-Jane".
 
@@ -44,7 +44,7 @@ Without consulting the VIZ data, there is no way to tell which interpretation is
 
 You can improve the accuracy of the DCS checks that use data from the passport chip, for example:
 
-* if the initial check fails, allow the user to input their passport data manually 
+* if the initial check fails, allow the user to input their passport data manually
 * if there are multiple interpretations, submit a DCS check for both (each request will contribute to your [quota][quotas])
 
 <%= partial "partials/links" %>
