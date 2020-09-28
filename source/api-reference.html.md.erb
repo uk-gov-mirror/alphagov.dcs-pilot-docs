@@ -92,6 +92,43 @@ The DCS validates each field before forwarding the evidence check to HMPO. For e
   "requestId": "not-a-valid-uuid"
 }
 ```
+
+#### Request validation error messages
+
+If any of the request fields do not pass validation, the `errorMessage` field will contain an entry for each validation error detailing the cause of the error.
+
+These are in the format `validation: <field>: <message>`, for example `validation: requestId: must be in universally unique identifier (UUID) format`.
+
+We've listed all possible validation error messages for requests to the DCS's passport checking endpoint, along with some example values that would cause each error message.
+
+| Request field       | Error message   | Example of what could cause the error message |
+|--------------------------------------------|--------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+requestId|must be in universally unique identifier (UUID) format|`1234`
+||must not be empty|`<blank>`
+correlationId|must be in universally unique identifier (UUID) format|`1234`
+||must not be empty|`<blank>`
+timestamp|must be in ISO 8601 format YYYY-MM-DD'T'hh:mm:ss.SSSZ. For example, 2020-01-01T12:30:00.000Z|`01-01-1990 12:00:00`
+||must not be empty|`<blank>`
+||is not recent enough|`1990-01-01T12:00:00.000Z`
+passportNumber|must be a numeric string between 1 and 899999999|`999999999`
+||must be a numeric string between 1 and 899999999|`abcde`
+||must not be empty|`<blank>`
+surname|length must be between 1 and 30 characters|`long...name`
+||must only contain the characters: a-z, A-Z, space, hyphen, full stop and apostrophe|`12345`
+||must not be empty|`<blank>`
+forenames|must not be empty|`[]`
+||length must be between 1 and 30 characters|`["long...", "...names"]`
+||must only contain the characters: a-z, A-Z, space, hyphen, full stop and apostrophe|`[1234]`
+||must not be empty|`<blank>`
+dateOfBirth|must be in the format YYYY-MM-DD|`01-01-1990`
+||must not be in the future|`3000-01-01`
+||must not be empty|`<blank>`
+expiryDate|must be in the format YYYY-MM-DD|`01-01-1990`
+||must not be more than 18 months in the past |`1990-01-01`
+||must not be empty|`<blank>`
+
+
+
 ### Interpret the passport validity response
 
 A successful request completes without any errors, regardless of whether the passport is valid or not.
