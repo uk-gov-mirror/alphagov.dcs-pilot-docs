@@ -34,6 +34,16 @@ Install the application's dependencies:
 bundle install
 ```
 
+### Running on MacOS
+
+There is an incompatibility issue with the latest MacOS and the `ffi` library, this stops Middleman from starting on MacOS.
+
+To fix the issue you must the step the `ffi` Gem using the native `libffi` library by issuing the following command:
+
+```shell script
+gem install ffi -- --disable-system-libffi
+```
+
 ## Making changes
 To make changes, edit the markdown files in the source folder.
 
