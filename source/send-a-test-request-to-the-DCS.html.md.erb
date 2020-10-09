@@ -116,5 +116,37 @@ If your response does not look similar to this, [contact the DCS team](/support)
 
 Once you’ve received the data, you can [access the data in a DCS response](/access-the-data-in-a-DCS-response/#access-the-data-in-a-dcs-response).
 
+## Use other sample passport details
+
+Here's some additional sample passport details with specific characteristics for you to test against.
+
+### Passport example with multiple forenames
+
+```json
+{
+  "correlationId": "15ac0617-2654-4886-9cff-eaac3a47ae99",
+  "requestId": "2f42840f-ba07-450a-a53f-79ae7c12d78c",
+  "timestamp": "1997-07-16T19:20:30.45+01:00",
+  "passportNumber": "398593142",
+  "surname": "Hudson",
+  "forenames": [
+    "Martha",
+    "Jane"
+  ],
+  "dateOfBirth": "1931-06-11",
+  "expiryDate": "2022-01-01"
+}
+```
+
+If your request is successful, you should receive a response similar to this:
+
+```json
+{
+  "correlationId": "15ac0617-2654-4886-9cff-eaac3a47ae99",
+  "requestId": "2f42840f-ba07-450a-a53f-79ae7c12d78c",
+  "valid": true,
+  "error": false
+}
+```
 
  <%= partial "partials/links" %>
