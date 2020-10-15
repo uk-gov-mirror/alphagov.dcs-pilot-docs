@@ -43,6 +43,8 @@ If the DCS is available, the JSON response body will be similar to:
 }
 ```
 
+For the DCS pilot participants, the `scheduledOutages` field will be empty. 
+
 If the DCS is unavailable, the `message` field in the response describes the reason. The reason for the DCS being unavailable can be:
 
 * `Limit exceeded` - you have exceeded your [rate limit](/api-reference/#understand-rate-limits-in-the-dcs)
