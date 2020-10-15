@@ -43,7 +43,7 @@ If the DCS is available, the JSON response body will be similar to:
 }
 ```
 
-For the DCS pilot participants, the `scheduledOutages` field will be empty. 
+The `scheduledOutages` field is a legacy field provided for compatibility reasons for older clients and is always empty for participants of the DCS pilot.
 
 If the DCS is unavailable, the `message` field in the response describes the reason. The reason for the DCS being unavailable can be:
 
