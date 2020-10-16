@@ -1,0 +1,45 @@
+---
+title: Helping your users with their passport queries
+weight: 5.4
+last_reviewed_on: 2020-10-16
+review_in: 8 weeks
+---
+
+# Helping your users with their passport queries
+
+It’s possible a user may not believe the result of a DCS check is correct. For example, a user may make a mistake entering their passport details into your service and receive a `valid: false` response even though their passport is valid.
+
+This documentation will help you answer your users’ passport queries.
+
+1. Be aware of known `valid: false` passport issues.
+1. Allow your users to have the check made again.
+1. Consider offering your users an alternative route.
+1. Direct your users to the Passport Advice Line.
+
+## Be aware of known `valid: false` passport issues
+
+There’s a known issue with readings from the near-field communication (NFC) chips in passports. Some users may receive a false-negative result. There's [guidance on how to reduce errors when using data from a passport chip](/reading-data-from-passport-nfc-chip/#reduce-errors-when-using-data-from-a-passport-chip).
+
+To make your users aware of this known possible issue, you could:
+
+* reiterate this information in a separate email to your users
+* flag this as a possible issue when you’re building your service so a user can adjust their input
+
+## Allow your users to have the check made again
+
+It's likely that a check will have failed due to user error, for example a user misspelling their name. Allowing your users to re-enter their details and have the check made again can help solve this problem.
+
+## Consider offering your users an alternative route
+
+You could offer your users alternative routes to access your service for example:
+
+- if a user does not want to provide their passport details over the internet, you could offer them an in-person alternative
+- if a user fails a DCS check, you could provide an alternative route to access your service without a DCS check being made
+
+Even if a user can access your service through an alternative route, they may still have concerns about their passport validity. If this is the case, you should direct your users to the Passport Advice Line.
+
+## Direct your users to the Passport Advice Line
+
+If a DCS check has returned a `valid: false` response, your users may have doubts about whether their passport is valid (or red-flagged).
+
+You should direct users who are concerned about the status of their passport to the [Passport Advice Line](https://www.gov.uk/passport-advice-line). This final check will give your users reassurance about whether their passport is valid.
