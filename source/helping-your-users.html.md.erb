@@ -1,0 +1,40 @@
+---
+title: Helping your users with their passport queries
+weight: 5.4
+last_reviewed_on: 2020-10-16
+review_in: 8 weeks
+---
+
+# Helping your users with their passport queries
+
+It’s possible that as a result of using your service, a user might think something is wrong with their passport. This documentation will help you answer your users’ passport queries.
+
+1. Be aware of known `valid: false` passport issues.
+1. Allow your users to have the check made again.
+1. Consider offering your users an alternative route.
+1. Direct your users to the Passport Advice Line.
+
+## Be aware of known `valid: false` passport issues
+
+There’s a known issue with readings from NFC chips. Some users may receive a false-negative result. The Document Checking Service (DCS) has provided you with [guidance on how to reduce errors when using data from a passport chip](/reading-data-from-passport-nfc-chip/#reduce-errors-when-using-data-from-a-passport-chip).
+
+To make your users aware of this known possible issue, you could:
+
+* reiterate this information in a separate email to your users
+* flag this as a possible issue when you’re building your service so a user can adjust their input
+
+## Allow your users to have the check made again
+
+If the check fails for any reason, for example a user misspelling their name, you should allow your users to re-enter their details and have the check made again.
+
+## Consider offering your users an alternative route
+
+Your service could give users an alternative way to use the service if they do not have a British passport, or do not want their passport details to be checked in this way. A user can use this alternative route to access your service without a DCS check being made.
+
+However, even though a user can now access your service, they may still have concerns about their passport validity. If this is the case, you should direct your users to the Passport Advice Line.
+
+## Direct your users to the Passport Advice Line
+
+If a DCS check has returned a `valid: false` response, your users may still have doubts about whether their passport is valid (or red-flagged).
+
+You should [direct users in this position to the Passport Advice Line](https://www.gov.uk/passport-advice-line). This final check will give your users reassurance about whether their passport is valid.
