@@ -1,7 +1,7 @@
 ---
 title: Access the data in a DCS response
 weight: 4.7
-last_reviewed_on: 2020-08-06
+last_reviewed_on: 2020-10-19
 review_in: 8 weeks
 ---
 
@@ -25,7 +25,7 @@ You can read about the data contained in JSON messages in the [API reference sec
 
 You should have successfully submitted a request to the DCS which returns a `200` HTTP response code.
 
-You’ll need to use a library to work with the JSON Web Signature (JWS) and JWE objects. You can use the same one you used to [sign and encrypt your DCS request](/sign-and-encrypt-a-DCS-payload/#sign-and-encrypt-a-dcs-payload).
+You’ll need to use a library to work with the JSON Web Signature (JWS) and JSON Web Encryption (JWE) objects. You can use the same one you used to [sign and encrypt your DCS request](/sign-and-encrypt-a-DCS-payload/#sign-and-encrypt-a-dcs-payload).
 
 You’ll need:
 
@@ -56,7 +56,7 @@ To validate the outer signature, you must:
 
 This will return a string which is the response body string with the signature removed. Keep this for the next step.
 
-Assumming your library returns compact tokens, an example of the returned string is:
+Assuming your library returns compact tokens, an example of the returned string is:
 
 ```
 eyJhbGciOiJSU0EtT0FFUC0yNTYiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldFIn0.NO8UigzyV_9uEzb-nAAWxCle1aFz4yZV5PPqKvvyrvGnt2Ev7ntlsdv7VGtHbuPwjtOzwnjt-aDxZnZLrg9iXDndbECEfWpQ4zmuEBJaw-1ohXU1VZiaV6hgEHViC_wEnRlmIYJ2eY6bC454Es0dq4KZcxgE3ufDXtv2_yglZ_R3jPAB4XqcT2oYJ1Kk673-l_nkMKkI_jomvSpks7Pr4CIMdCKaTwexWQSQPOyR1Zm9fqeswxhA3b4VLEH-vi8dFFK8hLj8j4jJNUmMTtGoaMlekjqD7NvEgV-AXmZywozKEPk4kfF0mzZRmBxnsvblr5-gkI8q79CM37szYjTtgQ.fHQbSLTwRpv2OkWd4nZlgA.B62xwyRy2UDum6OeYewz1hCUi69ochGF3snG_yihC1DNh3_uOoEmKzK5XxgFW8CQrXzHjKqydmshJpPpKC8wv6LxkGhX7RPcbiCK56xAgEznRddevIamBHhaFbXBF1rh7igjtcu2uaTJ-DScQDI9E8mM-UXq2dfMQGKobYYFNf9UNrNqYuyDQxgr8DUN3It10-lQxyJRLuABa2vI_GfuuS6cgLWaHDf4N0-zw01lW5-6GFEx5nL77LKh_W34-SXnqNCsIOXvsvZDCbxIgfCLOsanMnl-qu0TBil14LMW03rKk90BSuGwHGQcYzU6QrOrP4NcWOGoxqtEtPhmTtEo0zNVZ1JOIFVjlIZcpLXxlj-rPtyeQ_U1usfBNkhxW0BU1n4o6FFTRwTKeELjBn-GKbPVS3KLtrA9H4CY9oxqFnp5l2j8A2Jw5eMEf-39RZaW-UUS7GtgAIKYSQHTuo_MJfWuOU3zp-g5gzcV8XcI9XbxnKv559loBHAztV5_AW_yI-w653IZGWCnD-3qGTcgb89vNWaBXfJRMY0mQRiiLAUUNzXHNMyAy4Jp5CZJEZcMP_Dv-5wowv26Svi3NrmlE0uyD6DzdaEgvhqt7NeUs9J0cxkEv4k5cKAUyMgj9BLJXOKTqihxB52O2tB9dufPiszi6GRDFdmohKBv08yKkW7YSf5Pm_aG_juzOLAlzmoYZnkZjsVOGQPGjaL54KWvZw.0iX6sc3qcB4CV6IAGOUL7w
@@ -72,7 +72,7 @@ To decrypt the string, you must:
 
 The method will return the JSON payload.
 
-Assumming your library returns compact tokens, an example of the returned string is:
+Assuming your library returns compact tokens, an example of the returned string is:
 
 ```
 eyJhbGciOiJSUzI1NiJ9.eyJjb3JyZWxhdGlvbklkIjoiNTc4MmQ1MWItNWI3Mi00NDQ4LThiMDYtY2Q4NmM0NDZiYzljIiwiZXJyb3IiOmZhbHNlLCJyZXF1ZXN0SWQiOiJiNWUyY2FjNi0zM2M4LTQ2NjQtYjFmZS0yYjQ5MGZkYjFjODIiLCJ2YWxpZCI6dHJ1ZX0.Me6ZAywbIrWZ7h0ekrCFxnhYDXdOmSWQLhQiuKq0msVtd5oQLzBGVWSs3agj9mQBN3yszYm6aFABc8r93t5jidaNCyaUJJSXd0qfQoK7G4eJaxEnOzSS26oRqk8t6OYtcfTfQ3QrZsS64B7OH0AhYR76RIeVWrVLbQ3qMsFujMqYZ68A6mDbeGYIUf9Wow41urbFHVbFoP30CA86Mb-JyA53nydaiBA5glppC571Ic-RUNF4HordP2i2c3X8lKkUmWlExormra4cXNEzDnaEbrRRTMSwcixTkpMWvDIN_7kqS2v9M84xBWDzxdnfS5F0UFgUDMWrrbk_dI_pQp1LgA
