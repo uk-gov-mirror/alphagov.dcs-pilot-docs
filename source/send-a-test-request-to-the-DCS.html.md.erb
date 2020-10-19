@@ -1,7 +1,7 @@
 ---
 title: Send a test request to the DCS
 weight: 4.65
-last_reviewed_on: 2020-08-06
+last_reviewed_on: 2020-10-19
 review_in: 8 weeks
 ---
 
@@ -16,9 +16,9 @@ You must check whether your client can make successful passport validity request
 Use the DCS integration endpoint for your test checks. Integration endpoint: <https://dcs-integration.ida.digital.cabinet-office.gov.uk/checks/passport>
 
 
-## Generate a `valid true` response
+## Generate a `valid: true` response
 
-Enter these sample passport details in your client to test a `valid true` response.
+Enter these sample passport details in your client to test a `valid: true` response.
 
 ```json
 {
@@ -48,9 +48,9 @@ If your request is successful, you should receive a response similar to this:
 
 If your response does not look similar to this, [contact the DCS team](/support).
 
-## Generate a `valid false` response
+## Generate a `valid: false` response
 
-Enter these sample passport details in your client to test a `valid false` response.
+Enter these sample passport details in your client to test a `valid: false` response.
 
 ```json
 {
@@ -80,9 +80,9 @@ If your request is successful, you should receive a response similar to this:
 
 If your response does not look similar to this, [contact the DCS team](/support).
 
-## Generate an `error true` response
+## Generate an `error: true` response
 
-Enter these sample passport details in your client to test an `error true` response.
+Enter these sample passport details in your client to test an `error: true` response.
 
 ```json
 {
