@@ -1,19 +1,19 @@
 ---
 title: Set up your JOSE certificate thumbprints
 weight: 4.5
-last_reviewed_on: 2020-09-03
+last_reviewed_on: 2020-11-11
 review_in: 2 months
 ---
 
 # Set up your JOSE certificate thumbprints
 
-You’ll need to include a certificate ‘thumbprint’ (also sometimes known as a ‘fingerprint’) in the JSON Web Signature (JWS) and JSON Web Encryption (JWE) objects you build when you sign and encrypt a Document Checking Service (DCS) payload.
+You will need to include a certificate ‘thumbprint’ (also sometimes known as a ‘fingerprint’) in the JSON Web Signature (JWS) and JSON Web Encryption (JWE) objects you build when you sign and encrypt a Document Checking Service (DCS) payload.
 
-The thumbprint is a hash of the public certificate used to sign or encrypt the JWS or JWE object. DCS uses the thumbprint to look up which certificate to use to validate your signature or decrypt your message.
+The thumbprint is a hash of the public certificate used to sign or encrypt the JWS or JWE object. DCS uses the thumbprint to look up the certificate with which to validate your signature or decrypt your message.
 
 The [library you use to build JWS and JWE objects](/sign-and-encrypt-a-DCS-payload/#choose-a-library-to-use-for-jws-and-jwe) may be able to create thumbprints for you.
 
-If you need to create the thumbprints manually yourself, you’ll need to:
+If you need to create the thumbprints manually yourself, you will need to:
 
 1. Check your certificate is in binary DER format.
 1. Hash the binary representation of the certificate.
@@ -21,13 +21,13 @@ If you need to create the thumbprints manually yourself, you’ll need to:
 
 ## Check your certificate is in binary DER format
 
-You’ll have a certificate in either plain text Privacy Enhanced Mail (PEM) format or binary DER format.
+You will have a certificate in either plain text Privacy Enhanced Mail (PEM) format or binary DER format.
 
 If your certificate is already in binary DER format, you can move on to hash the binary representation of the certificate.
 
 If your certificate is in PEM format, you’ll need to convert it into DER format. To do this, you can:
 
-* use an x509 library to load the whole certificate and convert it to DER format
+* use a language-appropriate x509 library to load the whole certificate and convert it to DER format
 * extract the Base64 representation of your certificate and decode it into a binary representation
 
 ### Extract the Base64 representation of your certificate
