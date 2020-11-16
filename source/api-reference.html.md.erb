@@ -131,7 +131,7 @@ expiryDate|must be in the format YYYY-MM-DD|`01-01-1990`
 
 
 
-### Interpret the passport validity response
+## Interpret the passport validity response
 
 A successful request completes without any errors, regardless of whether the passport is valid or not.
 
@@ -139,7 +139,23 @@ The DCS returns a `200` [HTTP response code][status-response-codes] for successf
 
 If the requests are not successful, the DCS will return a [HTTP response code][status-response-codes] to indicate why the request was not successful.
 
-You can [read further guidance about what responses mean when making a DCS check](/integrating-with-the-dcs/#understand-what-responses-mean-when-making-a-dcs-check).
+
+| Field          | Type    | Description                                                                                                                              |
+|-----------------|---------|------------------------------------------------------------------------------------------------------------------------------------------|
+| correlationId | string  | Contains the same `correlationId` provided in the request, which is a [RFC 4122]-compliant UUID.                                         |
+| requestId     | string  | Contains the same `requestId` provided in the request, which is a [RFC 4122]-compliant UUID.
+| error         | boolean | Indicates if there was an error when checking the passport data.                                                                         |
+| valid         | boolean | Indicates if the passport is valid or not. This field is not included if there is an error.                                              |
+| errorMessage  | array   | A list of error messages which indicate why there was an error processing the request. This field is only included if there is an error. |
+
+### Receiving a `valid: true` response
+
+A `valid: true` response means:
+
+* all the details on the passport, for example, first names or date of birth, exactly match the details held in Her Majesty’s Passport Office (HMPO)
+* the passport is not marked as lost, stolen or cancelled in the HMPO database
+* the passport has not expired, or expired no more than 18 months ago
+
 
 #### Example payload for a valid passport
 
@@ -152,6 +168,16 @@ You can [read further guidance about what responses mean when making a DCS check
 }
 ```
 
+### Receiving a `valid: false` response
+
+A `valid: false` response means:
+
+* one or more of the passport details, for example first names or date of birth, does not exactly match the details in the HMPO database
+* the passport is marked as lost, stolen or cancelled in the HMPO database
+* HMPO has not yet sent the passport to the holder
+
+It’s possible for a valid passport to return a `valid: false` response. Check how to [reduce errors when using data from a passport chip](/reading-data-from-passport-nfc-chip/#reduce-errors-when-using-data-from-a-passport-chip).
+
 #### Example payload for an invalid passport
 
 ```json
@@ -162,6 +188,10 @@ You can [read further guidance about what responses mean when making a DCS check
   "valid": false
 }
 ```
+
+### Receiving an `error: true` response
+
+An `error: true` response means the HMPO database is unavailable. You should wait a few seconds and then try again.
 
 #### Example payload for a successful response containing an error
 
@@ -175,15 +205,6 @@ You can [read further guidance about what responses mean when making a DCS check
   ]
 }
 ```
-
-| Field          | Type    | Description                                                                                                                              |
-|-----------------|---------|------------------------------------------------------------------------------------------------------------------------------------------|
-| correlationId | string  | Contains the same `correlationId` provided in the request, which is a [RFC 4122]-compliant UUID.                                         |
-| requestId     | string  | Contains the same `requestId` provided in the request, which is a [RFC 4122]-compliant UUID.
-| error         | boolean | Indicates if there was an error when checking the passport data.                                                                         |
-| valid         | boolean | Indicates if the passport is valid or not. This field is not included if there is an error.                                              |
-| errorMessage  | array   | A list of error messages which indicate why there was an error processing the request. This field is only included if there is an error. |
-
 
 ## Understand rate limits in the DCS
 

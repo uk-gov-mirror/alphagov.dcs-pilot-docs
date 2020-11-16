@@ -45,26 +45,6 @@ When you make a [DCS passport validity check](/api-reference/#check-whether-a-pa
 * `valid: false`
 * `error: true`
 
-### Receiving a `valid: true` response
-
-A `valid: true` response means:
-
-* all the details on the passport, for example, first names or date of birth, exactly match the details held in Her Majesty’s Passport Office (HMPO)
-* the passport is not marked as lost, stolen or cancelled in the HMPO database
-* the passport has not expired, or expired no more than 18 months ago
-
-### Receiving a `valid: false` response
-
-A `valid: false` response means:
-
-* one or more of the passport details, for example first names or date of birth, does not exactly match the details in the HMPO database
-* the passport is marked as lost, stolen or cancelled in the HMPO database
-* HMPO has not yet sent the passport to the holder
-
-It’s possible for a valid passport to return a `valid: false` response. Check how to [reduce errors when using data from a passport chip](/reading-data-from-passport-nfc-chip/#reduce-errors-when-using-data-from-a-passport-chip).
-
-### Receiving an `error: true` response
-
-An `error: true` response means the HMPO database is unavailable. You should wait a few seconds and then try again.
+You can [read further guidance about the passport validity responses in the API reference](/api-reference/#receiving-a-valid-true-response).
 
 <%= partial "partials/links" %>
