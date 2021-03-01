@@ -1,15 +1,17 @@
 ---
-title: Set up your JOSE certificate thumbprints
+title: Generate certificate thumbprints
 weight: 4.5
 last_reviewed_on: 2020-11-11
 review_in: 6 months
 ---
 
-# Set up your JOSE certificate thumbprints
+# Generate certificate thumbprints
 
-You will need to include a certificate ‘thumbprint’ (also sometimes known as a ‘fingerprint’) in the JSON Web Signature (JWS) and JSON Web Encryption (JWE) objects you build when you sign and encrypt a Document Checking Service (DCS) payload.
+A certificate ‘thumbprint’ (also sometimes known as a ‘fingerprint’) is a unique identifier for a certificate that can be derived from the certificate itself. The DCS uses thumbprints to identify which keys and certificates are being used when handling messages.
+ 
+The thumbprint format is a Base64url encoded SHA256 hash of the certificate.
 
-The thumbprint is a hash of the public certificate used to sign or encrypt the JWS or JWE object. DCS uses the thumbprint to look up the certificate with which to validate your signature or decrypt your message.
+You will need to include a certificate thumbprint in the JSON Web Signature (JWS) and JSON Web Encryption (JWE) objects you build when you [sign and encrypt a Document Checking Service (DCS) payload](/sign-and-encrypt-a-DCS-payload/#sign-and-encrypt-a-dcs-payload). You may also want to generate thumbprints for DCS signing certificates if you [enable dual running of the DCS signing certificates](/rotating-keys-and-certificates/#enable-dual-running-of-the-dcs-signing-certificates).
 
 The [library you use to build JWS and JWE objects](/sign-and-encrypt-a-DCS-payload/#choose-a-library-to-use-for-jws-and-jwe) may be able to create thumbprints for you.
 
@@ -17,7 +19,7 @@ If you need to create the thumbprints manually yourself, you will need to:
 
 1. Check your certificate is in binary DER format.
 1. Hash the binary representation of the certificate.
-1. Use the thumbprint to build a JWS or JWE object.
+1. Base64url encode the hash.
 
 ## Check your certificate is in binary DER format
 
@@ -68,9 +70,12 @@ Use a library or a command line tool to hash the certificate.
 
 You need to generate the SHA256 hash of your certificate’s binary DER.
 
-You need to:
+You need to make sure the hash is in raw bytes - some tools return a Base64 string or hex string by default.
 
-1. Make sure the hash is in raw bytes - some tools return a Base64 string or hex string by default.
+## Base64url encode the hash
+
+Use a library or command line tool to Base64url encode the hash.
+
 1. Encode the bytes into Base64url.
 1. Remove padding by stripping any `=` characters.
 
@@ -81,8 +86,5 @@ If your library or command line tool cannot encode bytes to Base64url directly, 
 1. Encode the bytes to Base64.
 1. Convert the Base64 string to Base64url in your own code.
 
-## Use the thumbprint to build a JWS or JWE object
-
-Once you’ve created your SHA256 hash, you can use it when you [sign and encrypt your DCS payload](/sign-and-encrypt-a-DCS-payload/#sign-and-encrypt-a-dcs-payload).
 
 <%= partial "partials/links" %>

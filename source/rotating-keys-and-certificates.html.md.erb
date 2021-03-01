@@ -60,9 +60,9 @@ To avoid having to coordinate the rotation of a DCS signing certificate, we reco
 
 
 1. Make it possible to configure 2 DCS signing certificates.
-1. Generate a JOSE certificate thumbprint for these certificates using the same process as when you [set up your JOSE certificate thumbprints](/set-up-your-JOSE-certificate-thumbprints/#set-up-your-jose-certificate-thumbprints) 
-1. Store the certificates in a map or dictionary using the JOSE thumbprint as the key.
-1. Use the JOSE certificate thumbprint from the DCS response to select which certificate to use.
+1. [Generate certificate thumbprints](/generate-certificate-thumbprints) for these certificates.
+1. Store the certificates in a map or dictionary using the thumbprint as the key.
+1. Use the certificate thumbprint from the DCS response to select which certificate to use.
 
 
 <%= partial "partials/links" %>
