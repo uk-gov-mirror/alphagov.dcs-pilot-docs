@@ -7,7 +7,7 @@ review_in: 6 months
 
 # Rotating keys and certificates
 
-When the certificates containing public keys are due to expire, they must replaced with new keys and certificates. We call this process certificate rotation. There are 2 sets of keys and certificates:
+When the certificates containing public keys are due to expire, they must be replaced with new keys and certificates. We call this process certificate rotation. There are 2 sets of keys and certificates:
 
   * the keys you create and the associated certificates
   * the keys the Document Checking Service (DCS) creates and the associated certificates
@@ -18,16 +18,16 @@ When the certificates containing your public keys are due to expire, you must ro
 
 1. The DCS team will contact you to let you know that you need to rotate your certificates.
 1. Follow the process to [generate keys and request certificates](/generate-keys-and-request-certificates). You must generate new keys. Do not reuse old keys.
-1. When you receive the new certificates, [contact the DCS](/support) to inform us that you are ready to start using your new keys and certificates.
+1. When you receive the new certificates, [contact the DCS](/support) to inform us that you're ready to start using your new keys and certificates.
 1. Wait for confirmation that the DCS is ready to start using your new certificates.
-1. When the DCS has confirmed we are ready, you can update your configuration to use the new keys and certificates.
+1. When the DCS team has confirmed we are ready, you can update your configuration to use the new keys and certificates.
 
 
 ## Rotating the DCS certificates
 
-When the certificates containing the DCS's public keys are due to expire, you must rotate them. If you do not, your connection to the DCS will stop working.
+When the DCS needs to rotate its certificates, the DCS team will contact you. You’ll need to use the new DCS signing certificate, and the new DCS encryption certificate. If you do not, your connection to the DCS will stop working.
 
-The DCS team will contact you to let you know that the DCS's certificates will be rotated. We'll give you at least one month's notice of the date when we will perform the rotation. 
+The DCS team will give you at least one month's notice of the date when we'll perform the rotation. 
 
 At least one week before the scheduled rotation, we'll send you the new signing and encryption certificates. There are different processes for: 
 
@@ -39,7 +39,7 @@ At least one week before the scheduled rotation, we'll send you the new signing 
 
 If you're able to dual-run signing certificates in your service, you can start using the new DCS signing certificate as your secondary certificate straight away. However, you need to keep using the old certificate as your primary certificate until we rotate to the new key.
 
-The DCS will start using its new signing key at the scheduled time. The DCS team will let you know when we have rotated to the new key. After the DCS has rotated to the new key, you are free to remove the old certificate.
+The DCS will start using its new signing key at the scheduled time. The DCS team will let you know when we have rotated to the new key. After the DCS has rotated to the new key, you can remove the old certificate.
 
 If you're not able to dual-run signing certificates, you'll need to join a coordinated rotation with us on the day. This means you'll need to join a conference call with us in which, simultaneously:
 
@@ -56,7 +56,7 @@ We'll remove the old encryption key shortly after switching the signing key duri
 
 ## Enable dual running of the DCS signing certificates
 
-To avoid having to coordinate the rotation of a DCS signing certificate, we recommend that you implement dual running for this certificate in your code. If you are not using a library with built-in support for this, you will need to implement it yourself.
+To avoid having to coordinate the rotation of a DCS signing certificate, we recommend that you implement dual running for this certificate in your code. If you're not using a library with built-in support for this, you'll need to implement it yourself.
 
 
 1. Make it possible to configure 2 DCS signing certificates.
