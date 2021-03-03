@@ -71,7 +71,7 @@ For the DCS, you need to set the following headers:
 1. `x5t#S256` contains the SHA256 thumbprint of your certificate.
 1. `alg` must be set to one of: `RS256`, `RS384`, `RS512`, `PS256`, `PS384`, or `PS512`.
 
-You must set the `x5t#S256` header. To set it, you’ll need to have [generated a thumbprint for your signing certificate](/set-up-your-JOSE-certificate-thumbprints).
+You must set the `x5t#S256` header. To set it, you’ll need to [generate a thumbprint](/generate-certificate-thumbprints) for your signing certificate.
 
 Depending on the library you use, you might have to manually construct the JWS header. Your header should look like this:
 
@@ -101,7 +101,7 @@ You must set the following headers:
 * `typ` must be set to `JWE`
 * `x5t#S256` contains the SHA256 thumbprint of the DCS encryption certificate
 
-You must set the `x5t#S256` header. To set it, you’ll need to have [generated a thumbprint for the DCS encryption certificate](/set-up-your-JOSE-certificate-thumbprints).
+You must set the `x5t#S256` header. To set it, you’ll need to [generate a thumbprint](/generate-certificate-thumbprints) for the DCS encryption certificate.
 
 Your header should look like this:
 
@@ -113,15 +113,6 @@ Your header should look like this:
   "x5t#S256":"PJLEl_B6MFKaMEG6HK7BBdaueJc7e-SiimQfvEpTYj4"
 }
 ```
-
-### Using encryption algorithms
-
-The encrypted component of the JSON Object Signing and Encryption (JOSE) message must use:
-
-* `RSA-OAEP-256` as the algorithm
-* any encryption method [permitted by RFC 7518][supported-JWE-encodings], for example `A128CBC-HS256`
-
-You can [learn more about these in the JSON Web Algorithms specification][RFC 7518].
 
 ## Sign your JWE object to complete the process
 
